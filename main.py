@@ -1,6 +1,31 @@
 import pygame, sys, time
 from pygame.locals import *
 
+class Player: # player class. could possible change this to have options to have different players/colors
+    marioColor = pygame.Color('red')
+
+    def __init__(self, surface):
+        self.surface = surface
+        self.radius = 7
+        self.center = [10, surface.get_height() - 8]
+        self.color = Player.marioColor
+
+    def draw(self):
+        pygame.draw.circle(self.surface, self.color, self.center, self.radius, 0)
+
+class DonkeyKong:
+    kongColor = pygame.Color('yellow')
+
+    def __init__(self, surface):
+        self.surface = surface
+        self.radius = 10
+        self.center = [surface.get_width() - 20, 20]
+        self.color = DonkeyKong.kongColor
+
+    def draw(self):
+        pygame.draw.circle(self.surface, self.color, self.center, self.radius, 0)
+
+
 class Game:
     # class attributes
     bgColor = pygame.Color('black')
@@ -15,6 +40,10 @@ class Game:
 
     def draw(self):
         pygame.draw.circle(self.surface, self.color, self.center, self.radius, 0)
+        player = Player(self.surface)
+        kong = DonkeyKong(self.surface)
+        player.draw()
+        kong.draw()
 
     def update(self):
         if False: # end of game condition
@@ -27,7 +56,7 @@ def main():
     pygame.init() # initialize pygame
 
     # set window size, title, frame delay
-    surfaceSize = [800, 600]
+    surfaceSize = [800, 500]
     windowTitle = '275 Project I Guess' # title
     frameDelay = 0.02 # smaller is faster
 
