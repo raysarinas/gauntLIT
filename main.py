@@ -34,13 +34,13 @@ class Game:
         if event.type == QUIT:
             self.exit = True
         if event.type == KEYDOWN and self.cont:
-            if event.key == K_w:
+            if event.key == K_UP:
                 self.player.move_vert(self.player.rect, -1) # move up
-            if event.key == K_s:
+            if event.key == K_DOWN:
                 self.player.move_vert(self.player.rect, 1) # move down
-            if event.key == K_a:
+            if event.key == K_LEFT:
                 self.player.move_horiz(self.player.rect, -1) # move left
-            if event.key == K_d:
+            if event.key == K_RIGHT:
                 self.player.move_horiz(self.player.rect, 1) # move right
 
     def draw(self):
