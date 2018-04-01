@@ -1,3 +1,6 @@
+import pygame, sys, time, board
+from pygame.locals import *
+
 class Board: # Melisse are u gonna work on this
     # this should just be the platforms I guess.
     # we could just work on making the game like a maze-type game?
