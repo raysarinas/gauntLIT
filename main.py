@@ -1,4 +1,4 @@
-import pygame, sys, time
+import pygame, sys, time, board
 from pygame.locals import *
 
 class Player: # player class. could possible change this to have options to have different players/colors
@@ -41,16 +41,6 @@ class Peach:
 
     def draw(self):
         pygame.draw.circle(self.surface, self.color, self.center, self.radius, 0)
-
-
-class Structure: # Melisse are u gonna work on this
-    # this should just be the platforms I guess.
-    # we could just work on making the game like a maze-type game?
-    # idk jumping and stuff seems too hard to work with.
-    structColor = pygame.Color('white')
-    def __init__(self, surface):
-        self.surface = surface
-        self.color = structColor
 
 class Game:
     # class attributes
