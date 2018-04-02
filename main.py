@@ -1,4 +1,4 @@
-import pygame, sys, time,
+import pygame, sys, time
 from board import *
 from characters import *
 from pygame.locals import *
