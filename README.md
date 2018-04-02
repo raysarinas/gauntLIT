@@ -1,11 +1,15 @@
 # gauntLIT
 the last time zac tries it with bonus pain from mid
 
-**READ THIS FOR ALGORITHM IMPLEMENTATION**
-https://www.redblobgames.com/pathfinding/tower-defense/implementation.html
+- **READ THIS FOR ALGORITHM IMPLEMENTATION** - https://www.redblobgames.com/pathfinding/tower-defense/implementation.html
 
-**PYGAME DOCUMENTATION**
+- **PYGAME DOCUMENTATION**
 https://www.pygame.org/docs/index.html
+
+- maybe this will help with drawing walls: https://stackoverflow.com/questions/24301702/walls-in-pygame
+
+- THIS LOOKS REALLY GOOD BUT I HAVENT READ IT YET. IT INCLUDES STUFF ON PATH FINDING AND HONESTLY WE COULD PROBABLY JUST MAKE A DUPLICATE OF THIS GAME BUT LIKE MAKE IT ALL MARIO AND WHATEVER ELSE 
+- https://eli.thegreenplace.net/tag/pygame-tutorial
 
 ## TODO BY TUESDAY
 - [x] got stuff started

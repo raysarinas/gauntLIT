@@ -1,4 +1,5 @@
-import pygame, sys, time, board
+import pygame, sys, time,
+from board import *
 from characters import *
 from pygame.locals import *
 
@@ -15,6 +16,9 @@ class Game:
         self.peach = Peach(self.surface)
         self.kong = DonkeyKong(self.surface)
         self.fireball = Fireball(self.surface)
+        self.counter = time.time()
+        #self.fireballs = [Fireball(self.surface)] # maybe use an array to store fireballs and then
+        # when updating just for-loop and draw all of them? idk
         pygame.key.set_repeat(20, 20)
 
     def play(self):
@@ -57,6 +61,9 @@ class Game:
     def update(self):
         # update game objects
         self.fireball.move()
+        # if (self.counter - time.time()) // 5 == 0:
+        #     self.fireball.draw()
+
 
     def should_continue(self):
         # check and remember if game should continue
@@ -65,7 +72,6 @@ class Game:
     def check(self):
         # self.iswin() # win game condition
         # self.islose() # DIE condition
-
         pass
 
 def main():
@@ -73,7 +79,7 @@ def main():
     # set window size, title, frame delay and create pygame window
     surface = pygame.display.set_mode([500, 400], 0, 0)
     pygame.display.set_caption('275 Project')
-
+    #count = time.time()
     # create and initialize objects
     gameOver = False
     game = Game(surface)
