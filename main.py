@@ -5,6 +5,7 @@ from pygame.locals import *
 
 class Game:
     # class attributes
+    #background colur
     bgColor = pygame.Color('blue')
 
     def __init__(self, surface):
@@ -78,7 +79,9 @@ def main():
     pygame.init() # initialize pygame
     # set window size, title, frame delay and create pygame window
     surface = pygame.display.set_mode([500, 400], 0, 0)
-    pygame.display.set_caption('275 Project')
+    # sets the title of the window
+    # please change the title
+    pygame.display.set_caption('275 Final Project - DonPy thong')
     #count = time.time()
     # create and initialize objects
     gameOver = False
