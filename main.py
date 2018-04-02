@@ -18,6 +18,7 @@ class Game:
         self.kong = DonkeyKong(self.surface)
         self.fireball = Fireball(self.surface)
         self.counter = time.time()
+        #self.board = Board(self.surface)
         #self.fireballs = [Fireball(self.surface)] # maybe use an array to store fireballs and then
         # when updating just for-loop and draw all of them? idk
         pygame.key.set_repeat(20, 20)
@@ -47,6 +48,9 @@ class Game:
                 self.player.move_horiz(self.player.rect, -1) # move left
             if event.key == K_RIGHT:
                 self.player.move_horiz(self.player.rect, 1) # move right
+            elif event.key == K_SPACE:
+                self.player.jump(self.player.rect)
+
 
     def draw(self):
         # THIS SEEMS LIKE IT WILL GET TO BE TOO LONG IF WE NEED TO DRAW
@@ -57,6 +61,15 @@ class Game:
         self.peach.draw()
         self.fireball.draw()
         self.player.draw()
+        # #self.board.initialize()
+        # wallColor = pygame.Color('black')
+        # pygame.draw.rect(self.surface, wallColor, [100, 100, 400, 10])
+        # pygame.draw.rect(self.surface, wallColor, [0, 200, 400, 10])
+        # pygame.draw.rect(self.surface, wallColor, [100, 300, 400, 10])
+        # pygame.draw.rect(self.surface, wallColor, [0, 400, 400, 10])
+        # pygame.draw.rect(self.surface, wallColor, [100, 500, 400, 10])
+        #
+
         pygame.display.update()
 
     def update(self):
@@ -78,7 +91,7 @@ class Game:
 def main():
     pygame.init() # initialize pygame
     # set window size, title, frame delay and create pygame window
-    surface = pygame.display.set_mode([500, 400], 0, 0)
+    surface = pygame.display.set_mode([500, 600], 0, 0)
     # sets the title of the window
     # please change the title
     pygame.display.set_caption('275 Final Project - DonPy thong')
