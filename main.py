@@ -56,7 +56,7 @@ class Game:
             if event.key == K_RIGHT:
                 self.player.move_horiz(self.player.rect, 1) # move right
             elif event.key == K_SPACE:
-                self.player.jump(self.player.rect)
+                self.player.jump()
 
 
     def draw(self):

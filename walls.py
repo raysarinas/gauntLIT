@@ -43,73 +43,41 @@ def makeWalls(all_sprite_list): # (x, y, width, height)
     all_sprite_list.add(wall)
 
     #upper left corner area
-    wall = Wall(350, 0, 10, 130)
+    wall = Wall(250, 0, 10, 80)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(70, 120, 290, 10)
+    wall = Wall(90, 80, 170, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    #two top middle area
-    wall = Wall(500, 0, 10, 70)
+    #top right corner
+    wall = Wall(450, 50, 170, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(580, 0, 10, 70)
+    #bottom middle
+    wall = Wall(80, 330, 200, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    #bottom left corner area
-    wall = Wall(70, 500, 250, 10)
+    wall = Wall(300, 280, 130, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(320, 500, 10, 100)
+    wall = Wall(50, 230, 100, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    #middle area
-    wall = Wall(150, 280, 10, 100)
+    wall = Wall(250, 200, 200, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(250, 280, 10, 100)
+    wall = Wall(330, 130, 400, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(150, 380, 110, 10)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    #right bottom area
-    wall = Wall(700, 300, 10, 400)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    #top right area
-    wall = Wall(600, 200, 300, 10)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    #right in the middle(sprial)
-    wall = Wall(600, 200, 10, 300)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    wall = Wall(410, 500, 200, 10)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    wall = Wall(410, 300, 10, 200)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    wall = Wall(410, 300, 100, 10)
-    wall_list.add(wall)
-    all_sprite_list.add(wall)
-
-    wall = Wall(510, 400, 100, 10)
+    wall = Wall(70, 150, 130, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
