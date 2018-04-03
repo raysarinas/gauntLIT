@@ -8,18 +8,15 @@ vec = pygame.math.Vector2
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
         pg.sprite.Sprite.__init__(self)
-        self.image = pygameg.Surface((w, h))
+        self.image = pygame.Surface((w, h))
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 
-class Player: # player class. could possible change this to have options to have different players/colors
-    # need to add conditions so doesnt go through structures/walls/platforms
-    # CONDITIONS SHOULD USE collidepoint function call with rectangles and stuff i think
-
-    def __init__(self, surface):
-        self.surface = surface
+class Player(pygame.sprite.Sprite):
+    def __init__(self, game):
+        self.surface = game
         self.surface_size = self.surface.get_size()
         self.color = pygame.Color('red')
         self.rect = Rect(10, self.surface_size[1] - 40, 20, 20)
@@ -28,6 +25,21 @@ class Player: # player class. could possible change this to have options to have
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
+    def jump(self):
+        # jump only if standing on a platform
+        self.rect.x += 1
+        hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        self.rect.x -= 1
+        if hits:
+            self.vel.y = -20
+
+    def update(self):
+        self.acc = vec(0, PLAYER_GRAV)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.acc.x = -PLAYER_ACC
+        if keys[pygame.K_RIGHT]:
+            self.acc.x = PLAYER_ACC
 
     def draw(self):
         #pygame.draw.rect(self.surface, self.color, self.rect)
@@ -52,13 +64,48 @@ class Player: # player class. could possible change this to have options to have
             rect.x = rect.x + direction * 10
             #self.vx = 5
 
-    def jump(self):
-        # # jump only if standing on a platform
-        # self.rect.x += 1
-        # hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
-        # self.rect.x -= 1
-        # if hits:
-        self.vel.y = -10
+
+# class Player: # player class. could possible change this to have options to have different players/colors
+#     # need to add conditions so doesnt go through structures/walls/platforms
+#     # CONDITIONS SHOULD USE collidepoint function call with rectangles and stuff i think
+#
+#     def __init__(self, surface):
+#         self.surface = surface
+#         self.surface_size = self.surface.get_size()
+#         self.color = pygame.Color('red')
+#         self.rect = Rect(10, self.surface_size[1] - 30, 20, 20)
+#
+#
+#         self.vel = vec(0, 0)
+#         self.acc = vec(0, 0)
+#
+#
+#     def draw(self):
+#         pygame.draw.rect(self.surface, self.color, self.rect)
+#
+#     def move_vert(self, rect, direction):
+#         size = self.surface.get_size()
+#         if direction < 0 and rect.top > 10:
+#                 rect.y = rect.y + direction * 10
+#         if direction > 0 and rect.bottom < size[1] - 10:
+#                 rect.y = rect.y + direction * 10
+#
+#     def move_horiz(self, rect, direction):
+#         size = self.surface.get_size()
+#         if direction < 0 and rect.left > 10:
+#             rect.x = rect.x + direction * 10
+#             #self.vx = -5
+#         if direction > 0 and rect.right < size[0] - 10:
+#             rect.x = rect.x + direction * 10
+#             #self.vx = 5
+#
+#     def jump(self):
+#         # # jump only if standing on a platform
+#         # self.rect.x += 1
+#         # hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+#         # self.rect.x -= 1
+#         # if hits:
+#         self.vel.y = -10
 
 class Fireball:
 

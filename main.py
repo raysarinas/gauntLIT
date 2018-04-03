@@ -23,6 +23,7 @@ class Game:
         self.princess = PrincessPeach(self.surface)
         self.all_sprite_list = pygame.sprite.Group()
         self.walllist, self.all_sprite_list = makeWalls(self.all_sprite_list)
+        self.platforms = pygame.sprite.Group()
         #self.board = Board(self.surface)
         #self.fireballs = [Fireball(self.surface)] # maybe use an array to store fireballs and then
         # when updating just for-loop and draw all of them? idk
@@ -56,7 +57,7 @@ class Game:
                 self.player.move_horiz(self.player.rect, -1) # move left
             if event.key == K_RIGHT:
                 self.player.move_horiz(self.player.rect, 1) # move right
-            elif event.key == K_SPACE:
+            elif event.key == pygame.K_SPACE:
                 self.player.jump()
 
 
@@ -72,12 +73,6 @@ class Game:
         self.player.draw()
         # #self.board.initialize()
         # wallColor = pygame.Color('black')
-        # pygame.draw.rect(self.surface, wallColor, [100, 100, 400, 10])
-        # pygame.draw.rect(self.surface, wallColor, [0, 200, 400, 10])
-        # pygame.draw.rect(self.surface, wallColor, [100, 300, 400, 10])
-        # pygame.draw.rect(self.surface, wallColor, [0, 400, 400, 10])
-        # pygame.draw.rect(self.surface, wallColor, [100, 500, 400, 10])
-        #
 
         pygame.display.update()
 
