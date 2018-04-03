@@ -65,7 +65,7 @@ class Fireball:
     def __init__(self, surface):
         self.surface = surface
         self.radius = 5
-        self.center = [20, 20]
+        self.center = [55, 40]
         self.color = pygame.Color('yellow')
         self.randomspeed = random.randint(1, 5)
         self.speed = [6, 7]
