@@ -8,13 +8,13 @@ https://www.pygame.org/docs/index.html
 
 - maybe this will help with drawing walls: https://stackoverflow.com/questions/24301702/walls-in-pygame
 
-- THIS LOOKS REALLY GOOD BUT I HAVENT READ IT YET. IT INCLUDES STUFF ON PATH FINDING AND HONESTLY WE COULD PROBABLY JUST MAKE A DUPLICATE OF THIS GAME BUT LIKE MAKE IT ALL MARIO AND WHATEVER ELSE 
+- THIS LOOKS REALLY GOOD BUT I HAVENT READ IT YET. IT INCLUDES STUFF ON PATH FINDING AND HONESTLY WE COULD PROBABLY JUST MAKE A DUPLICATE OF THIS GAME BUT LIKE MAKE IT ALL MARIO AND WHATEVER ELSE
 - https://eli.thegreenplace.net/tag/pygame-tutorial
 
 ## TODO BY TUESDAY
 - [x] got stuff started
 - [x] drew temp ~~circles~~ rectangles? for characters???
-- [ ] platforms drawn (randomly generated or no? we could just have one level) [use tic tac toe for reference. could use/generate a board with a 2D array? only issue would be super slow running time O(n^2) or something like that i think]
+- [x] platforms drawn (randomly generated or no? we could just have one level) [use tic tac toe for reference. could use/generate a board with a 2D array? only issue would be super slow running time O(n^2) or something like that i think]
 - [ ] txt file with screen coordinates that will act as vertices and edges
 - [x] have player/keyboard movement working properly
 - [ ] make sure player cant go through walls/platforms [pong for reference]

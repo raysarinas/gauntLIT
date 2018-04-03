@@ -1,4 +1,5 @@
 import pygame
+from walls import *
 
 # Colors
 BLACK = (0, 0, 0)
@@ -8,7 +9,6 @@ BLUE = (50, 50, 255)
 # Screen dimensions
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-
 
 class Player(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
@@ -68,169 +68,50 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
 
 
-class Wall(pygame.sprite.Sprite):
-    """ Wall the player can run into. """
-    def __init__(self, x, y, width, height):
-        """ Constructor for the wall that the player can run into. """
-        # Call the parent's constructor
-        super().__init__()
+def main():
+    pygame.init() # initialize pygame
+    surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
+    pygame.display.set_caption('275')
+    all_sprite_list = pygame.sprite.Group() # list of all sprites to hold
+    wall_list, all_sprite_list = makeWalls(all_sprite_list) # make walls
+    player = Player(50, 50) # player paddle object what
+    player.walls = wall_list
+    all_sprite_list.add(player)
 
-        # Make a blue wall, of the size specified in the parameters
-        self.image = pygame.Surface([width, height])
-        self.image.fill(BLUE)
+    done = False
+    while not done:
 
-        # Make our top-left corner the passed-in location.
-        self.rect = self.image.get_rect()
-        self.rect.y = y
-        self.rect.x = x
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
 
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.changespeed(-5, 0)
+                elif event.key == pygame.K_RIGHT:
+                    player.changespeed(5, 0)
+                elif event.key == pygame.K_UP:
+                    player.changespeed(0, -5)
+                elif event.key == pygame.K_DOWN:
+                    player.changespeed(0, 5)
 
-# Call this function so the Pygame library can initialize itself
-pygame.init()
-# Create an 800x600 sized screen
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-# Set the title of the window
-pygame.display.set_caption('275')
-# List to hold all the sprites
-all_sprite_list = pygame.sprite.Group()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    player.changespeed(5, 0)
+                elif event.key == pygame.K_RIGHT:
+                    player.changespeed(-5, 0)
+                elif event.key == pygame.K_UP:
+                    player.changespeed(0, 5)
+                elif event.key == pygame.K_DOWN:
+                    player.changespeed(0, -5)
 
-# Make the walls. (x_pos, y_pos, width, height)
-wall_list = pygame.sprite.Group()
+        all_sprite_list.update()
 
-#borders
-wall = Wall(0, 0, 10, 600)
-wall_list.add(wall)
-all_sprite_list.add(wall)
+        surface.fill(BLACK)
 
-wall = Wall(10, 0, 800, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
+        all_sprite_list.draw(surface)
 
-wall = Wall(0, 590, 800, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
+        pygame.display.flip()
 
-wall = Wall(790, 0, 10, 600)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#upper left corner area
-wall = Wall(350, 0, 10, 130)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(70, 120, 290, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#two top middle area
-wall = Wall(500, 0, 10, 70)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(580, 0, 10, 70)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#bottom left corner area
-wall = Wall(70, 500, 250, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(320, 500, 10, 100)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#middle area
-wall = Wall(150, 280, 10, 100)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(250, 280, 10, 100)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(150, 380, 110, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#right bottom area
-wall = Wall(700, 300, 10, 400)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#top right area
-wall = Wall(600, 200, 300, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-#right in the middle(sprial)
-wall = Wall(600, 200, 10, 300)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(410, 500, 200, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(410, 300, 10, 200)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(410, 300, 100, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-wall = Wall(510, 400, 100, 10)
-wall_list.add(wall)
-all_sprite_list.add(wall)
-
-
-
-
-
-
-
-# Create the player paddle object
-player = Player(50, 50)
-player.walls = wall_list
-
-all_sprite_list.add(player)
-
-done = False
-
-while not done:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
-
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                player.changespeed(-5, 0)
-            elif event.key == pygame.K_RIGHT:
-                player.changespeed(5, 0)
-            elif event.key == pygame.K_UP:
-                player.changespeed(0, -5)
-            elif event.key == pygame.K_DOWN:
-                player.changespeed(0, 5)
-
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                player.changespeed(5, 0)
-            elif event.key == pygame.K_RIGHT:
-                player.changespeed(-5, 0)
-            elif event.key == pygame.K_UP:
-                player.changespeed(0, 5)
-            elif event.key == pygame.K_DOWN:
-                player.changespeed(0, -5)
-
-    all_sprite_list.update()
-
-    screen.fill(BLACK)
-
-    all_sprite_list.draw(screen)
-
-    pygame.display.flip()
-
+main()
 pygame.quit()
