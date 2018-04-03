@@ -16,10 +16,11 @@ class Game:
         self.cont = True
         self.radius = 10
         self.player = Player(self.surface)
-        self.peach = Peach(self.surface)
+        #self.peach = Peach(self.surface)
         self.kong = DonkeyKong(self.surface)
         self.fireball = Fireball(self.surface)
         self.counter = time.time()
+        self.princess = PrincessPeach(self.surface)
         self.all_sprite_list = pygame.sprite.Group()
         self.walllist, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.platforms = pygame.sprite.Group()
@@ -66,8 +67,9 @@ class Game:
         # OR HAVE DRAW FUNCTION BE A SUBCLASS OR WHATEVER OR SOMETHING
         self.surface.fill(BLACK)
         self.kong.draw()
-        self.peach.draw()
+        #self.peach.draw()
         self.fireball.draw()
+        self.princess.draw()
         self.player.draw()
         # #self.board.initialize()
         # wallColor = pygame.Color('black')

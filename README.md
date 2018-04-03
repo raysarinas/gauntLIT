@@ -11,10 +11,14 @@ https://www.pygame.org/docs/index.html
 - THIS LOOKS REALLY GOOD BUT I HAVENT READ IT YET. IT INCLUDES STUFF ON PATH FINDING AND HONESTLY WE COULD PROBABLY JUST MAKE A DUPLICATE OF THIS GAME BUT LIKE MAKE IT ALL MARIO AND WHATEVER ELSE
 - https://eli.thegreenplace.net/tag/pygame-tutorial
 
+- SPRITES: https://piq.codeus.net/u/Revawolf
+
+- http://www.mariouniverse.com/sprites/gba/smb3
+
 ## TODO BY TUESDAY
 - [x] got stuff started
 - [x] drew temp ~~circles~~ rectangles? for characters???
-- [x] platforms drawn (randomly generated or no? we could just have one level) [use tic tac toe for reference. could use/generate a board with a 2D array? only issue would be super slow running time O(n^2) or something like that i think]
+- [x] platforms drawn (randomly generated or no? we could just have one level) ~~[use tic tac toe for reference. could use/generate a board with a 2D array? only issue would be super slow running time O(n^2) or something like that i think]~~
 - [ ] txt file with screen coordinates that will act as vertices and edges
 - [x] have player/keyboard movement working properly
 - [ ] make sure player cant go through walls/platforms [pong for reference]
@@ -30,3 +34,9 @@ https://www.pygame.org/docs/index.html
 ## TODO BY TUESDAY OR DEMO DAY
 - [ ] sprite importing and making sure they move properly
 - [ ] readme? idk
+
+
+
+
+REFERENCES:
+- https://stackoverflow.com/questions/18826788/converting-an-image-to-a-rect

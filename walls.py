@@ -1,6 +1,7 @@
 # im confused about whats happening im just going to move
 # things so everything is cleaner.
 import pygame
+
 BLUE = (128, 0, 128)#(50, 50, 255)
 
 class Wall(pygame.sprite.Sprite):
