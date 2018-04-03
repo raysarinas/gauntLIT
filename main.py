@@ -98,7 +98,7 @@ class Game:
 def main():
     pygame.init() # initialize pygame
     # set window size, title, frame delay and create pygame window
-    surface = pygame.display.set_mode([800, 600], 0, 0)
+    surface = pygame.display.set_mode([600,400], 0, 0)
     # sets the title of the window
     pygame.display.set_caption('275 Final Project - DonPy thong')
     # create and initialize objects

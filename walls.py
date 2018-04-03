@@ -1,7 +1,7 @@
 # im confused about whats happening im just going to move
 # things so everything is cleaner.
 import pygame
-BLUE = (50, 50, 255)
+BLUE = (128, 0, 128)#(50, 50, 255)
 
 class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
@@ -24,19 +24,21 @@ class Wall(pygame.sprite.Sprite):
 def makeWalls(all_sprite_list): # (x, y, width, height)
     wall_list = pygame.sprite.Group()
     #borders
-    wall = Wall(0, 0, 10, 600)
+    wall = Wall(0,0, 10, 400)#Wall(0, 0, 10, 600) LEFT BORDER
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(10, 0, 800, 10)
+    wall = Wall(10,0, 600, 10)#Wall(10, 0, 800, 10) TOP BORDER
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(0, 590, 800, 10)
+    wall = Wall(590, 0, 10, 400)
+    #RIGHT MOST WALL #wall = Wall(0, 590, 800, 10)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 
-    wall = Wall(790, 0, 10, 600)
+    wall = Wall(0, 390, 600, 10)
+    #BOTTOM #wall = Wall(790, 0, 10, 600)
     wall_list.add(wall)
     all_sprite_list.add(wall)
 

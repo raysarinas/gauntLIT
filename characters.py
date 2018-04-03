@@ -66,7 +66,7 @@ class Fireball:
         self.center = [20, 20]
         self.color = pygame.Color('yellow')
         self.randomspeed = random.randint(1, 5)
-        self.speed = [3, 4]
+        self.speed = [6, 7]
         self.surface_size = self.surface.get_size()
         self.walls = None
 
@@ -78,11 +78,11 @@ class Fireball:
             self.center[coord] = (self.center[coord] + self.speed[coord])
 
              # change direction if top or left
-            if self.center[coord] < self.radius + 10:
+            if self.center[coord] < self.radius + 15:
                 self.speed[coord] = -self.speed[coord]
 
              # change direction if bottom or right
-            if self.center[coord] + self.radius > self.surface_size[coord] - 10:
+            if self.center[coord] + self.radius > self.surface_size[coord] - 15:
                 self.speed[coord] = -self.speed[coord]
 
             walls = walllist
