@@ -15,6 +15,8 @@ https://www.pygame.org/docs/index.html
 
 - http://www.mariouniverse.com/sprites/gba/smb3
 
+- Collisions: https://www.youtube.com/watch?v=8IRyt7ft7zg&t=388s
+
 ## DONE BY TUESDAY
 - [x] got stuff started
 - [x] ~~drew temp rectangles? for characters???~~
