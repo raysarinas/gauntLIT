@@ -1,4 +1,5 @@
-import pygame
+import pygame, random
+import pygame.gfxdraw
 from walls import *
 from chars import *
 
@@ -17,11 +18,30 @@ class Game:
         self.done = False
         self.cont = True
         self.all_sprite_list = pygame.sprite.Group()
+        self.block_list = pygame.sprite.Group()
+
         self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
+<<<<<<< HEAD
         self.player = Player(200, 50)
+=======
+        self.player = Player(10, SCREEN_HEIGHT - 36)
+>>>>>>> 0924e334cf0d68a61a2665a5b3fb732e4dac6e4e
         self.peach = Peach(590 - 18, 10)
+        self.fireball = Fireball(50, 50)
         self.player.walls = self.wall_list
-        self.all_sprite_list.add(self.player, self.peach)
+        self.all_sprite_list.add(self.player, self.peach, self.fireball)
+
+
+        for i in range(50):
+            self.block = Block(WHITE, 15, 15)
+            self.block.rect.x = 20
+            self.block.rect.y = 20
+            self.block.left_boundary = 10
+            self.block.top_boundary = 10
+            self.block.right_boundary = 550
+            self.block.bottom_boundary = 350
+            self.all_sprite_list.add(self.block)
+            self.block_list.add(self.block)
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -64,6 +84,10 @@ class Game:
             self.handle_event()
             self.all_sprite_list.update()
             self.surface.fill(BLACK)
+            blocks_hit_list = pygame.sprite.spritecollide(self.player, self.block_list, True)
+
+            for block in blocks_hit_list:
+                print('hit!')
             self.all_sprite_list.draw(self.surface)
             pygame.display.flip()
             self.collision()

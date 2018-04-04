@@ -1,4 +1,5 @@
-import pygame
+import pygame, random
+import pygame.gfxdraw
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -124,3 +125,81 @@ class Peach(pygame.sprite.Sprite):
         #         myfont = pygame.font.SysFont('Comic Sans MS', 30)
         #         textsurface = myfont.render('<3', False, (0, 0, 0))
         #         self.image.blit(textsurface,(0,0))
+
+class Fireball(pygame.sprite.Sprite):
+    """ BALL """
+
+    # Constructor function
+    def __init__(self, x, y):
+        # Call the parent's constructor
+        super().__init__()
+
+        # Set height, width
+        self.image = pygame.Surface([16, 16])
+        self.image.fill(BLACK)
+
+        # Make our top-left corner the passed-in location.
+        self.rect = self.image.get_rect()
+        self.sprite = pygame.image.load('fireball.png')
+        self.image.blit(self.sprite, self.rect)
+        self.rect.y = y
+        self.rect.x = x
+
+        # Set speed vector
+        self.change_x = 0
+        self.change_y = 0
+        self.walls = None
+
+    def changespeed(self, x, y):
+        """ Change the speed of the player. """
+        self.change_x += x
+        self.change_y += y
+
+
+class Block(pygame.sprite.Sprite):
+    """
+    This class represents the ball
+    It derives from the "Sprite" class in Pygame
+    """
+
+    def __init__(self, color, width, height):
+        """ Constructor. Pass in the color of the block,
+        and its x and y position. """
+        # Call the parent class (Sprite) constructor
+        super().__init__()
+
+        # Create an image of the block, and fill it with a color.
+        # This could also be an image loaded from the disk.
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+
+        # Fetch the rectangle object that has the dimensions of the image
+        # image.
+        # Update the position of this object by setting the values
+        # of rect.x and rect.y
+        self.rect = self.image.get_rect()
+        self.sprite = pygame.image.load('fireball.png')
+        self.image.blit(self.sprite, self.rect)
+
+        # Instance variables that control the edges of where we bounce
+        self.left_boundary = 0
+        self.right_boundary = 0
+        self.top_boundary = 0
+        self.bottom_boundary = 0
+
+        # Instance variables for our current speed and direction
+        self.change_x = 0
+        self.change_y = 0
+
+
+
+    def update(self):
+        """ Called each frame. """
+        self.rect.x += self.change_x
+        self.rect.y += self.change_y
+
+        if self.rect.right >= self.right_boundary or self.rect.left <= self.left_boundary:
+            self.change_x *= -1
+
+        if self.rect.bottom >= self.bottom_boundary or self.rect.top <= self.top_boundary:
+            self.change_y *= -1
