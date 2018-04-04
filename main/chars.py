@@ -5,10 +5,11 @@ WHITE = (255, 255, 255)
 BLUE = (50, 50, 255)
 
 class Player(pygame.sprite.Sprite):
-    """ This class represents the bar at the bottom that the player
+    """ This class the character Mario that that player controls
     controls. """
 
     # Constructor function
+    # gets the starting position of mario
     def __init__(self, x, y):
         # Call the parent's constructor
         super().__init__()
@@ -20,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         #self.image = pygame.image.load('mario.png').convert_alpha
         self.image.fill(BLACK)
 
-        # Make our top-left corner the passed-in location.
+        # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
         self.sprite = pygame.image.load('mario.png')
         self.image.blit(self.sprite, self.rect)
@@ -65,6 +66,14 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom = block.rect.top
             else:
                 self.rect.top = block.rect.bottom
+
+            # Reset our position based on the top/bottom of the object.
+            if self.change_y > 0:
+                self.rect.bottom = block.rect.top
+            else:
+                self.rect.top = block.rect.bottom
+
+
 
 class Peach(pygame.sprite.Sprite):
     """ This class represents Princess Peach that must be saved I guess? """

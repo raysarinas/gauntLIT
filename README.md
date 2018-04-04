@@ -15,7 +15,9 @@ https://www.pygame.org/docs/index.html
 
 - http://www.mariouniverse.com/sprites/gba/smb3
 
-- Collisions: https://www.youtube.com/watch?v=8IRyt7ft7zg&t=388s
+- Collisions with the walls: https://www.youtube.com/watch?v=8IRyt7ft7zg&t=388s
+
+-Peach and Mario collision: https://stackoverflow.com/questions/42081204/pygame-collision-not-working-pygame-sprite-collide-rect
 
 ## DONE BY TUESDAY
 - [x] got stuff started

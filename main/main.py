@@ -18,7 +18,7 @@ class Game:
         self.cont = True
         self.all_sprite_list = pygame.sprite.Group()
         self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
-        self.player = Player(50, 50)
+        self.player = Player(200, 50)
         self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player, self.peach)
@@ -47,13 +47,26 @@ class Game:
                 elif event.key == pygame.K_DOWN:
                     self.player.changespeed(0, -5)
 
+
+    # DETECT COLLISION
+    def collision(self):
+        # player collition with alien
+        hits = pygame.sprite.collide_rect(self.player, self.peach)
+        if hits:
+            self.done = True
+            screen.fill(BLUE)
+
+            #self.running = False
+
     def play(self):
+        self.done = False
         while not self.done:
             self.handle_event()
             self.all_sprite_list.update()
             self.surface.fill(BLACK)
             self.all_sprite_list.draw(self.surface)
             pygame.display.flip()
+            self.collision()
 
 
 def main():
