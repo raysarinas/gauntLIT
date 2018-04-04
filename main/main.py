@@ -67,12 +67,11 @@ class Game:
 
     # DETECT COLLISION
     def collision(self):
-        # player collition with alien
+        # player collision with peach
         hits = pygame.sprite.collide_rect(self.player, self.peach)
         if hits:
             self.done = True
             screen.fill(BLUE)
-
             #self.running = False
 
     def play(self):
