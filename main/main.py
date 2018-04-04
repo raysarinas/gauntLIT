@@ -71,7 +71,7 @@ class Game:
         hits = pygame.sprite.collide_rect(self.player, self.peach)
         if hits:
             self.done = True
-            screen.fill(BLUE)
+            self.surface.fill(BLUE)
             #self.running = False
 
     def play(self):
