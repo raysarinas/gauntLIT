@@ -8,8 +8,8 @@ WHITE = (255, 255, 255)
 BLUE = (50, 50, 255)
 
 # Screen dimensions
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 400
 
 class Game:
     def __init__(self, surface):
