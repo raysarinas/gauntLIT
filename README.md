@@ -30,7 +30,7 @@ https://www.pygame.org/docs/index.html
 - [ ] txt file with screen coordinates that will act as vertices and edges [DONE BY FRIDAY]
 - [ ] **ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)** [DONE BY FRIDAY]
 - [ ] randomly moving fireball [FRIDAY/WEEKEND]
-- [ ] endgame conditions (i.e. getting to peach or dying?) [FRIDAY/WEEKEND]
+- [x] endgame conditions (i.e. getting to peach or dying?) (SORT OF DONE? but game just ends... should fix that probably maybe)[FRIDAY/WEEKEND]
 
 ## TODO BY THURSDAY
 - [x] sprite importing and making sure they move properly
