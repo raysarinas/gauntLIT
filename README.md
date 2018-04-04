@@ -12,7 +12,7 @@ https://www.pygame.org/docs/index.html
 - https://eli.thegreenplace.net/tag/pygame-tutorial
 
 - SPRITES: https://piq.codeus.net/u/Revawolf
-
+- https://stackoverflow.com/questions/27867073/how-to-put-an-image-onto-a-sprite-pygame
 - http://www.mariouniverse.com/sprites/gba/smb3
 
 - Collisions: https://www.youtube.com/watch?v=8IRyt7ft7zg&t=388s
@@ -24,13 +24,13 @@ https://www.pygame.org/docs/index.html
 - [x] have player/keyboard movement working properly
 - [x] make sure player cant go through walls/platforms ~~[pong for reference]~~
 
-## TODO BY THE END OF THE WEEK/WEEKEND
-- [ ] txt file with screen coordinates that will act as vertices and edges
-- [ ] **ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)**
-- [ ] randomly moving fireball
-- [ ] endgame conditions (i.e. getting to peach or dying?)
+## TODO BY THE END OF THE WEEK/WEEKEND/TUESDAY
+- [ ] txt file with screen coordinates that will act as vertices and edges [DONE BY FRIDAY]
+- [ ] **ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)** [DONE BY FRIDAY]
+- [ ] randomly moving fireball [FRIDAY/WEEKEND]
+- [ ] endgame conditions (i.e. getting to peach or dying?) [FRIDAY/WEEKEND]
 
-## TODO BY TUESDAY OR THURSDAY?
+## TODO BY THURSDAY
 - [x] sprite importing and making sure they move properly
 - [ ] multiple fireballs every x amount of seconds that will breadth-first search player
 - [ ] coins / points system
