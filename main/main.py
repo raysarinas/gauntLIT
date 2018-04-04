@@ -19,8 +19,9 @@ class Game:
         self.all_sprite_list = pygame.sprite.Group()
         self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.player = Player(50, 50)
+        self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list
-        self.all_sprite_list.add(self.player)
+        self.all_sprite_list.add(self.player, self.peach)
 
     def handle_event(self):
         for event in pygame.event.get():

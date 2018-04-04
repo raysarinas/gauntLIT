@@ -1,5 +1,5 @@
 # gauntLIT
-the last time zac tries it with bonus pain from mid
+CMPUT 275 FINAL PROJECT (the last time zac tries it with bonus pain from omid)
 
 - **READ THIS FOR ALGORITHM IMPLEMENTATION** - https://www.redblobgames.com/pathfinding/tower-defense/implementation.html
 
@@ -15,24 +15,23 @@ https://www.pygame.org/docs/index.html
 
 - http://www.mariouniverse.com/sprites/gba/smb3
 
-## TODO BY TUESDAY
+## DONE BY TUESDAY
 - [x] got stuff started
-- [x] drew temp ~~circles~~ rectangles? for characters???
+- [x] ~~drew temp rectangles? for characters???~~
 - [x] platforms drawn (randomly generated or no? we could just have one level) ~~[use tic tac toe for reference. could use/generate a board with a 2D array? only issue would be super slow running time O(n^2) or something like that i think]~~
-- [ ] txt file with screen coordinates that will act as vertices and edges
 - [x] have player/keyboard movement working properly
-- [ ] make sure player cant go through walls/platforms [pong for reference]
-- [ ] randomly generate moving fireballs/barrels at varying speed(s) [see pong/alien invasion file for reference]
-- [ ] ***generate graph - use least cost path / dijkstra mayhaps for fireballs/barrels [use assign 1 as reference i guess]***
+- [x] make sure player cant go through walls/platforms ~~[pong for reference]~~
 
 ## TODO BY THE END OF THE WEEK/WEEKEND
-- [ ] player jumping stuff if we arent doing something like a maze?
-- [ ] endgame conditions (i.e. getting to peach)
-- [ ] how are we killing donkey kong???????? or are we just tryna get to peach
-- [ ] **implementing graph algorithm if cant get it by tuesday?**
+- [ ] txt file with screen coordinates that will act as vertices and edges
+- [ ] **ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)**
+- [ ] randomly moving fireball
+- [ ] endgame conditions (i.e. getting to peach or dying?)
 
-## TODO BY TUESDAY OR DEMO DAY
-- [ ] sprite importing and making sure they move properly
+## TODO BY TUESDAY OR THURSDAY?
+- [x] sprite importing and making sure they move properly
+- [ ] multiple fireballs every x amount of seconds that will breadth-first search player
+- [ ] coins / points system
 - [ ] readme? idk
 
 
