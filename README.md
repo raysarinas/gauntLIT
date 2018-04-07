@@ -28,9 +28,15 @@ https://www.pygame.org/docs/index.html
 
 ## TODO BY THE END OF THE WEEK/WEEKEND/TUESDAY
 - [ ] txt file with screen coordinates that will act as vertices and edges [DONE BY FRIDAY]
-- [ ] **ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)** [DONE BY FRIDAY]
-- [ ] randomly moving fireball [FRIDAY/WEEKEND]
+- [ ] ~~**ALGORITHM IMPLEMENTATION (Breadth First Search / Dijkstra?)** [DONE BY FRIDAY]~~
 - [x] endgame conditions (i.e. getting to peach or dying?) (SORT OF DONE? but game just ends... should fix that probably maybe)[FRIDAY/WEEKEND]
+
+## TODO BY MONDAY !!!!!!!!!!!!!!
+- [ ] make textfile graph
+- [ ] fix maze/graph/screen and character sizes/peach
+- [ ] generate graph with algorithm thing to check if valid edge and stuff to add to graph **ALGORITHM IMPLEMENTATION KIND OF SORT OF?**
+- [ ] ghost moving thru BFS stuff
+- [ ] endgame conditions
 
 ## TODO BY THURSDAY
 - [x] sprite importing and making sure they move properly

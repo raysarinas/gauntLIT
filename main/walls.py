@@ -4,6 +4,10 @@ import pygame
 
 BLUE = (50, 50, 255)
 
+def makeGraph():
+    pass
+    for i in range()
+
 class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
     def __init__(self, x, y, width, height):
@@ -19,6 +23,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x
+
 
 # generate borders
 
