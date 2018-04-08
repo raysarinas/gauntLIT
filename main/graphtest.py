@@ -17,9 +17,8 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     print(len(vertices))
 
     # THIS MIGHT BE THE BETTER WAY TO GETTING THE VALID VERTICES? IDK
-    validverts = {}
     rects = []
-
+    '''
     for wall in wall_list:
         for i in range(len(vertices)):
             if wall.rect.collidepoint(vertices[i]):
@@ -28,9 +27,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                 validverts[i] = vertices[i]
                 rects.append(pygame.Rect(vertices[i][0], vertices[i][1], 1, 1))
                 # pygame.draw.rect(surface, pygame.Color('red'), rect)
-
-    print(validverts)
-    return validverts, rects
+    '''
 
 
     vertdict = {}
@@ -58,17 +55,51 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 # something along these lines should implement algorithm that
 # only adds valid vertices
 
+    invalidverts = {}
+    invalid = []
+
 # NEED TO FIX THIS???
     for v in vertices:
         for i in range(len(walls)):
             if v[0] in range(topleft_bounds[i][0], bottomright_bounds[i][0]):
                 if v[1] in range(topleft_bounds[i][1], bottomright_bounds[i][1]):
-                    pass
-            else:
-                pass #print(v)
+                    invalidverts[i] = v # SOMETHING WRONG WITH IDENTIFIERS HERE
+                    # YEAH INDEXING IS JUST WRONG HERE
+                    invalid.append(v)
+                    rects.append(pygame.Rect(v[0], v[1], 1, 1))
+
+    print(invalid)
+    print(len(invalid))
+    print(invalidverts)
+    print(len(invalidverts))
 
 
-        '''#if vertices[v][0] in range(topleft_bounds[0][0], bottomright_bounds[0][0]):
+    for key in vertdict.keys():
+        if key in invalidverts.keys():
+            print(invalidverts[key])
+
+    '''
+    for i in range(len(vertdict.values())):
+        if i in invalid:
+            # somehow delete the item with the value but like delete key?
+    print(len(vertdict))
+    '''
+
+    for i in range(len(vertdict.keys())):
+        if i in invalidverts.keys():
+            print(i, vertdict[i])
+            del vertdict[i]
+    print(len(vertdict))
+
+    # OK SO DELETING THE RIGHT VERTICES BUT STILL NOT DRAWING PROPERLY??
+
+    for v in vertdict.values():
+        pass #rects.append(pygame.Rect(v[0], v[1], 2, 2))
+
+    return vertdict, rects #invalidverts, rects
+
+
+    '''#if vertices[v][0] in range(topleft_bounds[0][0], bottomright_bounds[0][0]):
         if not True:    # ^^^^ THIS ISNT RIGHT I THINK
             pass
         else:
