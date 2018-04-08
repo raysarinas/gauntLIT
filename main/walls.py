@@ -4,9 +4,52 @@ import pygame
 
 BLUE = (50, 50, 255)
 
-def makeGraph():
-    pass
-    for i in range()
+class Wall1(pygame.sprite.Sprite):
+    """ Wall the player can run into. """
+    def __init__(self, wallrect):
+        """ Constructor for the wall that the player can run into. """
+        # Call the parent's constructor
+        super().__init__()
+
+        # Make a blue wall, of the size specified in the parameters
+        self.width = wallrect[2]
+        self.height = wallrect[3]
+        self.image = pygame.Surface([self.width, self.height])
+        self.image.fill(BLUE)
+
+        # Make our top-left corner the passed-in location.
+        self.rect = self.image.get_rect()
+        self.rect.y = wallrect[1]
+        self.rect.x = wallrect[0]
+
+
+# GENERATE BORDERS MORE EFFICIENTLY:
+def generate_walls(all_sprite_list):
+    walls = []
+
+    with open('../map.txt', 'r') as filename:
+        for line in filename:
+            row = line.strip().split(",")
+
+            topleftx = int(row[0])
+            toplefty = int(row[1])
+            width = int(row[2])
+            height = int(row[3])
+            wallrect = [topleftx, toplefty, width, height]
+            walls.append(wallrect)
+
+    wall_list = pygame.sprite.Group()
+
+    for i in range(len(walls)):
+        wall = Wall1(walls[i])
+        wall_list.add(wall)
+        all_sprite_list.add(wall)
+
+    return wall_list, all_sprite_list, walls
+
+
+
+# OLD WALL GENERATING NOT CALLED BUT STILL HERE
 
 class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
@@ -24,12 +67,11 @@ class Wall(pygame.sprite.Sprite):
         self.rect.y = y
         self.rect.x = x
 
-
 # generate borders
-
 def makeWalls(all_sprite_list): # (x, y, width, height)
     wall_list = pygame.sprite.Group()
     #borders
+
     wall = Wall(0,0, 10, 400)#Wall(0, 0, 10, 600) LEFT BORDER
     wall_list.add(wall)
     all_sprite_list.add(wall)

@@ -56,46 +56,33 @@ def least_cost_path(graph, start, dest, cost):
     return path
 
 
-def load_edmonton_graph(filename):
-    """
-    Loads the graph of Edmonton from the given file.
-    Args:
-      filename: file to be read and used to create an instance of a
-                Graph object.
-    Returns two items:
-      graph: the instance of the class Graph() corresponding to the
-        directed graph from edmonton-roads-2.0.1.txt
-      location: a dictionary mapping the identifier of a vertex to
-        the pair (lat, lon) of geographic coordinates for that vertex.
-        These should be integers measuring the lat/lon in 100000-ths
-        of a degree.
 
-    Note: the vertex identifiers are converted to integers
-      before being added to the graph and the dictionary.
-     """
+def generate_graph(screenwidth, screenheight, filename):
 
-    # get the file and open it
     with open(filename, 'r') as filename:
-        graph = Graph()
+        graph = Graph
         location = {}
+        walls = []
 
-        # split at each comma and store data appropriately
+        # get the wall coordinates/vertices
+
         for line in filename:
             row = line.strip().split(",")
 
-            # if first character is a 'V' store vertex data
-            # elif first character is an 'E' store edge data
             if row[0] == "V":
-                graph.add_vertex(int(row[1]))
-
-                # store coordinates in location dictionary
-                latitude = int(float(row[2]) * 100000)
-                longitude = int(float(row[3]) * 100000)
-                location[int(row[1])] = (latitude, longitude)
-
-            elif row[0] == "E":
-                graph.add_edge((int(row[1]), int(row[2])))
-
+                if int(row[1]) in walls:
+                    pass
+                else:
+                    graph.add_vertex(int(row[1]))
+                    xcoord, ycoord = int(row[2]), int(row[3])
+                    location[int(row[1])] = (xcoord, ycoord)
+            elif row[1] == "E":
+                if int(row[1]) in walls:
+                    # check if vertex in walls, then find whatever edges
+                    # that vertex is connected to and dont add edge
+                    pass
+                else:
+                    graph.add_edge
     return graph, location
 
 

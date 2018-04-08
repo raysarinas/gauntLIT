@@ -20,7 +20,9 @@ class Game:
         self.all_sprite_list = pygame.sprite.Group()
         self.block_list = pygame.sprite.Group()
 
-        self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
+        #self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
+        self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
+        print(self.walls)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
