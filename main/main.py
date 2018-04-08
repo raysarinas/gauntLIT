@@ -2,6 +2,7 @@ import pygame, random
 import pygame.gfxdraw
 from walls import *
 from chars import *
+from graphtest import *
 
 # Colors
 BLACK = (0, 0, 0)
@@ -22,7 +23,8 @@ class Game:
 
         #self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
-        print(self.walls)
+        #print(self.walls)
+        generate_graph(SCREEN_WIDTH, SCREEN_HEIGHT, self.walls)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
