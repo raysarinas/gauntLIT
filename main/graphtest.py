@@ -66,7 +66,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                     invalidverts[i] = v # SOMETHING WRONG WITH IDENTIFIERS HERE
                     # YEAH INDEXING IS JUST WRONG HERE
                     invalid.append(v)
-                    rects.append(pygame.Rect(v[0], v[1], 1, 1))
+                    rects.append(pygame.Rect(v[0], v[1], 4, 4))
 
     print(invalid)
     print('num of invalid: ', len(invalid))
@@ -84,9 +84,17 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 
     good = vertdict.values()
     good = list(good)
+    print(good)
+    print('num of total vertices: ', len(good))
+    print('num of total invalid: ', len(invalid))
+
+    goodrects = []
+    good = [v for v in good if v not in invalid]
     for v in good:
-        if v in invalid:
-            good.remove(v)
+        goodrects.append(pygame.Rect(v[0], v[1], 4, 4))
+    # for v in good[:]:
+    #     if v in invalid:
+    #         good.remove(v)
 
     print('NUM OF VALID VERTS:', len(good))
 
@@ -97,7 +105,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
             del vertdict[i]
     #print(len(vertdict))
 
-    return vertdict, rects #invalidverts, rects
+    return vertdict, rects, goodrects #invalidverts, rects
 
 
 #generate_graph(600, 400)

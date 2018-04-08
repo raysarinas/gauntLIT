@@ -135,12 +135,12 @@ class Fireball(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.image = pygame.Surface([16, 16])
+        self.image = pygame.Surface([26, 26])
         self.image.fill(BLACK)
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('fireball.png')
+        self.sprite = pygame.image.load('boo.png')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
