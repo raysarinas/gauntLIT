@@ -24,7 +24,8 @@ class Game:
         #self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
-        generate_graph(SCREEN_WIDTH, SCREEN_HEIGHT, self.walls)
+        # FOR TESTING VERTICES AND GRAPH STUFF
+        self.valid, self.rects = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
@@ -89,6 +90,11 @@ class Game:
             for block in blocks_hit_list:
                 print('hit!')
             self.all_sprite_list.draw(self.surface)
+
+            # DRAW VERTICES ON TOP OF EVERYTHING
+            for rect in self.rects:
+                pygame.draw.rect(self.surface, pygame.Color('red'), rect)
+
             pygame.display.flip()
             self.collision()
 

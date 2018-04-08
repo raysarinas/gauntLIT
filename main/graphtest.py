@@ -1,6 +1,7 @@
 from graph import Graph
+import pygame
 
-def generate_graph(screenwidth, screenheight, walls):
+def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     graph = Graph
     xrange = (screenwidth - 10) // 25 + 1
     yrange = (screenheight - 10) // 25 + 1
@@ -15,12 +16,29 @@ def generate_graph(screenwidth, screenheight, walls):
     print(vertices)
     print(len(vertices))
 
+    # THIS MIGHT BE THE BETTER WAY TO GETTING THE VALID VERTICES? IDK
+    validverts = {}
+    rects = []
+
+    for wall in wall_list:
+        for i in range(len(vertices)):
+            if wall.rect.collidepoint(vertices[i]):
+                continue
+            else:
+                validverts[i] = vertices[i]
+                rects.append(pygame.Rect(vertices[i][0], vertices[i][1], 1, 1))
+                # pygame.draw.rect(surface, pygame.Color('red'), rect)
+
+    print(validverts)
+    return validverts, rects
+
+
     vertdict = {}
 
     for i in range(len(vertices)):
         vertdict[i] = vertices[i]
 
-    print(vertdict)
+    #print(vertdict)
 
     topleft_bounds = []
     bottomright_bounds = []
@@ -32,8 +50,8 @@ def generate_graph(screenwidth, screenheight, walls):
         topleft_bounds.append([startx, starty])
         bottomright_bounds.append([xbound, ybound])
 
-    print(topleft_bounds)
-    print(bottomright_bounds)
+    #print(topleft_bounds)
+    #print(bottomright_bounds)
 
     valid = []
 
@@ -47,7 +65,7 @@ def generate_graph(screenwidth, screenheight, walls):
                 if v[1] in range(topleft_bounds[i][1], bottomright_bounds[i][1]):
                     pass
             else:
-                print(v)
+                pass #print(v)
 
 
         '''#if vertices[v][0] in range(topleft_bounds[0][0], bottomright_bounds[0][0]):
