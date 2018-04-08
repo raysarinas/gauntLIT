@@ -6,7 +6,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     xrange = (screenwidth - 10) // 25 + 1
     yrange = (screenheight - 10) // 25 + 1
     print(xrange, yrange)
-    print(walls)
+    #print(walls)
     vertices = []
 
     for i in range(1, xrange):
@@ -14,7 +14,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
             vertices.append([25 * i, 25 * j])
 
     print(vertices)
-    print(len(vertices))
+    print('num of vertices: ', len(vertices))
 
     # THIS MIGHT BE THE BETTER WAY TO GETTING THE VALID VERTICES? IDK
     rects = []
@@ -69,7 +69,8 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                     rects.append(pygame.Rect(v[0], v[1], 1, 1))
 
     print(invalid)
-    print(len(invalid))
+    print('num of invalid: ', len(invalid))
+    print('total valid should be:', len(vertices) - len(invalid))
     print(invalidverts)
     print(len(invalidverts))
 
@@ -78,35 +79,25 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
         if key in invalidverts.keys():
             print(invalidverts[key])
 
-    '''
-    for i in range(len(vertdict.values())):
-        if i in invalid:
-            # somehow delete the item with the value but like delete key?
-    print(len(vertdict))
-    '''
+
+    #for i in range(len(vertdict.values())):
+
+    good = vertdict.values()
+    good = list(good)
+    for v in good:
+        if v in invalid:
+            good.remove(v)
+
+    print('NUM OF VALID VERTS:', len(good))
+
 
     for i in range(len(vertdict.keys())):
         if i in invalidverts.keys():
-            print(i, vertdict[i])
+            #print(i, vertdict[i])
             del vertdict[i]
-    print(len(vertdict))
-
-    # OK SO DELETING THE RIGHT VERTICES BUT STILL NOT DRAWING PROPERLY??
-
-    for v in vertdict.values():
-        pass #rects.append(pygame.Rect(v[0], v[1], 2, 2))
+    #print(len(vertdict))
 
     return vertdict, rects #invalidverts, rects
-
-
-    '''#if vertices[v][0] in range(topleft_bounds[0][0], bottomright_bounds[0][0]):
-        if not True:    # ^^^^ THIS ISNT RIGHT I THINK
-            pass
-        else:
-            print(v[0])
-            valid.append(v)'''
-
-
 
 
 #generate_graph(600, 400)
