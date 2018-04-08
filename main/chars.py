@@ -135,7 +135,7 @@ class Fireball(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.image = pygame.Surface([26, 26])
+        self.image = pygame.Surface([25, 26])
         self.image.fill(BLACK)
 
         # Make our top-left corner the passed-in location.
@@ -178,7 +178,7 @@ class Block(pygame.sprite.Sprite):
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('fireball.png')
+        self.sprite = pygame.image.load('boo.png')
         self.image.blit(self.sprite, self.rect)
 
         # Instance variables that control the edges of where we bounce
@@ -188,9 +188,13 @@ class Block(pygame.sprite.Sprite):
         self.bottom_boundary = 0
 
         # Instance variables for our current speed and direction
-        self.change_x = 0
-        self.change_y = 0
+        self.change_x = random.randint(1, 2)
+        self.change_y = random.randint(1, 3)
 
+
+    #def update(self):
+        #self.rect.x += random.randint(1, 2)
+        #self.rect.y += random.randint(2, 3)
 
 
     def update(self):
@@ -198,8 +202,8 @@ class Block(pygame.sprite.Sprite):
         self.rect.x += self.change_x
         self.rect.y += self.change_y
 
-        if self.rect.right >= self.right_boundary or self.rect.left <= self.left_boundary:
+        if self.rect.right >= self.right_boundary + 40 or self.rect.left <= self.left_boundary:
             self.change_x *= -1
 
-        if self.rect.bottom >= self.bottom_boundary or self.rect.top <= self.top_boundary:
+        if self.rect.bottom - 40 >= self.bottom_boundary or self.rect.top <= self.top_boundary:
             self.change_y *= -1

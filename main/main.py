@@ -34,10 +34,10 @@ class Game:
         self.all_sprite_list.add(self.player, self.peach, self.fireball)
 
 
-        for i in range(50):
-            self.block = Block(WHITE, 15, 15)
-            self.block.rect.x = 20
-            self.block.rect.y = 20
+        for i in range(5):
+            self.block = Block(BLACK, 25, 25)
+            self.block.rect.x = 10 + i
+            self.block.rect.y = 10 + i
             self.block.left_boundary = 10
             self.block.top_boundary = 10
             self.block.right_boundary = 550
@@ -100,13 +100,23 @@ class Game:
             pygame.display.flip()
             self.collision()
 
+    # def gameOver(self):
+    #     self.exit = False
+    #     while not exit:
+    #         self.handle_event()
+    #         self.surface.fill(BLUE)
+    #         pygame.display.flip()
+
+
 
 def main():
     pygame.init() # initialize pygame
+    pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
     pygame.display.set_caption('Mario Maze Apparently')
     game = Game(surface)
     game.play()
+    # game.gameOver()
 
 main()
 pygame.quit()
