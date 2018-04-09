@@ -1,24 +1,24 @@
 from graph import Graph
-from itertools import combinations
 
 import pygame
 
 def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
-    xrange = (screenwidth - 10) // 25 + 1
-    yrange = (screenheight - 10) // 25 + 1
+    # GET VERTICES FOR THE ENTIRE SCREEN
+    xrange = (screenwidth - 10) // 25 + 1 # NUMBER OF HORIZONTAL VERTICES
+    yrange = (screenheight - 10) // 25 + 1 # NUMBER OF VERTICAL VERTICES
     print(xrange, yrange)
 
-    vertices = []
-    for i in range(xrange + 1):
-        for j in range(yrange + 1):
-            vertices.append([25 * i, 25 * j])
+    vertices = [] # ARRAY TO HOLD VERTICES
+    for i in range(1, xrange):
+        for j in range(1, yrange):
+            vertices.append([25 * i, 25 * j]) # APPEND VERTICE
 
     vertdict = {} # store ALL vertices in a dictionary
     for i in range(len(vertices)):
         vertdict[i] = vertices[i]
 
-
-
+    # STORE WALLS IN LISTS
+    # ONE LIST TO HOLD TOP LEFT CORNER BOUNDARIES AND ANOTHER FOR BOTTOM RIGHT
     topleft_bounds = []
     bottomright_bounds = []
     for k in range(len(walls)):
@@ -37,46 +37,38 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
         for i in range(len(walls)):
             if v[0] in range(topleft_bounds[i][0], bottomright_bounds[i][0]):
                 if v[1] in range(topleft_bounds[i][1], bottomright_bounds[i][1]):
-                    invalidverts[i] = v # SOMETHING WRONG WITH IDENTIFIERS HERE
-                    # YEAH INDEXING IS JUST WRONG HERE
                     invalid.append(v)
+                    #invalid.append([v[0], v[1]])
                     rects.append(pygame.Rect(v[0], v[1], 4, 4))
 
-    good = vertdict.values()
-    good = list(good) # list of ALL VERTICES
-    #good = [tuple(x) for x in good] # convert vertices to tuples so hashable(?)
-    print(good)
-    print('num of total vertices: ', len(good))
-    print('num of total invalid: ', len(invalid))
-
-    goodrects = [] # for printing the valid vertices
-    good = [v for v in good if v not in invalid] # filter out invalid vertices
-    for v in good: # appent valid vertices to goodrects so can draw out valid vertices
-        goodrects.append(pygame.Rect(v[0], v[1], 4, 4))
-
-    ''' ADDING VERTICES TO GRAPH'''
-    good = [tuple(x) for x in good] # convert vertices to tuples so hashable?
-    # need to do it after filtering out apparently?? idk why it wont work otherwise
-    print('valid vertices', good)
-    goodset = set(good)
-    print('vertices', goodset)
-    graph = Graph(goodset)
-    graph.get_vertices() # I THINK THIS WORKS O.K.
 
 
-    # NEED TO WORK WITH DICTIONARY
-    print(len(good))
-    vertexdict = {}
-    for i in range(len(good)):
-        vertexdict.update({i:good[i]})
+    # GETTING VALID VERTICES AND FILTERING
+    validrects = []
+    valid = [v for v in vertices if v not in invalid] # filter out invalid vertices
+    for v in valid:
+        validrects.append(pygame.Rect(v[0], v[1], 4, 4))
 
-    print(vertexdict)
-    print(len(vertexdict))
-    print(len(vertdict))
+    # add vertices to the graph
+    # convert vertices from lists to tuples so hashable?
+    valid = [tuple(v) for v in valid]
+    # need to make hashable AFTER filtering out or else cant filter out in first place
+    validset = set(valid) # set of all valid vertices
+    graph = Graph(validset) # initiate graph with set of vertices!
+    v = graph.get_vertices()
+    print(v) # this should work O.K.
+
+
+
+    # EDGES AND STUFFFFF
 
     ''' EDGE TESTING STARTS HERE '''
-    vertexlist = good #list(goodset)
-    test = []
+    vertexlist = valid #good #list(goodset)
+    vedges = [] # vertical vertices
+    hedges = [] # horizontal vertices
+    temp = []
+    temp2 = []
+    edges = []
 
     for i in range(len(vertexlist)):
         for j in range(len(vertexlist)):
@@ -84,15 +76,27 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                 if vertexlist[i][1] == vertexlist[j][1]: # vertices in same column
                     # then this is just the vertex itself.
                     print('vertex is itself: ', vertexlist[i], vertexlist[j])
+                    temp.append(vertexlist[i])
                 else: # vertices in same row but not same column. transverse row.
-                    if vertexlist[i][1] + 25 == vertexlist[j][1]: # if vertex beside i'th vertex
+                    if (vertexlist[i][1] + 25 == vertexlist[j][1]): # if vertex beside i'th vertex
                         # ADD EDGE
-                        #print(vertexlist[i], 'and', vertexlist[j], 'are adjacent')
-                        test.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 7, 7))
+                        edges.append((vertexlist[i], vertexlist[j]))
+                        vedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 2, 24))
+            # REPEAT but with horiztonal vertices now i guess
+            if vertexlist[i][1] == vertexlist[j][1]:
+                if vertexlist[i][0] == vertexlist[j][0]:
+                    temp2.append(vertexlist[i])
+                else:
+                    if vertexlist[i][0] + 25 == vertexlist[j][0]:
+                        # ADD EDGE
+                        edges.append((vertexlist[i], vertexlist[j]))
+                        hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 24, 2))
 
 
-
-
+    print(temp)
+    print('transvered vertices vertically:', len(temp))
+    print(edges)
+    print(len(edges))
 
 
     # for i in range(len(goodset)):
@@ -101,26 +105,10 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
         if vertexlist[i][0] == vertexlist[i][1] or vertexlist[i][1] == vertexlist[i-1][0]:
             pass
 
-    nodes = ['A', 'B', 'C', 'D', 'E']
-    edges = list(combinations(good, 2))
-    for i in range(len(edges)):
-        graph.add_edge(edges[i])
-    #print(list(edges))
-    print(len(edges))
-    # vertexlist = list(goodset)
-    # for i in range(len(goodset)):
-    #
-    # for i, j in range(len(vertexdict)):
-    #     graph.add_edge((i, j))
-    #
-    # print(graph.get_edges())
-    # print('num of edges: ', len(graph.get_edges()))
-    #
-    #
-    #
 
 
-    print('NUM OF VALID VERTS:', len(good))
+    print('NUM OF VALID VERTS:', len(valid))
+    print('NUM OF TOTAL VERTS:', len(vertices))
 
     # for i in range(len(vertdict.keys())):
     #     if i in invalidverts.keys():
@@ -128,7 +116,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     #         del vertdict[i]
     # #print(len(vertdict))
 
-    return vertdict, rects, goodrects, test #invalidverts, rects
+    return vertdict, rects, validrects, vedges, hedges #invalidverts, rects
 
 
 #generate_graph(600, 400)

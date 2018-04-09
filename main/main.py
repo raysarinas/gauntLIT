@@ -25,14 +25,13 @@ class Game:
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.valid, self.badrects, self.goodrects, self.test = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
+        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
         self.fireball = Fireball(50, 50)
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player, self.peach, self.fireball)
-
 
         for i in range(5):
             self.block = Block(BLACK, 25, 25)
@@ -96,8 +95,10 @@ class Game:
                 pygame.draw.rect(self.surface, pygame.Color('red'), rect)
             for rect in self.goodrects:
                 pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            for rect in self.test:
+            for rect in self.vedges:
                 pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
+            for rect in self.hedges:
+                pygame.draw.rect(self.surface, pygame.Color('yellow'), rect)
 
             pygame.display.flip()
             self.collision()
@@ -115,7 +116,7 @@ def main():
     pygame.init() # initialize pygame
     pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
-    pygame.display.set_caption('Mario Maze Apparently')
+    pygame.display.set_caption('Some sort of mario maze game I guess')
     game = Game(surface)
     game.play()
     # game.gameOver()
