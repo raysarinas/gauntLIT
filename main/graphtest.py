@@ -54,9 +54,6 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     valid = [tuple(v) for v in valid]
     # need to make hashable AFTER filtering out or else cant filter out in first place
     validset = set(valid) # set of all valid vertices
-    graph = Graph(validset) # initiate graph with set of vertices!
-    v = graph.get_vertices()
-    print(v) # this should work O.K.
 
 
 
@@ -75,8 +72,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
             if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
                 if vertexlist[i][1] == vertexlist[j][1]: # vertices in same column
                     # then this is just the vertex itself.
-                    print('vertex is itself: ', vertexlist[i], vertexlist[j])
-                    temp.append(vertexlist[i])
+                    temp.append(vertexlist[i]) # JUST TO CHECK
                 else: # vertices in same row but not same column. transverse row.
                     if (vertexlist[i][1] + 25 == vertexlist[j][1]): # if vertex beside i'th vertex
                         # ADD EDGE
@@ -85,7 +81,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
             # REPEAT but with horiztonal vertices now i guess
             if vertexlist[i][1] == vertexlist[j][1]:
                 if vertexlist[i][0] == vertexlist[j][0]:
-                    temp2.append(vertexlist[i])
+                    temp2.append(vertexlist[i]) # JUST TO CHECK
                 else:
                     if vertexlist[i][0] + 25 == vertexlist[j][0]:
                         # ADD EDGE
@@ -93,18 +89,17 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                         hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 24, 2))
 
 
-    print(temp)
-    print('transvered vertices vertically:', len(temp))
-    print(edges)
-    print(len(edges))
+    #print(temp)
+    print('transversed vertices vertically:', len(temp))
+    print('transversed vertices horizontally:', len(temp2))
+    #print(edges)
+    print('num of edges:', len(edges))
 
-
-    # for i in range(len(goodset)):
-    #     graph.add_edge(vertexlist[i])
-    for i in range(1, len(vertexlist)):
-        if vertexlist[i][0] == vertexlist[i][1] or vertexlist[i][1] == vertexlist[i-1][0]:
-            pass
-
+    '''******************* HERE IS WHERE GRAPH IS MADE *****************************'''
+    graph = Graph(validset, edges) # initiate graph with set of vertices!
+    v = graph.get_vertices()
+    e = graph.get_edges()
+    print(len(v), len(e)) # this should work O.K.
 
 
     print('NUM OF VALID VERTS:', len(valid))
