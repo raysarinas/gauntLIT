@@ -1,4 +1,6 @@
 from graph import Graph
+from itertools import combinations
+
 import pygame
 
 def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
@@ -7,17 +9,14 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     print(xrange, yrange)
 
     vertices = []
-    for i in range(1, xrange):
-        for j in range(1, yrange):
+    for i in range(xrange + 1):
+        for j in range(yrange + 1):
             vertices.append([25 * i, 25 * j])
-
-    print(vertices)
-    print('num of vertices: ', len(vertices))
-
 
     vertdict = {} # store ALL vertices in a dictionary
     for i in range(len(vertices)):
         vertdict[i] = vertices[i]
+
 
 
     topleft_bounds = []
@@ -58,6 +57,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     ''' ADDING VERTICES TO GRAPH'''
     good = [tuple(x) for x in good] # convert vertices to tuples so hashable?
     # need to do it after filtering out apparently?? idk why it wont work otherwise
+    print('valid vertices', good)
     goodset = set(good)
     print('vertices', goodset)
     graph = Graph(goodset)
@@ -72,11 +72,44 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 
     print(vertexdict)
     print(len(vertexdict))
+    print(len(vertdict))
 
     ''' EDGE TESTING STARTS HERE '''
+    vertexlist = good #list(goodset)
+    test = []
+
+    for i in range(len(vertexlist)):
+        for j in range(len(vertexlist)):
+            if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
+                if vertexlist[i][1] == vertexlist[j][1]: # vertices in same column
+                    # then this is just the vertex itself.
+                    print('vertex is itself: ', vertexlist[i], vertexlist[j])
+                else: # vertices in same row but not same column. transverse row.
+                    if vertexlist[i][1] + 25 == vertexlist[j][1]: # if vertex beside i'th vertex
+                        # ADD EDGE
+                        #print(vertexlist[i], 'and', vertexlist[j], 'are adjacent')
+                        test.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 7, 7))
+
+
+
+
+
+
+    # for i in range(len(goodset)):
+    #     graph.add_edge(vertexlist[i])
+    for i in range(1, len(vertexlist)):
+        if vertexlist[i][0] == vertexlist[i][1] or vertexlist[i][1] == vertexlist[i-1][0]:
+            pass
+
+    nodes = ['A', 'B', 'C', 'D', 'E']
+    edges = list(combinations(good, 2))
+    for i in range(len(edges)):
+        graph.add_edge(edges[i])
+    #print(list(edges))
+    print(len(edges))
     # vertexlist = list(goodset)
     # for i in range(len(goodset)):
-    # 
+    #
     # for i, j in range(len(vertexdict)):
     #     graph.add_edge((i, j))
     #
@@ -95,7 +128,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     #         del vertdict[i]
     # #print(len(vertdict))
 
-    return vertdict, rects, goodrects #invalidverts, rects
+    return vertdict, rects, goodrects, test #invalidverts, rects
 
 
 #generate_graph(600, 400)

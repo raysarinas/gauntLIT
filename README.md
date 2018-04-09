@@ -32,15 +32,24 @@ https://www.pygame.org/docs/index.html
 - [x] endgame conditions (i.e. getting to peach or dying?) (SORT OF DONE? but game just ends... should fix that probably maybe)[FRIDAY/WEEKEND]
 
 ## TODO BY MONDAY !!!!!!!!!!!!!!
-- [ ] make textfile graph
+- [x] make textfile graph
 - [ ] fix maze/graph/screen and character sizes/peach
 - [ ] generate graph with algorithm thing to check if valid edge and stuff to add to graph **ALGORITHM IMPLEMENTATION KIND OF SORT OF?**
-- [ ] ghost moving thru BFS stuff
+- [x] ghost moving ~~thru BFS stuff~~
 - [ ] endgame conditions
 
-## TODO BY THURSDAY
+## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
+- [x] textfile with walls/maze info
+- [ ] new sprites for characters / import them correctly
+- [ ] add edges to graph / make sure correct edges are being used
+- [ ] move ghost with BFS and algorithm stuff
+- [ ] calculate manhattan distance between ghost and player
+- [ ] find nearest vertex and make ghost move to that vertex every k seconds
+- [ ] endgame conditions
+
+## TODO BY THURSDAY / BONUS???? IDEK
 - [x] sprite importing and making sure they move properly
-- [ ] multiple fireballs every x amount of seconds that will breadth-first search player
+- [ ] multiple ghosts every x amount of seconds and have those 
 - [ ] coins / points system
 - [ ] readme? idk
 
