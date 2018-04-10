@@ -111,7 +111,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     #         del vertdict[i]
     # #print(len(vertdict))
 
-    return vertdict, rects, validrects, vedges, hedges #invalidverts, rects
+    return vertdict, rects, validrects, vedges, hedges, graph #invalidverts, rects
 
 
 #generate_graph(600, 400)

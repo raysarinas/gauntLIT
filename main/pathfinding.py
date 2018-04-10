@@ -2,7 +2,12 @@ from graph import Graph
 from binary_heap import BinaryHeap
 import math, pygame, sys
 from chars import *
+from graphtest import *
 
+# ******************************
+# PLEASE IMPLEMENT THE PATHFINDING STUFF IN THE FINDPATH FUNCTION NOT THE
+# GETPATH FUNCTION!!!!!
+# ******************************
 def distance(self, e):
     """
     Here e is a pair (u,v) of vertices. / technically just an edge
@@ -15,8 +20,7 @@ def distance(self, e):
     e_dist = abs((lat2 - lat1)) + abs((lon2 - lon1))
     return e_dist
 
-def findpath(playercoordx, playercoordy, blockx, blocky):
-    # MODIFIED VERSION OF PROCESS_INPUT FROM ASSIGN 1 PART 1
+def getpath(playercoordx, playercoordy, blockx, blocky):
 
     # STILL NEED TO EDIT TO FIT OUR PROJECT NOT SURE HOW TO DO THAT YET!
     # store list of input things into appropriate variables
@@ -49,9 +53,16 @@ def findpath(playercoordx, playercoordy, blockx, blocky):
 
 
 # this should be in an infinite loop prob in main game execution
-clock = pygame.time.Clock()
-time = pygame.time.get_ticks() // 1000 # divide to get in seconds
-while True:
-    if ((pygame.time.get_ticks() // 1000) - time) % 10 == 0:
-        # when testing this out rmr to change speed of block to 0
-        findpath(self.player.rect.x, self.player.rect.y, self.player.block.x, self.player.block.y)
+
+def findpath(playercoordx, playercoordy, blockx, blocky, graph):
+    # MODIFIED VERSION OF PROCESS_INPUT FROM ASSIGN 1 PART 1
+    # SHOuLD TAKE PLAYER AND GHOST COORDINATES
+    # COMPUTE MANHATTAN DISTANCE (CALL DISTANCE FUNCTION)
+    # FIND NEAREST VERTICES TO BOTH POINTS
+    # JUST PRINT TO TERMINAL START AND END VERTICES
+    graph = graph
+    if graph:
+        print('got graph!') # make sure getting the graph
+
+    print('player coordinates:', playercoordx, playercoordy)
+    print('ghost goordinates: ', blockx, blocky)

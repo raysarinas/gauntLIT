@@ -3,6 +3,7 @@ import pygame.gfxdraw
 from walls import *
 from chars import *
 from graphtest import *
+from pathfinding import *
 
 # Colors
 BLACK = (0, 0, 0)
@@ -25,15 +26,14 @@ class Game:
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
+        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
-        self.fireball = Fireball(50, 50)
         self.player.walls = self.wall_list
-        self.all_sprite_list.add(self.player, self.peach, self.fireball)
+        self.all_sprite_list.add(self.player, self.peach)
 
-        for i in range(5):
+        for i in range(1):
             self.block = Block(BLACK, 25, 25)
             self.block.rect.x = 10 + i
             self.block.rect.y = 10 + i
@@ -80,6 +80,8 @@ class Game:
 
     def play(self):
         self.done = False
+        time_since_path_last_found = 0
+        clock = pygame.time.Clock()
         while not self.done:
             self.handle_event()
             self.all_sprite_list.update()
@@ -98,18 +100,18 @@ class Game:
             for rect in self.vedges:
                 pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
             for rect in self.hedges:
-                pygame.draw.rect(self.surface, pygame.Color('yellow'), rect)
+                pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
             pygame.display.flip()
             self.collision()
 
-    # def gameOver(self):
-    #     self.exit = False
-    #     while not exit:
-    #         self.handle_event()
-    #         self.surface.fill(BLUE)
-    #         pygame.display.flip()
+            dt = clock.tick()
 
+            time_since_path_last_found += dt
+            # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
+            if time_since_path_last_found > 5000: # find coordinates every 2 seconds
+                findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph)
+                time_since_path_last_found = 0 # reset it to 0 so you can count again
 
 
 def main():
@@ -119,7 +121,6 @@ def main():
     pygame.display.set_caption('Some sort of mario maze game I guess')
     game = Game(surface)
     game.play()
-    # game.gameOver()
 
 main()
 pygame.quit()

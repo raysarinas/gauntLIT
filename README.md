@@ -21,11 +21,11 @@ https://www.pygame.org/docs/index.html
 
 - https://stackoverflow.com/questions/20025367/pygame-making-a-sprite-move-along-a-predetermined-path-at-a-constant-speed
 
--
+- TIMER: https://stackoverflow.com/questions/18948981/do-something-every-x-milliseconds-in-pygame
 
 ## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
 - [x] textfile with walls/maze info
-- [ ] new sprites for characters / import them correctly
+- [x] new sprites for characters / import them correctly
 - [x] add edges to graph / make sure correct edges are being used --> THERES A FEW BUGS WITH THE EDGES BUT I THINK CHANGING THE WALLS WILL HELP
 - [ ] move ghost with BFS and algorithm stuff
 - [ ] calculate manhattan distance between ghost and player - *this might be done idk yet*

@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
 
         # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('mario.png')
+        self.sprite = pygame.image.load('luigi.gif')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
@@ -85,12 +85,12 @@ class Peach(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.image = pygame.Surface([18, 32])
+        self.image = pygame.Surface([16, 25])
         self.image.fill(BLACK)
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('peach.png')
+        self.sprite = pygame.image.load('peach2.png')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
@@ -126,34 +126,6 @@ class Peach(pygame.sprite.Sprite):
         #         textsurface = myfont.render('<3', False, (0, 0, 0))
         #         self.image.blit(textsurface,(0,0))
 
-class Fireball(pygame.sprite.Sprite):
-    """ BALL """
-
-    # Constructor function
-    def __init__(self, x, y):
-        # Call the parent's constructor
-        super().__init__()
-
-        # Set height, width
-        self.image = pygame.Surface([25, 26])
-        self.image.fill(BLACK)
-
-        # Make our top-left corner the passed-in location.
-        self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('boo.png')
-        self.image.blit(self.sprite, self.rect)
-        self.rect.y = y
-        self.rect.x = x
-
-        # Set speed vector
-        self.change_x = 0
-        self.change_y = 0
-        self.walls = None
-
-    def changespeed(self, x, y):
-        """ Change the speed of the player. """
-        self.change_x += x
-        self.change_y += y
 
 
 class Block(pygame.sprite.Sprite):
@@ -178,7 +150,7 @@ class Block(pygame.sprite.Sprite):
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('boo.png')
+        self.sprite = pygame.image.load('boo.gif')
         self.image.blit(self.sprite, self.rect)
 
         # Instance variables that control the edges of where we bounce
