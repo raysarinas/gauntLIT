@@ -93,14 +93,14 @@ class Game:
             self.all_sprite_list.draw(self.surface)
 
             # DRAW VERTICES ON TOP OF EVERYTHING
-            # for rect in self.badrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
-            # for rect in self.goodrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            # for rect in self.vedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
-            # for rect in self.hedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
+            for rect in self.badrects:
+                pygame.draw.rect(self.surface, pygame.Color('red'), rect)
+            for rect in self.goodrects:
+                pygame.draw.rect(self.surface, pygame.Color('green'), rect)
+            for rect in self.vedges:
+                pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
+            for rect in self.hedges:
+                pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
             pygame.display.flip()
             self.collision()

@@ -1,14 +1,16 @@
 from graph import Graph
 from binary_heap import BinaryHeap
-import math, pygame, sys
+import math, pygame, sys, random, time
 from chars import *
 from graphtest import *
+from collections import deque
 
 # ******************************
 # PLEASE IMPLEMENT THE PATHFINDING STUFF IN THE FINDPATH FUNCTION NOT THE
 # GETPATH FUNCTION!!!!!
 # ******************************
 # def distance(self, e):
+
 def distance(start, end):
     """
     Here e is a pair (u,v) of vertices. / technically just an edge
@@ -56,7 +58,93 @@ def getpath(playercoordx, playercoordy, blockx, blocky):
 
     return startV, endV
 
+def breadth_first_search(graph, s):
+  """
+  Given a graph (an instance of Digraph) and a vertex s
+  in the graph, will return construct a search tree from s
+  using a breadth-first search.
 
+  That is, a dictionary "reached" will be returned whose keys are all vertices
+  reachable from s and where reached[v] is the predecessor of v in the search.
+  The exception is reached[s] == s.
+
+  Use can use get_path(reached, s, t) to recover a path from s to t
+  in the graph, after running this search.
+
+  >>> g1 = Graph({"A","B","C","D"}, [("A","B"), ("B","D"), ("C","B"), ("C","D")])
+  >>> breadth_first_search(g1, "A").keys() == {"A", "B", "D"}
+  True
+  >>> breadth_first_search(g1, "C").keys() == {"C", "B", "D"}
+  True
+  >>> breadth_first_search(g1, "B").keys() == {"B", "D"}
+  True
+  >>> breadth_first_search(g1, "D").keys() == {"D"}
+  True
+  >>> g2 = Graph({"A","B","C"}, [("A","B"), ("B","C"), ("C","B")])
+  >>> breadth_first_search(g2, "A").keys() == {"A", "B", "C"}
+  True
+  >>> breadth_first_search(g2, "B").keys() == {"B", "C"}
+  True
+  >>> breadth_first_search(g2, "C").keys() == {"B", "C"}
+  True
+  """
+
+  reached = {s:s}
+  todo = deque([s])
+
+  while todo: # condition is true if and only if todo is not empty
+    curr = todo.popleft()
+
+    for nbr in graph.neighbours(curr):
+      if nbr not in reached:
+        reached[nbr] = curr
+        todo.append(nbr)
+
+  return reached
+
+
+def get_path(reached, start, end):
+  """
+  Return a path from start to end, given a search tree.
+
+  reached:
+    A dictionary representing a search tree of a search
+    initiated from the vertex "start".
+  start:
+    The vertex that was the start of the search that constructed
+    the search tree
+  end:
+    The desired endpoint of the search
+
+  Returns a list of vertices starting at vertex start and ending at vertex end
+  representing a path between these vertices (the path in the search tree).
+  If the vertex "end" was not reached (i.e. is not a key in reached),
+  this simply returns the empty list []
+
+  # the example in the docstring test is the search tree run on the graph
+  # drawn using graphviz above, starting from vertex 3
+
+  >>> reached = {3:3, 1:3, 4:3, 2:4}
+  >>> get_path(reached, 3, 2)
+  [3, 4, 2]
+  >>> get_path(reached, 3, 3)
+  [3]
+  >>> get_path(reached, 3, 5)
+  []
+  """
+
+  if end not in reached:
+    return []
+
+  path = [end]
+
+  while end != start:
+    end = reached[end]
+    path.append(end)
+
+  path.reverse()
+
+  return path
 # this should be in an infinite loop prob in main game execution
 
 def findpath(playercoordx, playercoordy, blockx, blocky, graph):
@@ -69,24 +157,8 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph):
     if graph:
         print('got graph!') # make sure getting the graph
 
-    print('player coordinates:', playercoordx, playercoordy)
-    print('ghost goordinates: ', blockx, blocky)
-
-    # startcoord = (playercoordx, playercoordy)
-    # destination = (blockx, blocky)
-    # startDist = distance(point , startcoord)
-    # endDist = distance(point, destination)
-    #
-    # print(startDist)
-    # print(endDist)
-
-
     playercoords= [playercoordx, playercoordy]
     ghostcoords = [blockx, blocky]
-
-    # initialize minimum start/end and start/end vertex values
-    # minStart = float('inf')
-    # minEnd = float('inf')
 
     minplayer = float('inf')
     minghost = float('inf')
@@ -97,29 +169,38 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph):
     # find the nearest vertex to the start and destination/end points
     # that have been inputted/requested
 
-
-    #vertlist = list(graph.get_vertices())#######
-    #edgelist = graph.get_edges()
-
-    #print(distance(playercoords, ghostcoords))
-
     vertlist = list(graph.get_vertices())
-    mintemp = 0
-    ghosttemp = 0
+    counter1 = 0
+    counter2 = 0
 
-    
+
 
     for vertex in vertlist:
-        mintemp = distance(vertex, playercoords)
-        if mintemp < minplayer:
-            minplayer = mintemp
-        ghosttemp = distance(vertex, ghostcoords)
-        if ghosttemp < minghost:
-            minghost = ghosttemp
+        currvert = vertex
+        playervertdist = distance(currvert, playercoords)
+        if playervertdist < minplayer:
+            minplayer = playervertdist
+            minplayerID = counter1
+        counter1 += 1
+        ghostvertdist = distance(currvert, ghostcoords)
+        if ghostvertdist < minghost:
+            minghost = ghostvertdist
+            minghostID = counter2
+        counter2 += 1
 
     currentvertex = minplayer
+    startvert = vertlist[minplayerID]
+    endvert = vertlist[minghostID]
 
-    print(currentvertex)
+    print(minplayerID, minghostID)
+    print('player coordinates:', playercoordx, playercoordy)
+    print('vertex closest to player: ', vertlist[minplayerID])
+    print('ghost goordinates: ', blockx, blocky)
+    print('vertex closest to ghost: ', vertlist[minghostID])
+    #print(currentvertex)
+
+    #reached = breadth_first_search(graph, 0)
+    #print(get_path(reached, startvert, endvert))
 
     # print(minplayer)
     # print(minghost)
