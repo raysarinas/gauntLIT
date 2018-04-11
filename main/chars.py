@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         # Call the parent's constructor
         super().__init__()
-        self.sprite = pygame.image.load('luigi.gif')
+        self.sprite = pygame.image.load('images/luigi.gif')
         self.size = self.sprite.get_rect().size
 
         # Set height, width
@@ -91,7 +91,7 @@ class Peach(pygame.sprite.Sprite):
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('peach2.png')
+        self.sprite = pygame.image.load('images/peach2.png')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
@@ -151,7 +151,7 @@ class Block(pygame.sprite.Sprite):
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('boo.gif')
+        self.sprite = pygame.image.load('images/boo.gif')
         self.image.blit(self.sprite, self.rect)
 
         # Instance variables that control the edges of where we bounce
