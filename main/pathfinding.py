@@ -122,14 +122,11 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
     # PLACEHOLDER *HERE* FOR OLD PATHFINDING STUFF
 
     cost = CostDistance(location)
-    #print(location)
-
-    #print(reached)
-    print('poop')
     #print(graph.neighbours(location[minplayerID]))
     #print(bellman_ford(graph.get_vertices(), graph.get_edges(), minplayerID))
     reached = least_cost_path(graph, minghostID, minplayerID, cost, location)
     print(reached)
+    return reached
 
     # print(minplayer)
     # print(minghost)

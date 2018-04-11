@@ -4,6 +4,7 @@ from walls import *
 from chars import *
 from buildgraph import *
 from pathfinding import *
+from moveghost import *
 
 # Colors
 BLACK = (0, 0, 0)
@@ -22,6 +23,17 @@ class Game:
         self.all_sprite_list = pygame.sprite.Group()
         self.block_list = pygame.sprite.Group()
 
+        for i in range(1):
+            self.block = Block(BLACK, 25, 25)
+            self.block.rect.x = 25 + i
+            self.block.rect.y = 25 + i
+            self.block.left_boundary = 10
+            self.block.top_boundary = 10
+            self.block.right_boundary = 550
+            self.block.bottom_boundary = 350
+            self.all_sprite_list.add(self.block)
+            self.block_list.add(self.block)
+
         #self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
@@ -32,17 +44,6 @@ class Game:
         self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player, self.peach)
-
-        for i in range(1):
-            self.block = Block(BLACK, 25, 25)
-            self.block.rect.x = 10 + i
-            self.block.rect.y = 10 + i
-            self.block.left_boundary = 10
-            self.block.top_boundary = 10
-            self.block.right_boundary = 550
-            self.block.bottom_boundary = 350
-            self.all_sprite_list.add(self.block)
-            self.block_list.add(self.block)
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -83,6 +84,7 @@ class Game:
         time_since_path_last_found = 0
         clock = pygame.time.Clock()
         while not self.done:
+            dt = clock.tick()
             self.handle_event()
             self.all_sprite_list.update()
             self.surface.fill(BLACK)
@@ -91,6 +93,35 @@ class Game:
             for block in blocks_hit_list:
                 print('hit!')
             self.all_sprite_list.draw(self.surface)
+
+            time_since_path_last_found += dt
+            # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
+            path = []
+            if time_since_path_last_found > 2000: # find coordinates every 2 seconds
+                path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
+                time_since_path_last_found = 0 # reset it to 0 so you can count again
+
+            newghostx = moveghost_x(path, self.location, self.graph, self.block.rect.x)
+            newghosty = moveghost_y(path, self.location, self.graph, self.block.rect.y)
+            if newghostx != None:
+                #self.block.change_x = newghostx
+                self.block.rect.x = newghostx
+                # while len(path) != 0:
+                #     point = path.pop()
+                #     while point:
+                #         while point != self.block.rect.x:
+                #             self.block.change_x = newghostx
+                #     self.block.change_x = 0
+            else:
+                self.block.change_x = 0
+                #self.block.rect.x = newghostx
+            if newghosty != None:
+                #self.block.change_y = newghosty
+                self.block.rect.y = newghosty
+            else:
+                self.block.change_y = 0
+
+
 
             # DRAW VERTICES ON TOP OF EVERYTHING
             for rect in self.badrects:
@@ -104,14 +135,6 @@ class Game:
 
             pygame.display.flip()
             self.collision()
-
-            dt = clock.tick()
-
-            time_since_path_last_found += dt
-            # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
-            if time_since_path_last_found > 5000: # find coordinates every 2 seconds
-                findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
-                time_since_path_last_found = 0 # reset it to 0 so you can count again
 
 
 def main():

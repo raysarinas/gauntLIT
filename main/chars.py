@@ -14,9 +14,11 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         # Call the parent's constructor
         super().__init__()
+        self.sprite = pygame.image.load('luigi.gif')
+        self.size = self.sprite.get_rect().size
 
         # Set height, width
-        self.image = pygame.Surface([15, 21])#[16, 26])
+        self.image = pygame.Surface(self.size)#[16, 26])
 
         # sprite
         #self.image = pygame.image.load('mario.png').convert_alpha
@@ -24,7 +26,6 @@ class Player(pygame.sprite.Sprite):
 
         # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('luigi.gif')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
