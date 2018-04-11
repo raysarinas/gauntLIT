@@ -41,6 +41,7 @@ class Game:
         self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph, self.location = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
+        self.playerspeed = 7
         self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player, self.peach)
@@ -51,23 +52,23 @@ class Game:
                 self.done = True
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.player.changespeed(-5, 0)
+                    self.player.changespeed(-self.playerspeed, 0)
                 elif event.key == pygame.K_RIGHT:
-                    self.player.changespeed(5, 0)
+                    self.player.changespeed(self.playerspeed, 0)
                 elif event.key == pygame.K_UP:
-                    self.player.changespeed(0, -5)
+                    self.player.changespeed(0, -self.playerspeed)
                 elif event.key == pygame.K_DOWN:
-                    self.player.changespeed(0, 5)
+                    self.player.changespeed(0, self.playerspeed)
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
-                    self.player.changespeed(5, 0)
+                    self.player.changespeed(self.playerspeed, 0)
                 elif event.key == pygame.K_RIGHT:
-                    self.player.changespeed(-5, 0)
+                    self.player.changespeed(-self.playerspeed, 0)
                 elif event.key == pygame.K_UP:
-                    self.player.changespeed(0, 5)
+                    self.player.changespeed(0, self.playerspeed)
                 elif event.key == pygame.K_DOWN:
-                    self.player.changespeed(0, -5)
+                    self.player.changespeed(0, -self.playerspeed)
 
 
 
@@ -80,8 +81,19 @@ class Game:
             #self.done
             self.finishScreen()
 
-        hitGhost = pygame.sprite.collide_rect(self.player, self.block)
-        if hitGhost:
+        hitGhost1 = pygame.sprite.collide_rect(self.player, self.block)
+        hitGhost2 = pygame.sprite.collide_rect(self.block, self.player)
+# COLLISION IS TOO CLOSE LIKE
+   # STILL PRETTY FAR FROM LUIGI AND STILL A COLLISION IS DETECTED?
+   # get the range of coordinates for the player and the ghost, see if any
+   # of them intersect and if they do, then that is when hitghost goes to finish screen
+
+   # playercoords = coords of player
+   # ghostcoords = coords of ghost
+   #
+   # if playercoord[0] == ghostcoords[0] or playercoord[1] == ghostcoords[1]:
+   # self.finishScreen()
+        if hitGhost1 or hitGhost2:
             self.finishScreen()
 
 
@@ -108,6 +120,7 @@ class Game:
             self.handle_event()
             self.all_sprite_list.update()
             self.surface.fill(BLACK)
+            self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
             blocks_hit_list = pygame.sprite.spritecollide(self.player, self.block_list, True)
 
             for block in blocks_hit_list:
@@ -117,15 +130,20 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
-            if time_since_path_last_found > 200: # find coordinates every 2 seconds
+            if time_since_path_last_found > 100: # find coordinates every 2 seconds
                 path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
             newghostx = moveghost_x(path, self.location, self.graph, self.block.rect.x)
             newghosty = moveghost_y(path, self.location, self.graph, self.block.rect.y)
+            correction = 6
             if newghostx != None:
                 #self.block.change_x = newghostx
-                self.block.rect.x = newghostx
+                #self.block.rect.x = newghostx - 8
+                if self.block.rect.x > self.player.rect.x:
+                    self.block.rect.x = newghostx - correction
+                elif self.block.rect.x < self.player.rect.x:
+                    self.block.rect.x = newghostx + correction
                 # while len(path) != 0:
                 #     point = path.pop()
                 #     while point:
@@ -137,7 +155,10 @@ class Game:
                 #self.block.rect.x = newghostx
             if newghosty != None:
                 #self.block.change_y = newghosty
-                self.block.rect.y = newghosty
+                if self.block.rect.y > self.player.rect.y:
+                    self.block.rect.y = newghosty + correction
+                elif self.block.rect.y < self.player.rect.y:
+                    self.block.rect.y = newghosty - correction
             else:
                 self.block.change_y = 0
 
@@ -196,7 +217,7 @@ class Game:
                     sys.exit()
                 if event.type == pygame.KEYUP:
                     waiting = False
-                    Game.play()
+                    self.play()
 
 
 
