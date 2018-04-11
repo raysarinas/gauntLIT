@@ -41,4 +41,6 @@ https://www.pygame.org/docs/index.html
 
 - TIMER: https://stackoverflow.com/questions/18948981/do-something-every-x-milliseconds-in-pygame
 
+- https://stackoverflow.com/questions/28645597/how-to-draw-a-transparent-image-in-pygame
+
 - https://stackoverflow.com/questions/18826788/converting-an-image-to-a-rect

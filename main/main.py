@@ -130,7 +130,7 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
-            if time_since_path_last_found > 100: # find coordinates every 2 seconds
+            if time_since_path_last_found > 200: # find coordinates every 2 seconds
                 path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
@@ -138,18 +138,10 @@ class Game:
             newghosty = moveghost_y(path, self.location, self.graph, self.block.rect.y)
             correction = 6
             if newghostx != None:
-                #self.block.change_x = newghostx
-                #self.block.rect.x = newghostx - 8
                 if self.block.rect.x > self.player.rect.x:
                     self.block.rect.x = newghostx - correction
                 elif self.block.rect.x < self.player.rect.x:
                     self.block.rect.x = newghostx + correction
-                # while len(path) != 0:
-                #     point = path.pop()
-                #     while point:
-                #         while point != self.block.rect.x:
-                #             self.block.change_x = newghostx
-                #     self.block.change_x = 0
             else:
                 self.block.change_x = 0
                 #self.block.rect.x = newghostx
@@ -226,7 +218,7 @@ def main():
     pygame.init() # initialize pygame
     pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
-    pygame.display.set_caption('Some sort of mario maze game I guess')
+    pygame.display.set_caption("Green Mario's Bungalow")
     game = Game(surface)
     game.play()
 
