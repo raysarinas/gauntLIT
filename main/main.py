@@ -138,7 +138,7 @@ class Game:
 
             newghostx = moveghost_x(path, self.location, self.graph, self.block.rect.x)
             newghosty = moveghost_y(path, self.location, self.graph, self.block.rect.y)
-            correction = 6
+            correction = 0
             if newghostx != None:
                 if self.block.rect.x > self.player.rect.x:
                     self.block.rect.x = newghostx - correction
@@ -159,14 +159,14 @@ class Game:
 
 
             # DRAW VERTICES ON TOP OF EVERYTHING
-            for rect in self.badrects:
-                pygame.draw.rect(self.surface, pygame.Color('red'), rect)
-            for rect in self.goodrects:
-                pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            for rect in self.vedges:
-                pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
-            for rect in self.hedges:
-                pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
+            # for rect in self.badrects:
+            #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
+            # for rect in self.goodrects:
+            #     pygame.draw.rect(self.surface, pygame.Color('green'), rect)
+            # for rect in self.vedges:
+            #     pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
+            # for rect in self.hedges:
+            #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
             pygame.display.flip()
             self.collision()
@@ -174,7 +174,7 @@ class Game:
 
     def finishScreen(self):
         fontWin = pygame.font.SysFont(None, 40, True)
-        textWin = fontWin.render('Game Over?', True, pygame.Color('white'), pygame.Color('black'))
+        textWin = fontWin.render('GAME OVER', True, pygame.Color('white'), pygame.Color('black'))
         self.surface.blit(textWin, ((self.surface.get_width()/2)/2, (self.surface.get_height()/2)/2))
         fontAsk = pygame.font.SysFont(None, 100, True)
         textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
