@@ -4,18 +4,22 @@ import pygame
 
 def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     # GET VERTICES FOR THE ENTIRE SCREEN
-    xrange = (screenwidth - 10) // 25 + 1 # NUMBER OF HORIZONTAL VERTICES
-    yrange = (screenheight - 10) // 25 + 1 # NUMBER OF VERTICAL VERTICES
+    splitnum = 25
+    xrange = (screenwidth - 10) // splitnum + 1 # NUMBER OF HORIZONTAL VERTICES
+    yrange = (screenheight - 10) // splitnum + 1 # NUMBER OF VERTICAL VERTICES
+    location = {}
     print(xrange, yrange)
 
     vertices = [] # ARRAY TO HOLD VERTICES
     for i in range(1, xrange):
         for j in range(1, yrange):
-            vertices.append([25 * i, 25 * j]) # APPEND VERTICE
+            vertices.append([splitnum * i, splitnum * j]) # APPEND VERTICE
 
     vertdict = {} # store ALL vertices in a dictionary
     for i in range(len(vertices)):
         vertdict[i] = vertices[i]
+        location[i] = (vertices[i][0], vertices[i][1])
+
 
     # STORE WALLS IN LISTS
     # ONE LIST TO HOLD TOP LEFT CORNER BOUNDARIES AND ANOTHER FOR BOTTOM RIGHT
@@ -74,19 +78,21 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                     # then this is just the vertex itself.
                     temp.append(vertexlist[i]) # JUST TO CHECK
                 else: # vertices in same row but not same column. transverse row.
-                    if (vertexlist[i][1] + 25 == vertexlist[j][1]): # if vertex beside i'th vertex
+                    if (vertexlist[i][1] + splitnum == vertexlist[j][1]): # if vertex beside i'th vertex
                         # ADD EDGE
                         edges.append((vertexlist[i], vertexlist[j]))
-                        vedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 2, 24))
+                        edges.append((vertexlist[j], vertexlist[i])) # BOTH WAYS SO UNDIRECTED
+                        vedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 2, (splitnum - 1)))
             # REPEAT but with horiztonal vertices now i guess
             if vertexlist[i][1] == vertexlist[j][1]:
                 if vertexlist[i][0] == vertexlist[j][0]:
                     temp2.append(vertexlist[i]) # JUST TO CHECK
                 else:
-                    if vertexlist[i][0] + 25 == vertexlist[j][0]:
+                    if vertexlist[i][0] + splitnum == vertexlist[j][0]:
                         # ADD EDGE
                         edges.append((vertexlist[i], vertexlist[j]))
-                        hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 24, 2))
+                        edges.append((vertexlist[j], vertexlist[i]))
+                        hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], (splitnum - 1), 2))
 
 
     #print(temp)
@@ -111,7 +117,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     #         del vertdict[i]
     # #print(len(vertdict))
 
-    return vertdict, rects, validrects, vedges, hedges, graph #invalidverts, rects
+    return vertdict, rects, validrects, vedges, hedges, graph, location #invalidverts, rects
 
 
 #generate_graph(600, 400)

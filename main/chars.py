@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.image = pygame.Surface([16, 26])
+        self.image = pygame.Surface([15, 21])#[16, 26])
 
         # sprite
         #self.image = pygame.image.load('mario.png').convert_alpha
@@ -160,8 +160,8 @@ class Block(pygame.sprite.Sprite):
         self.bottom_boundary = 0
 
         # Instance variables for our current speed and direction
-        self.change_x = random.randint(1, 2)
-        self.change_y = random.randint(1, 3)
+        self.change_x = 0#random.randint(1, 2)
+        self.change_y = 0#random.randint(1, 3)
 
 
     #def update(self):

@@ -2,7 +2,7 @@ import pygame, random
 import pygame.gfxdraw
 from walls import *
 from chars import *
-from graphtest import *
+from buildgraph import *
 from pathfinding import *
 
 # Colors
@@ -26,7 +26,7 @@ class Game:
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
+        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph, self.location = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 36)
         self.peach = Peach(590 - 18, 10)
@@ -110,7 +110,7 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             if time_since_path_last_found > 5000: # find coordinates every 2 seconds
-                findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph)
+                findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
 
