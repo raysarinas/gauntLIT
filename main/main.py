@@ -70,18 +70,6 @@ class Game:
                     self.player.changespeed(0, -5)
 
 
-    # # DETECT COLLISION
-    # def collision(self):
-    #     # player collision with peach
-    #     hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
-    #     if hitPeach:
-    #         self.done = True
-    #         self.surface.fill(BLUE)
-    #     hitGhost = pygame.sprite.collide_rect(self.player, self.block)
-    #     if hitGhost:
-    #         self.done = True
-    #         self.surface.fill(BLUE)
-    #         #self.running = False
 
     # DETECT COLLISION
     def collision(self):
@@ -208,6 +196,9 @@ class Game:
                     sys.exit()
                 if event.type == pygame.KEYUP:
                     waiting = False
+                    Game.play()
+
+
 
 
 def main():
