@@ -9,7 +9,9 @@ from moveghost import *
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-BLUE = (50, 50, 255)
+BLUE = (187, 192, 255)
+
+
 
 # Screen dimensions
 SCREEN_WIDTH = 600
@@ -40,7 +42,7 @@ class Game:
         # FOR TESTING VERTICES AND GRAPH STUFF
         self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph, self.location = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
-        self.player = Player(10, SCREEN_HEIGHT - 36)
+        self.player = Player(10, SCREEN_HEIGHT - 34)
         self.playerspeed = 7
         self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list

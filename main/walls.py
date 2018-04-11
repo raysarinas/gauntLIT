@@ -2,7 +2,7 @@
 # things so everything is cleaner.
 import pygame
 
-BLUE = (50, 50, 255)
+BLUE = (117, 122, 163)
 
 class Wall1(pygame.sprite.Sprite):
     """ Wall the player can run into. """
