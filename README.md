@@ -1,7 +1,25 @@
 # gauntLIT
 CMPUT 275 FINAL PROJECT (the last time zac tries it with bonus pain from omid)
 
-- **READ THIS FOR ALGORITHM IMPLEMENTATION** - https://www.redblobgames.com/pathfinding/tower-defense/implementation.html
+## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
+- [x] textfile with walls/maze info
+- [x] new sprites for characters / import them correctly
+- [x] add edges to graph / make sure correct edges are being used --> THERES A FEW BUGS WITH THE EDGES BUT I THINK CHANGING THE WALLS WILL HELP
+- [x] move ghost with DIJKSTRA and algorithm stuff! 🔥
+- [x] calculate manhattan distance between ghost and player - *this might be done idk yet*
+- [x] find nearest vertex and make ghost move to that vertex every k seconds
+- [ ] start screen and different levels of difficulty
+- [ ] endgame conditions and game over screen
+- [ ] DEBUG WALL THING MIGHT JUST NEED TO MAKE WALLS THICCC
+
+## TODO BY THURSDAY / BONUS???? IDEK
+- [ ] replace peach with a key and open a door mayhaps? idk
+- [ ] multiple ghosts every x amount of seconds and have those
+- [ ] coins / points system?
+- [ ] readme? idk
+
+
+### REFERENCES
 
 - **PYGAME DOCUMENTATION**
 https://www.pygame.org/docs/index.html
@@ -23,23 +41,4 @@ https://www.pygame.org/docs/index.html
 
 - TIMER: https://stackoverflow.com/questions/18948981/do-something-every-x-milliseconds-in-pygame
 
-## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
-- [x] textfile with walls/maze info
-- [x] new sprites for characters / import them correctly
-- [x] add edges to graph / make sure correct edges are being used --> THERES A FEW BUGS WITH THE EDGES BUT I THINK CHANGING THE WALLS WILL HELP
-- [ ] move ghost with BFS and algorithm stuff
-- [ ] calculate manhattan distance between ghost and player - *this might be done idk yet*
-- [ ] find nearest vertex and make ghost move to that vertex every k seconds
-- [ ] endgame conditions
-
-## TODO BY THURSDAY / BONUS???? IDEK
-- [x] sprite importing and making sure they move properly
-- [ ] multiple ghosts every x amount of seconds and have those
-- [ ] coins / points system
-- [ ] readme? idk
-
-
-
-
-REFERENCES:
 - https://stackoverflow.com/questions/18826788/converting-an-image-to-a-rect
