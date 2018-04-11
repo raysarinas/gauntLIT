@@ -70,14 +70,46 @@ class Game:
                     self.player.changespeed(0, -5)
 
 
+    # # DETECT COLLISION
+    # def collision(self):
+    #     # player collision with peach
+    #     hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
+    #     if hitPeach:
+    #         self.done = True
+    #         self.surface.fill(BLUE)
+    #     hitGhost = pygame.sprite.collide_rect(self.player, self.block)
+    #     if hitGhost:
+    #         self.done = True
+    #         self.surface.fill(BLUE)
+    #         #self.running = False
+
     # DETECT COLLISION
     def collision(self):
         # player collision with peach
-        hits = pygame.sprite.collide_rect(self.player, self.peach)
-        if hits:
-            self.done = True
-            self.surface.fill(BLUE)
-            #self.running = False
+        hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
+        #hitGhost = pygame.sprite.collide_rect(self.player, self.block)
+        if hitPeach:
+            #self.done
+            self.finishScreen()
+
+        hitGhost = pygame.sprite.collide_rect(self.player, self.block)
+        if hitGhost:
+            self.finishScreen()
+
+
+    def checkSpacePressed(self):
+        # Get the events that occur in pygame
+        for event in pygame.event.get():
+            # User has clicked on the exit sign of the window
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            # User has pressed the entered key
+            if event.type == KEYUP and event.key == K_SPACE:
+                return True
+
+
+
 
     def play(self):
         self.done = False
@@ -97,7 +129,7 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
-            if time_since_path_last_found > 2000: # find coordinates every 2 seconds
+            if time_since_path_last_found > 200: # find coordinates every 2 seconds
                 path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
@@ -135,6 +167,47 @@ class Game:
 
             pygame.display.flip()
             self.collision()
+
+
+    def finishScreen(self):
+        fontWin = pygame.font.SysFont(None, 40, True)
+        textWin = fontWin.render('Game Over?', True, pygame.Color('white'), pygame.Color('black'))
+        self.surface.blit(textWin, ((self.surface.get_width()/2)/2, (self.surface.get_height()/2)/2))
+        fontAsk = pygame.font.SysFont(None, 100, True)
+        textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
+        self.surface.blit(textAsk, ((self.surface.get_width()/2)/2, ((self.surface.get_height()/2)/2)+100))
+
+        # pressed = False
+        #
+        #
+        # pressed = self.checkSpacePressed
+        # # If they did press enter
+        # if pressed:
+        #     # Change result to 1 to indicate that the user wants to keep playing
+        #      result = 1
+        # return result
+
+    # def GameOverScreen(self):
+    #     fontWin = pygame.font.SysFont(None, 40, True)
+    #     textWin = fontWin.render('u got caught by a mf ghost!', True, pygame.Color('white'), pygame.Color('black'))
+    #     self.surface.blit(textWin, ((self.surface.get_width()/2)/2, (self.surface.get_height()/2)/2))
+    #     fontAsk = pygame.font.SysFont(None, 100, True)
+    #     textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
+    #     self.surface.blit(textAsk, ((self.surface.get_width()/2)/2, ((self.surface.get_height()/2)/2)+100))
+
+
+
+        gameOver = False
+        pygame.display.flip()
+        waiting = True
+        while waiting:
+            print('collided')
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYUP:
+                    waiting = False
 
 
 def main():
