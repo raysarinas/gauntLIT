@@ -57,7 +57,7 @@ def least_cost_path(graph, start, dest, cost, location):
     reached = {}
     events = BinaryHeap()
     events.insert((start, start), 0)
-    print((start, start))
+    #print((start, start))
 
     while len(events) > 0:
         edge, time = events.popmin()
@@ -90,8 +90,8 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
     # FIND NEAREST VERTICES TO BOTH POINTS
     # JUST PRINT TO TERMINAL START AND END VERTICES
     graph = graph
-    if graph:
-        print('got graph!') # make sure getting the graph
+    #if graph:
+        #print('got graph!') # make sure getting the graph
 
     playercoords= [playercoordx, playercoordy]
     ghostcoords = [blockx, blocky]
@@ -116,8 +116,8 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
             minghost = ghostvertdist
             minghostID = key
 
-    print('player ID:', minplayerID, '/ playercoord:', location[minplayerID])
-    print('ghost ID:', minghostID, '/ghostcoord:', location[minghostID])
+    #print('player ID:', minplayerID, '/ playercoord:', location[minplayerID])
+    #print('ghost ID:', minghostID, '/ghostcoord:', location[minghostID])
 
     # PLACEHOLDER *HERE* FOR OLD PATHFINDING STUFF
 
@@ -125,7 +125,7 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
     #print(graph.neighbours(location[minplayerID]))
     #print(bellman_ford(graph.get_vertices(), graph.get_edges(), minplayerID))
     reached = least_cost_path(graph, minghostID, minplayerID, cost, location)
-    print(reached)
+    #print(reached)
     return reached
 
     # print(minplayer)

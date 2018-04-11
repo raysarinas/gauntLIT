@@ -18,11 +18,11 @@ class Player(pygame.sprite.Sprite):
         self.size = self.sprite.get_rect().size
 
         # Set height, width
-        self.image = pygame.Surface(self.size)#[16, 26])
+        self.image = pygame.Surface(self.size, pygame.SRCALPHA)#[16, 26])
 
         # sprite
         #self.image = pygame.image.load('mario.png').convert_alpha
-        self.image.fill(BLACK)
+        #self.image.fill(BLACK)
 
         # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
@@ -86,12 +86,13 @@ class Peach(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.image = pygame.Surface([16, 25])
-        self.image.fill(BLACK)
+        self.sprite = pygame.image.load('images/peach2.png')
+        self.size = self.sprite.get_rect().size
+        self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+        #self.image.fill(BLACK)
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('images/peach2.png')
         self.image.blit(self.sprite, self.rect)
         self.rect.y = y
         self.rect.x = x
@@ -135,7 +136,7 @@ class Block(pygame.sprite.Sprite):
     It derives from the "Sprite" class in Pygame
     """
 
-    def __init__(self, color, width, height):
+    def __init__(self, color, x, y):
         """ Constructor. Pass in the color of the block,
         and its x and y position. """
         # Call the parent class (Sprite) constructor
@@ -143,15 +144,17 @@ class Block(pygame.sprite.Sprite):
 
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
+
+        self.sprite = pygame.image.load('images/boo.gif')
+        self.size = self.sprite.get_rect().size
+        self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+        #self.image.fill(color)
 
         # Fetch the rectangle object that has the dimensions of the image
         # image.
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-        self.sprite = pygame.image.load('images/boo.gif')
         self.image.blit(self.sprite, self.rect)
 
         # Instance variables that control the edges of where we bounce

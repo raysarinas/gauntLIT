@@ -96,20 +96,21 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 
 
     #print(temp)
-    print('transversed vertices vertically:', len(temp))
-    print('transversed vertices horizontally:', len(temp2))
+    #print('transversed vertices vertically:', len(temp))
+    #print('transversed vertices horizontally:', len(temp2))
     #print(edges)
-    print('num of edges:', len(edges))
+    #print('num of edges:', len(edges))
 
     '''******************* HERE IS WHERE GRAPH IS MADE *****************************'''
     graph = Graph(validset, edges) # initiate graph with set of vertices!
     v = graph.get_vertices()
     e = graph.get_edges()
-    print(len(v), len(e)) # this should work O.K.
+    #print(len(v), len(e)) # this should work O.K.
 
 
-    print('NUM OF VALID VERTS:', len(valid))
-    print('NUM OF TOTAL VERTS:', len(vertices))
+
+    #print('NUM OF VALID VERTS:', len(valid))
+    #print('NUM OF TOTAL VERTS:', len(vertices))
 
     # for i in range(len(vertdict.keys())):
     #     if i in invalidverts.keys():
