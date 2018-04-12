@@ -97,36 +97,8 @@ class Peach(pygame.sprite.Sprite):
         self.rect.y = y
         self.rect.x = x
 
-    #     # Set speed vector
-    #     self.change_x = 0
-    #     self.change_y = 0
-    #     self.walls = None
-    #
-    # def changespeed(self, x, y):
-    #     """ Change the speed of the player. """
-    #     self.change_x += x
-    #     self.change_y += y
-
     def update(self):
-        # PROBABLY WILL NEED END GAME CONDITIONS IN HERE?
-        """ CHECK IF HIT PEACH """
         pass
-
-        # # Check and see if we hit anything
-        # block_hit_list = pygame.sprite.spritecollide(self, self.walls, False)
-        # for block in block_hit_list:
-        #
-        #     # Reset our position based on the top/bottom of the object.
-        #     if self.rect.left == Game.player.rect.right:
-        #     #     self.rect.bottom = block.rect.top
-        #     # else:
-        #     #     self.rect.top = block.rect.bottom
-        #
-        #         pygame.font.init() # you have to call this at the start,
-        #                # if you want to use this module.
-        #         myfont = pygame.font.SysFont('Comic Sans MS', 30)
-        #         textsurface = myfont.render('<3', False, (0, 0, 0))
-        #         self.image.blit(textsurface,(0,0))
 
 
 
