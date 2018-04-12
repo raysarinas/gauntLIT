@@ -98,21 +98,6 @@ class Game:
         if hitGhost1 or hitGhost2:
             self.finishScreen()
 
-
-    def checkSpacePressed(self):
-        # Get the events that occur in pygame
-        for event in pygame.event.get():
-            # User has clicked on the exit sign of the window
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            # User has pressed the entered key
-            if event.type == KEYUP and event.key == K_SPACE:
-                return True
-
-
-
-
     def play(self):
         self.done = False
         time_since_path_last_found = 0
@@ -171,6 +156,28 @@ class Game:
             pygame.display.flip()
             self.collision()
 
+    # def checkSpacePressed(self):
+    #     # Get the events that occur in pygame
+    #     for event in pygame.event.get():
+    #         # User has clicked on the exit sign of the window
+    #         if event.type == QUIT:
+    #             pygame.quit()
+    #             sys.exit()
+    #         # User has pressed the entered key
+    #         if event.type == KEY_UP and event.key == K_SPACE:
+    #             return True
+
+
+    def checkEnter(self):
+        # Get the events that occur in pygame
+        for event in pygame.event.get():
+            # User has clicked on the exit sign of the window
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            # User has pressed the entered key
+            if event.type == KEYDOWN and event.key == K_RETURN:
+                return True
 
     def finishScreen(self):
         fontWin = pygame.font.SysFont(None, 40, True)
@@ -180,38 +187,21 @@ class Game:
         textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
         self.surface.blit(textAsk, ((self.surface.get_width()/2)/2, ((self.surface.get_height()/2)/2)+100))
 
-        # pressed = False
-        #
-        #
-        # pressed = self.checkSpacePressed
-        # # If they did press enter
-        # if pressed:
-        #     # Change result to 1 to indicate that the user wants to keep playing
-        #      result = 1
-        # return result
-
-    # def GameOverScreen(self):
-    #     fontWin = pygame.font.SysFont(None, 40, True)
-    #     textWin = fontWin.render('u got caught by a mf ghost!', True, pygame.Color('white'), pygame.Color('black'))
-    #     self.surface.blit(textWin, ((self.surface.get_width()/2)/2, (self.surface.get_height()/2)/2))
-    #     fontAsk = pygame.font.SysFont(None, 100, True)
-    #     textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
-    #     self.surface.blit(textAsk, ((self.surface.get_width()/2)/2, ((self.surface.get_height()/2)/2)+100))
-
-
-
         gameOver = False
         pygame.display.flip()
         waiting = True
         while waiting:
-            print('collided')
+            #print('collided')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYUP:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     waiting = False
-                    self.play()
+                    self.checkEnter()
+                    print("pressed")
+                    newgame = Game(self.surface)
+                    newgame.play()
 
 
 
