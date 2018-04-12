@@ -94,12 +94,12 @@ class Game:
         playercoords = self.player.rect.x, self.player.rect.y
         ghostcoords = self.block.rect.x, self.block.rect.y
         if hitGhost1 or hitGhost2:
-            print('player coords', self.player.rect.x, self.player.rect.y)
-            print('player size', self.player.size)
-            print('player rightside coordinates', self.player.rect.x + self.player.size[0], self.player.rect.y + self.player.size[1])
-            print('ghost coords', self.block.rect.x, self.block.rect.y)
-            print('ghost size', self.block.size)
-            print('ghost rightside coordinates', self.block.rect.x + self.block.size[0], self.block.rect.y + self.block.size[1])
+            # print('player coords', self.player.rect.x, self.player.rect.y)
+            # print('player size', self.player.size)
+            # print('player rightside coordinates', self.player.rect.x + self.player.size[0], self.player.rect.y + self.player.size[1])
+            # print('ghost coords', self.block.rect.x, self.block.rect.y)
+            # print('ghost size', self.block.size)
+            # print('ghost rightside coordinates', self.block.rect.x + self.block.size[0], self.block.rect.y + self.block.size[1])
             if (playercoords[0] != ghostcoords[0]):
                 self.block.rect.x += 2
                 self.block.update()
@@ -137,7 +137,7 @@ class Game:
             correction = 0
             if newghostx != None:
                 if self.block.rect.x > self.player.rect.x:
-                    print('change ghost x coord to:', newghostx)
+                    #print('change ghost x coord to:', newghostx)
                     self.block.rect.x = newghostx - correction
                 elif self.block.rect.x < self.player.rect.x:
                     self.block.rect.x = newghostx + correction
@@ -147,7 +147,7 @@ class Game:
             if newghosty != None:
                 #self.block.change_y = newghosty
                 if self.block.rect.y > self.player.rect.y:
-                    print('change ghost y coord to:', newghosty)
+                    #print('change ghost y coord to:', newghosty)
                     self.block.rect.y = newghosty + correction
                 elif self.block.rect.y < self.player.rect.y:
                     self.block.rect.y = newghosty - correction
@@ -158,14 +158,14 @@ class Game:
 
 
             # DRAW VERTICES ON TOP OF EVERYTHING
-            for rect in self.badrects:
-                pygame.draw.rect(self.surface, pygame.Color('red'), rect)
-            for rect in self.goodrects:
-                pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            for rect in self.vedges:
-                pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
-            for rect in self.hedges:
-                pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
+            # for rect in self.badrects:
+            #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
+            # for rect in self.goodrects:
+            #     pygame.draw.rect(self.surface, pygame.Color('green'), rect)
+            # for rect in self.vedges:
+            #     pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
+            # for rect in self.hedges:
+            #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
 
 
@@ -174,7 +174,7 @@ class Game:
             self.collision()
 
     def finishScreen(self):
-        self.surface.fill(BLUE)
+        self.surface.blit(pygame.image.load('images/halloweeny.jpg'), self.surface.get_rect())
 
         fontWin = pygame.font.SysFont(None, 45, True)
         textWin = fontWin.render('GAME OVER', True, pygame.Color('white'))
@@ -200,7 +200,8 @@ class Game:
                     newgame.startScreen()
 
     def startScreen(self):
-        self.surface.fill(BLUE)
+        #self.surface.fill(BLUE)
+        self.surface.blit(pygame.image.load('images/sunset.png'), self.surface.get_rect())
 
         fontstart = pygame.font.SysFont(None, 30, True)
         textstart = fontstart.render('Press 1,2 or 3 to select difficulty', True, pygame.Color('white'))
