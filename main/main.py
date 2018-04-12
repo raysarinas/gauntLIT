@@ -7,7 +7,7 @@ from pathfinding import *
 from moveghost import *
 
 # Colors
-BLACK = (0, 0, 0)
+BLACK = (100, 10, 0)
 WHITE = (255, 255, 255)
 BLUE = (187, 192, 255)
 
@@ -72,8 +72,6 @@ class Game:
                 elif event.key == pygame.K_DOWN:
                     self.player.changespeed(0, -self.playerspeed)
 
-
-
     # DETECT COLLISION
     def collision(self):
         # player collision with peach
@@ -90,11 +88,6 @@ class Game:
    # get the range of coordinates for the player and the ghost, see if any
    # of them intersect and if they do, then that is when hitghost goes to finish screen
 
-   # playercoords = coords of player
-   # ghostcoords = coords of ghost
-   #
-   # if playercoord[0] == ghostcoords[0] or playercoord[1] == ghostcoords[1]:
-   # self.finishScreen()
         playercoords = self.player.rect.x, self.player.rect.y
         ghostcoords = self.block.rect.x, self.block.rect.y
         if hitGhost1 or hitGhost2:
@@ -158,8 +151,6 @@ class Game:
             else:
                 self.block.change_y = 0
 
-
-
             # DRAW VERTICES ON TOP OF EVERYTHING
             for rect in self.badrects:
                 pygame.draw.rect(self.surface, pygame.Color('red'), rect)
@@ -173,16 +164,16 @@ class Game:
             pygame.display.flip()
             self.collision()
 
-    def checkEnter(self):
-        # Get the events that occur in pygame
-        for event in pygame.event.get():
-            # User has clicked on the exit sign of the window
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            # User has pressed the entered key
-            if event.type == KEYDOWN and event.key == K_RETURN:
-                return True
+    # def checkEnter(self):
+    #     # Get the events that occur in pygame
+    #     for event in pygame.event.get():
+    #         # User has clicked on the exit sign of the window
+    #         if event.type == QUIT:
+    #             pygame.quit()
+    #             sys.exit()
+    #         # User has pressed the entered key
+    #         if event.type == KEYDOWN and event.key == K_RETURN:
+    #             return True
 
     def finishScreen(self):
         self.surface.fill(BLUE)
@@ -207,18 +198,83 @@ class Game:
                     sys.exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     waiting = False
-                    self.checkEnter()
-                    print("pressed")
                     newgame = Game(self.surface)
                     newgame.play()
 
+    def startScreen(self):
+        self.surface.fill(BLUE)
+
+        fontstart = pygame.font.SysFont(None, 30, True)
+        textstart = fontstart.render('Press 1,2 or 3 to select difficulty', True, pygame.Color('white'))
+        self.surface.blit(textstart, ((self.surface.get_width()/2)-175, (self.surface.get_height()/2)/2))
+
+        fontstart1 = pygame.font.SysFont(None, 40, True)
+        textstart1 = fontstart1.render('1 - Easy', True, pygame.Color('white'))
+        self.surface.blit(textstart1, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+40))
+
+        fontstart2 = pygame.font.SysFont(None, 40, True)
+        textstart2 = fontstart2.render('2 - Medium', True, pygame.Color('white'))
+        self.surface.blit(textstart2, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+80))
+
+        fontstart3 = pygame.font.SysFont(None, 40, True)
+        textstart3 = fontstart3.render('3 - Hard', True, pygame.Color('white'))
+        self.surface.blit(textstart3, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+120))
+
+        pygame.display.flip()
+
+        waiting = True
+        while waiting:
+            print("start")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+                    waiting = False
+                    game = Game(self.surface)
+                    game.play()
+
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+                    waiting = False
+                    game = Game(self.surface)
+                    game.play()
+
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
+                    waiting = False
+                    game = Game(self.surface)
+                    game.play()
+
+        # game = Game(self.surface)
+        # game.play()
+
+
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         pygame.quit()
+        #         sys.exit()
+        #     if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+        #         newgame = Game(self.surface)
+        #         newgame.play()
 def main():
     pygame.init() # initialize pygame
     pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
     pygame.display.set_caption("Green Mario's Bungalow")
+    # mode = 0
+    # if mode == 0:
+    #     start = Game(startScreen)
+    #     #self.surface.fill(BLUE)
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             sys.exit()
+    #         if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+    #             newgame = Game(self.surface)
+    #             newgame.play()
+
     game = Game(surface)
-    game.play()
+    #game.play()
+    game.startScreen()
 
 main()
 pygame.quit()
