@@ -282,7 +282,7 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     waiting = False
                     game = Game(self.surface)
-                    game.ghostSpeed = 100
+                    game.ghostSpeed = 150
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
