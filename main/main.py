@@ -8,6 +8,7 @@ from moveghost import *
 
 # Colors
 BLACK = (100, 10, 0)
+BLK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (187, 192, 255)
 
@@ -25,8 +26,8 @@ class Game:
 
         for i in range(1):
             self.block = Block(BLACK, 25, 25)
-            #self.block.rect.x = 25 + i
-            #self.block.rect.y = 25 + i
+            self.block.rect.x = 25
+            self.block.rect.y = 25
             self.block.left_boundary = 10
             self.block.top_boundary = 10
             self.block.right_boundary = 550
@@ -44,7 +45,7 @@ class Game:
         self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph, self.location = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
-        self.playerspeed = 7
+        self.playerspeed = 4
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player)
         self.ghostSpeed1 = 300
@@ -77,12 +78,14 @@ class Game:
 
     # DETECT COLLISION
     def collision(self):
+        winGame = False
         # player collision with peach
         hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
         #hitGhost = pygame.sprite.collide_rect(self.player, self.block)
         if hitPeach:
             #self.done
-            self.finishScreen()
+            winGame = True
+            self.finishScreen(winGame)
 
         hitGhost1 = pygame.sprite.collide_rect(self.player, self.block)
         hitGhost2 = pygame.sprite.collide_rect(self.block, self.player)
@@ -94,6 +97,7 @@ class Game:
         playercoords = self.player.rect.x, self.player.rect.y
         ghostcoords = self.block.rect.x, self.block.rect.y
         if hitGhost1 or hitGhost2:
+            winGame = False
             # print('player coords', self.player.rect.x, self.player.rect.y)
             # print('player size', self.player.size)
             # print('player rightside coordinates', self.player.rect.x + self.player.size[0], self.player.rect.y + self.player.size[1])
@@ -105,7 +109,12 @@ class Game:
                 self.block.update()
                 self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
                 self.all_sprite_list.draw(self.surface)
-            self.finishScreen()
+            if (playercoords[1] != ghostcoords[1]):
+                self.block.rect.y += 5
+                self.block.update()
+                self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
+                self.all_sprite_list.draw(self.surface)
+            self.finishScreen(winGame)
 
     def updatescreen(self):
         self.surface.fill(BLACK)
@@ -154,9 +163,6 @@ class Game:
             else:
                 self.block.change_y = 0
 
-
-
-
             # DRAW VERTICES ON TOP OF EVERYTHING
             # for rect in self.badrects:
             #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
@@ -167,23 +173,47 @@ class Game:
             # for rect in self.hedges:
             #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
-
-
-
             pygame.display.flip()
             self.collision()
 
-    def finishScreen(self):
-        self.surface.blit(pygame.image.load('images/halloweeny.jpg'), self.surface.get_rect())
+    def finishScreen(self, winGame):
+        if winGame:
+            #print('win!')
+            self.surface.fill(BLK)
+            self.surface.blit(pygame.image.load('images/sunset.png'), self.surface.get_rect())
+            winpic = pygame.image.load('images/win.png')
+            self.surface.blit(winpic, [self.surface.get_width()//2 + 70, 70])
+            #print(self.surface.get_rect())
 
-        fontWin = pygame.font.SysFont(None, 45, True)
-        textWin = fontWin.render('GAME OVER', True, pygame.Color('white'))
-        self.surface.blit(textWin, ((self.surface.get_width()/2)-120, (self.surface.get_height()/2)/2))
+            fontWin = pygame.font.SysFont(None, 45, True)
+            textWin = fontWin.render('YOU WIN!', True, pygame.Color('white'))
+            textWin_rect = textWin.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+            self.surface.blit(textWin, textWin_rect)
 
 
-        fontAsk = pygame.font.SysFont(None, 100, True)
-        textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'))
-        self.surface.blit(textAsk, ((self.surface.get_width()/2)-220, ((self.surface.get_height()/2)/2)+100))
+            fontAsk = pygame.font.SysFont(None, 100, True)
+            textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'))
+            textAsk_rect = textAsk.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50))
+            self.surface.blit(textAsk, textAsk_rect)
+
+        else:
+            #print('lose!')
+            self.surface.fill(BLK)
+            losepic = pygame.image.load('images/gameover.png')
+            picrect = losepic.get_rect()
+            self.surface.blit(losepic, ((self.surface.get_width() - picrect[0]) // 2, 2))
+            #print(self.surface.get_rect())
+
+            fontWin = pygame.font.SysFont(None, 45, True)
+            textWin = fontWin.render('GAME OVER', True, pygame.Color('white'))
+            textWin_rect = textWin.get_rect(center=(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 30))
+            self.surface.blit(textWin, textWin_rect)
+
+
+            fontAsk = pygame.font.SysFont(None, 100, True)
+            textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'))
+            textAsk_rect = textAsk.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 20))
+            self.surface.blit(textAsk, textAsk_rect)
 
         gameOver = False
         pygame.display.flip()
@@ -201,29 +231,43 @@ class Game:
 
     def startScreen(self):
         #self.surface.fill(BLUE)
-        self.surface.blit(pygame.image.load('images/sunset.png'), self.surface.get_rect())
+        self.surface.blit(pygame.image.load('images/house.png'), self.surface.get_rect())
+
+        fontwelcome = pygame.font.SysFont(None, 35, True)
+        textwelcome = fontwelcome.render("HAUNTED BUNGALOW RESCUE", True, pygame.Color('white'))
+        text_rect = textwelcome.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100))
+        self.surface.blit(textwelcome, text_rect)
+        #self.surface.blit(textwelcome, ((self.surface.get_width()/2)-175, (self.surface.get_height()/2)/2 - 30))
 
         fontstart = pygame.font.SysFont(None, 30, True)
-        textstart = fontstart.render('Press 1,2 or 3 to select difficulty', True, pygame.Color('white'))
-        self.surface.blit(textstart, ((self.surface.get_width()/2)-175, (self.surface.get_height()/2)/2))
+        textstart = fontstart.render('Press 1, 2, or 3 to Select a Difficulty', True, pygame.Color('white'))
+        start_rect = textstart.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70))
+        self.surface.blit(textstart, start_rect)
+        #self.surface.blit(textstart, ((self.surface.get_width()/2)-175, (self.surface.get_height()/2)/2))
 
-        fontstart1 = pygame.font.SysFont(None, 40, True)
+        fontstart1 = pygame.font.SysFont(None, 30, True)
         textstart1 = fontstart1.render('1 - Easy', True, pygame.Color('white'))
-        self.surface.blit(textstart1, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+40))
+        start_rect1 = textstart1.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 10))
+        self.surface.blit(textstart1, start_rect1)
+        #self.surface.blit(textstart1, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+40))
 
-        fontstart2 = pygame.font.SysFont(None, 40, True)
+        fontstart2 = pygame.font.SysFont(None, 30, True)
         textstart2 = fontstart2.render('2 - Medium', True, pygame.Color('white'))
-        self.surface.blit(textstart2, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+80))
+        start_rect2 = textstart2.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 20))
+        self.surface.blit(textstart2, start_rect2)
+        #self.surface.blit(textstart2, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+80))
 
-        fontstart3 = pygame.font.SysFont(None, 40, True)
+        fontstart3 = pygame.font.SysFont(None, 30, True)
         textstart3 = fontstart3.render('3 - Hard', True, pygame.Color('white'))
-        self.surface.blit(textstart3, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+120))
+        start_rect3 = textstart3.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50))
+        self.surface.blit(textstart3, start_rect3)
+        #self.surface.blit(textstart3, ((self.surface.get_width()/2)-170, ((self.surface.get_height()/2)/2)+120))
 
         pygame.display.flip()
 
         waiting = True
         while waiting:
-            print("start")
+            #print("start")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -237,13 +281,13 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     waiting = False
                     game = Game(self.surface)
-                    game.play.ghostSpeed = 200
+                    game.ghostSpeed = 200
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
                     waiting = False
                     game = Game(self.surface)
-                    game.ghostSpeed = 150
+                    game.ghostSpeed = 100
                     game.play()
 
         # game = Game(self.surface)
@@ -261,7 +305,7 @@ def main():
     pygame.init() # initialize pygame
     pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
-    pygame.display.set_caption("Green Mario's Bungalow")
+    pygame.display.set_caption("Green Mario's Haunted Bungalow Rescue")
 
 
     game = Game(surface)

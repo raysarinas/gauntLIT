@@ -1,5 +1,9 @@
 # gauntLIT
-CMPUT 275 FINAL PROJECT (the last time zac tries it with bonus pain from omid)
+CMPUT 275 FINAL PROJECT
+
+
+## TODO ASAP
+- [ ] COMMENTS AND README FOR SUBMISSION
 
 ## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
 - [x] textfile with walls/maze info
@@ -8,15 +12,9 @@ CMPUT 275 FINAL PROJECT (the last time zac tries it with bonus pain from omid)
 - [x] move ghost with DIJKSTRA and algorithm stuff! 🔥
 - [x] calculate manhattan distance between ghost and player - *this might be done idk yet*
 - [x] find nearest vertex and make ghost move to that vertex every k seconds
-- [ ] start screen and different levels of difficulty
+- [x] start screen and different levels of difficulty
 - [x] endgame conditions and game over screen
 - [x] DEBUG WALL THING MIGHT JUST NEED TO MAKE WALLS THICCC
-
-## TODO BY THURSDAY / BONUS???? IDEK
-- [ ] replace peach with a key and open a door mayhaps? idk
-- [ ] multiple ghosts every x amount of seconds and have those
-- [ ] coins / points system?
-- [ ] readme? idk
 
 
 ### REFERENCES
@@ -46,3 +44,7 @@ https://www.pygame.org/docs/index.html
 - https://stackoverflow.com/questions/18826788/converting-an-image-to-a-rect
   Press space:
 - https://stackoverflow.com/questions/20748326/pygame-waiting-the-user-to-keypress-a-key
+
+- https://i.pinimg.com/originals/3f/ee/f2/3feef297db2e56baeacde08ae854819f.jpg
+
+- TEXT CENTERING https://stackoverflow.com/questions/23982907/python-library-pygame-centering-text

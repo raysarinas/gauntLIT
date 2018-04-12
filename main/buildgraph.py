@@ -38,7 +38,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     xrange = (screenwidth - 10) // splitnum + 1 # NUMBER OF HORIZONTAL VERTICES
     yrange = (screenheight - 10) // splitnum + 1 # NUMBER OF VERTICAL VERTICES
     location = {}
-    print(xrange, yrange)
+    #print(xrange, yrange)
 
     vertices = [] # ARRAY TO HOLD VERTICES
     for i in range(1, xrange):
