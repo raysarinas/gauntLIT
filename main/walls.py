@@ -1,5 +1,3 @@
-# im confused about whats happening im just going to move
-# things so everything is cleaner.
 import pygame
 
 BLUE = (117, 122, 163)
@@ -12,12 +10,11 @@ class Wall1(pygame.sprite.Sprite):
         # Call the parent's constructor
         super().__init__()
 
-        # Make a blue wall, of the size specified in the parameters
+        # Make a wall, of the size specified in the parameters
         self.sprite = pygame.image.load('images/bricks.png')
         self.width = wallrect[2]
         self.height = wallrect[3]
         self.image = pygame.Surface([self.width, self.height])
-        #self.image.fill(BLUE)
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()

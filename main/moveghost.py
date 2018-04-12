@@ -19,8 +19,3 @@ def moveghost(reached, location, graph, ghost, player):
     if delx != None:
         if ghost.rect.x > player.rect.x:
             player.rect.x = newghost
-
-
-
-
-#self.ghost.changespeed(5, 0)

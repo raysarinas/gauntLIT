@@ -65,7 +65,6 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     invalidverts = {}
     invalid = []
 
-# NEED TO FIX THIS???
     rects = [] # temp array to draw out invalid vertices
     for v in vertices:
         for i in range(len(walls)):
@@ -74,8 +73,6 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                     invalid.append(v)
                     #invalid.append([v[0], v[1]])
                     rects.append(pygame.Rect(v[0], v[1], 4, 4))
-
-
 
     # GET VALID VERTICES AND FILTER OUT INVALID VERTICES
     validrects = []
@@ -133,6 +130,3 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 
 
     return vertdict, rects, validrects, vedges, hedges, graph, location #invalidverts, rects
-
-
-#generate_graph(600, 400)

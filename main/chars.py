@@ -20,10 +20,6 @@ class Player(pygame.sprite.Sprite):
         # Set height, width
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)#[16, 26])
 
-        # sprite
-        #self.image = pygame.image.load('mario.png').convert_alpha
-        #self.image.fill(BLACK)
-
         # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
         self.image.blit(self.sprite, self.rect)
@@ -138,12 +134,6 @@ class Block(pygame.sprite.Sprite):
         # Instance variables for our current speed and direction
         self.change_x = 0#random.randint(1, 2)
         self.change_y = 0#random.randint(1, 3)
-
-
-    #def update(self):
-        #self.rect.x += random.randint(1, 2)
-        #self.rect.y += random.randint(2, 3)
-
 
     def update(self):
         """ Called each frame. """

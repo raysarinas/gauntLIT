@@ -18,9 +18,7 @@ def distance(start, end):
     blocky = end[1]
 
     man_dist = abs((playerx - blockx)) + abs((playery - blocky))
-    # print(playerx)
     return man_dist #, playerx
-
 
 def neighbour_identifier(nbr, location):
     for v in location:
@@ -55,27 +53,6 @@ def least_cost_path(graph, start, dest, location):
     path = path[::-1]
     return path
 
-# def findclosest(location, playercoords, ghostcoords):
-#     minplayer = float('inf')
-#     minghost = float('inf')
-#
-#     # find the nearest vertex to the start and destination/end points
-#     # that have been inputted/requested
-#     for key, vertex in location.items():
-#         currentvert = location[key]
-#         playervertdist = distance(currentvert, playercoords)
-#         if playervertdist < minplayer:
-#             minplayer = playervertdist
-#             minplayerID = key
-#
-#         ghostvertdist = distance(currentvert, ghostcoords)
-#         if ghostvertdist < minghost:
-#             minghost = ghostvertdist
-#             minghostID = key
-#
-#     return minplayerID, minghostID
-
-
 # this should be in an infinite loop prob in main game execution
 def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
 
@@ -101,16 +78,5 @@ def findpath(playercoordx, playercoordy, blockx, blocky, graph, location):
             minghost = ghostvertdist
             minghostID = key
 
-    #minplayerID, minghostID = findclosest(location, playercoords, ghostcoords)
-
-    # PLACEHOLDER *HERE* FOR OLD PATHFINDING STUFF
-
-    # cost = CostDistance()
-    #print(graph.neighbours(location[minplayerID]))
-    #print(bellman_ford(graph.get_vertices(), graph.get_edges(), minplayerID))
     reached = least_cost_path(graph, minghostID, minplayerID, location)
-    #print(reached)
     return reached
-
-    # print(minplayer)
-    # print(minghost)
