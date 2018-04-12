@@ -1,31 +1,12 @@
 # gauntLIT
 CMPUT 275 FINAL PROJECT
 
-
-## TODO ASAP
-- [ ] COMMENTS AND README FOR SUBMISSION
-
-## WHAT WE ACTUALLY NEED TO BE DONE BY THURSDAY
-- [x] textfile with walls/maze info
-- [x] new sprites for characters / import them correctly
-- [x] add edges to graph / make sure correct edges are being used --> THERES A FEW BUGS WITH THE EDGES BUT I THINK CHANGING THE WALLS WILL HELP
-- [x] move ghost with DIJKSTRA and algorithm stuff! 🔥
-- [x] calculate manhattan distance between ghost and player - *this might be done idk yet*
-- [x] find nearest vertex and make ghost move to that vertex every k seconds
-- [x] start screen and different levels of difficulty
-- [x] endgame conditions and game over screen
-- [x] DEBUG WALL THING MIGHT JUST NEED TO MAKE WALLS THICCC
-
-
 ### REFERENCES
 
 - **PYGAME DOCUMENTATION**
 https://www.pygame.org/docs/index.html
 
 - maybe this will help with drawing walls: https://stackoverflow.com/questions/24301702/walls-in-pygame
-
-- THIS LOOKS REALLY GOOD BUT I HAVENT READ IT YET. IT INCLUDES STUFF ON PATH FINDING AND HONESTLY WE COULD PROBABLY JUST MAKE A DUPLICATE OF THIS GAME BUT LIKE MAKE IT ALL MARIO AND WHATEVER ELSE
-- https://eli.thegreenplace.net/tag/pygame-tutorial
 
 - SPRITES: https://piq.codeus.net/u/Revawolf
 - https://stackoverflow.com/questions/27867073/how-to-put-an-image-onto-a-sprite-pygame
@@ -50,3 +31,5 @@ https://www.pygame.org/docs/index.html
 - TEXT CENTERING https://stackoverflow.com/questions/23982907/python-library-pygame-centering-text
 
 - http://pixeljoint.com/pixelart/87261.htm
+
+- http://johanvinet.tumblr.com/tagged/Extreme-Exorcism
