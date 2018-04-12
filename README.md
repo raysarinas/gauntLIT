@@ -9,8 +9,8 @@ CMPUT 275 FINAL PROJECT (the last time zac tries it with bonus pain from omid)
 - [x] calculate manhattan distance between ghost and player - *this might be done idk yet*
 - [x] find nearest vertex and make ghost move to that vertex every k seconds
 - [ ] start screen and different levels of difficulty
-- [ ] endgame conditions and game over screen
-- [ ] DEBUG WALL THING MIGHT JUST NEED TO MAKE WALLS THICCC
+- [x] endgame conditions and game over screen
+- [x] DEBUG WALL THING MIGHT JUST NEED TO MAKE WALLS THICCC
 
 ## TODO BY THURSDAY / BONUS???? IDEK
 - [ ] replace peach with a key and open a door mayhaps? idk

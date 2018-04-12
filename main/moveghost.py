@@ -4,6 +4,7 @@ from pathfinding import *
 def moveghost_x(reached, location, graph, ghostcoord):
     if len(reached) > 1:
         if location[reached[1]][0] != ghostcoord:
+            print('location[reached[1]]', location[reached[1]])
             return location[reached[1]][0]
         # for v in reached:
         #     print(location[v][0], location[v][1])

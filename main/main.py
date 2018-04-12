@@ -25,14 +25,17 @@ class Game:
 
         for i in range(1):
             self.block = Block(BLACK, 25, 25)
-            self.block.rect.x = 25 + i
-            self.block.rect.y = 25 + i
+            #self.block.rect.x = 25 + i
+            #self.block.rect.y = 25 + i
             self.block.left_boundary = 10
             self.block.top_boundary = 10
             self.block.right_boundary = 550
             self.block.bottom_boundary = 350
             self.all_sprite_list.add(self.block)
             self.block_list.add(self.block)
+
+        self.peach = Peach(590 - 18, 15)
+        self.all_sprite_list.add(self.peach)
 
         #self.wall_list, self.all_sprite_list = makeWalls(self.all_sprite_list)
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
@@ -42,9 +45,8 @@ class Game:
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
         self.playerspeed = 7
-        self.peach = Peach(590 - 18, 10)
         self.player.walls = self.wall_list
-        self.all_sprite_list.add(self.player, self.peach)
+        self.all_sprite_list.add(self.player)
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -88,8 +90,30 @@ class Game:
    # get the range of coordinates for the player and the ghost, see if any
    # of them intersect and if they do, then that is when hitghost goes to finish screen
 
+   # playercoords = coords of player
+   # ghostcoords = coords of ghost
+   #
+   # if playercoord[0] == ghostcoords[0] or playercoord[1] == ghostcoords[1]:
+   # self.finishScreen()
+        playercoords = self.player.rect.x, self.player.rect.y
+        ghostcoords = self.block.rect.x, self.block.rect.y
         if hitGhost1 or hitGhost2:
+            print('player coords', self.player.rect.x, self.player.rect.y)
+            print('player size', self.player.size)
+            print('player rightside coordinates', self.player.rect.x + self.player.size[0], self.player.rect.y + self.player.size[1])
+            print('ghost coords', self.block.rect.x, self.block.rect.y)
+            print('ghost size', self.block.size)
+            print('ghost rightside coordinates', self.block.rect.x + self.block.size[0], self.block.rect.y + self.block.size[1])
+            if (playercoords[0] != ghostcoords[0]):
+                self.block.rect.x += 2
+                self.block.update()
+                self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
+                self.all_sprite_list.draw(self.surface)
             self.finishScreen()
+
+    def updatescreen(self):
+        self.surface.fill(BLACK)
+        self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
 
     def play(self):
         self.done = False
@@ -99,12 +123,10 @@ class Game:
             dt = clock.tick()
             self.handle_event()
             self.all_sprite_list.update()
-            self.surface.fill(BLACK)
-            self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
+            self.updatescreen()
+            # self.surface.fill(BLACK)
+            # self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
             blocks_hit_list = pygame.sprite.spritecollide(self.player, self.block_list, True)
-
-            for block in blocks_hit_list:
-                print('hit!')
             self.all_sprite_list.draw(self.surface)
 
             time_since_path_last_found += dt
@@ -119,6 +141,7 @@ class Game:
             correction = 0
             if newghostx != None:
                 if self.block.rect.x > self.player.rect.x:
+                    print('change ghost x coord to:', newghostx)
                     self.block.rect.x = newghostx - correction
                 elif self.block.rect.x < self.player.rect.x:
                     self.block.rect.x = newghostx + correction
@@ -128,6 +151,7 @@ class Game:
             if newghosty != None:
                 #self.block.change_y = newghosty
                 if self.block.rect.y > self.player.rect.y:
+                    print('change ghost y coord to:', newghosty)
                     self.block.rect.y = newghosty + correction
                 elif self.block.rect.y < self.player.rect.y:
                     self.block.rect.y = newghosty - correction
