@@ -48,6 +48,7 @@ class Game:
         self.playerspeed = 4
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player)
+        self.ghostSpeed = 200
         self.ghostSpeed1 = 300
         self.ghostSpeed2 = 200
         self.ghostSpeed3 = 150
@@ -137,7 +138,7 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
-            if time_since_path_last_found > 200: # find coordinates every 2 seconds
+            if time_since_path_last_found > self.ghostSpeed: # find coordinates every 2 seconds
                 path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
@@ -275,19 +276,19 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     waiting = False
                     game = Game(self.surface)
-                    game.ghostSpeed = 300
+                    game.ghostSpeed = 200
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     waiting = False
                     game = Game(self.surface)
-                    game.ghostSpeed = 200
+                    game.ghostSpeed = 100
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
                     waiting = False
                     game = Game(self.surface)
-                    game.ghostSpeed = 100
+                    game.ghostSpeed = 50
                     game.play()
 
         # game = Game(self.surface)
