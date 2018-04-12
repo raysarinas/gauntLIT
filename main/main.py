@@ -47,6 +47,9 @@ class Game:
         self.playerspeed = 7
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player)
+        self.ghostSpeed1 = 300
+        self.ghostSpeed2 = 200
+        self.ghostSpeed3 = 150
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -125,7 +128,7 @@ class Game:
             time_since_path_last_found += dt
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
-            if time_since_path_last_found > 200: # find coordinates every 2 seconds
+            if time_since_path_last_found > ghostSpeed: # find coordinates every 2 seconds
                 path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
@@ -151,6 +154,9 @@ class Game:
             else:
                 self.block.change_y = 0
 
+
+
+
             # DRAW VERTICES ON TOP OF EVERYTHING
             for rect in self.badrects:
                 pygame.draw.rect(self.surface, pygame.Color('red'), rect)
@@ -161,19 +167,11 @@ class Game:
             for rect in self.hedges:
                 pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
+
+
+
             pygame.display.flip()
             self.collision()
-
-    # def checkEnter(self):
-    #     # Get the events that occur in pygame
-    #     for event in pygame.event.get():
-    #         # User has clicked on the exit sign of the window
-    #         if event.type == QUIT:
-    #             pygame.quit()
-    #             sys.exit()
-    #         # User has pressed the entered key
-    #         if event.type == KEYDOWN and event.key == K_RETURN:
-    #             return True
 
     def finishScreen(self):
         self.surface.fill(BLUE)
@@ -199,7 +197,7 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     waiting = False
                     newgame = Game(self.surface)
-                    newgame.play()
+                    newgame.startScreen()
 
     def startScreen(self):
         self.surface.fill(BLUE)
@@ -232,16 +230,19 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     waiting = False
                     game = Game(self.surface)
+                    game.ghostSpeed = 300
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     waiting = False
                     game = Game(self.surface)
+                    game.play.ghostSpeed = 200
                     game.play()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
                     waiting = False
                     game = Game(self.surface)
+                    game.ghostSpeed = 150
                     game.play()
 
         # game = Game(self.surface)
@@ -260,17 +261,7 @@ def main():
     pygame.font.init() # for drawing words and stuff mayhaps?
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
     pygame.display.set_caption("Green Mario's Bungalow")
-    # mode = 0
-    # if mode == 0:
-    #     start = Game(startScreen)
-    #     #self.surface.fill(BLUE)
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             sys.exit()
-    #         if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-    #             newgame = Game(self.surface)
-    #             newgame.play()
+
 
     game = Game(surface)
     #game.play()
