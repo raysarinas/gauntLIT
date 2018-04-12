@@ -44,3 +44,5 @@ https://www.pygame.org/docs/index.html
 - https://stackoverflow.com/questions/28645597/how-to-draw-a-transparent-image-in-pygame
 
 - https://stackoverflow.com/questions/18826788/converting-an-image-to-a-rect
+  Press space:
+- https://stackoverflow.com/questions/20748326/pygame-waiting-the-user-to-keypress-a-key

@@ -11,8 +11,6 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (187, 192, 255)
 
-
-
 # Screen dimensions
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
@@ -90,11 +88,6 @@ class Game:
    # get the range of coordinates for the player and the ghost, see if any
    # of them intersect and if they do, then that is when hitghost goes to finish screen
 
-   # playercoords = coords of player
-   # ghostcoords = coords of ghost
-   #
-   # if playercoord[0] == ghostcoords[0] or playercoord[1] == ghostcoords[1]:
-   # self.finishScreen()
         if hitGhost1 or hitGhost2:
             self.finishScreen()
 
@@ -144,29 +137,17 @@ class Game:
 
 
             # DRAW VERTICES ON TOP OF EVERYTHING
-            # for rect in self.badrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
-            # for rect in self.goodrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            # for rect in self.vedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
-            # for rect in self.hedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
+            for rect in self.badrects:
+                pygame.draw.rect(self.surface, pygame.Color('red'), rect)
+            for rect in self.goodrects:
+                pygame.draw.rect(self.surface, pygame.Color('green'), rect)
+            for rect in self.vedges:
+                pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
+            for rect in self.hedges:
+                pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
 
             pygame.display.flip()
             self.collision()
-
-    # def checkSpacePressed(self):
-    #     # Get the events that occur in pygame
-    #     for event in pygame.event.get():
-    #         # User has clicked on the exit sign of the window
-    #         if event.type == QUIT:
-    #             pygame.quit()
-    #             sys.exit()
-    #         # User has pressed the entered key
-    #         if event.type == KEY_UP and event.key == K_SPACE:
-    #             return True
-
 
     def checkEnter(self):
         # Get the events that occur in pygame
@@ -180,12 +161,16 @@ class Game:
                 return True
 
     def finishScreen(self):
-        fontWin = pygame.font.SysFont(None, 40, True)
-        textWin = fontWin.render('GAME OVER', True, pygame.Color('white'), pygame.Color('black'))
-        self.surface.blit(textWin, ((self.surface.get_width()/2)/2, (self.surface.get_height()/2)/2))
+        self.surface.fill(BLUE)
+
+        fontWin = pygame.font.SysFont(None, 45, True)
+        textWin = fontWin.render('GAME OVER', True, pygame.Color('white'))
+        self.surface.blit(textWin, ((self.surface.get_width()/2)-120, (self.surface.get_height()/2)/2))
+
+
         fontAsk = pygame.font.SysFont(None, 100, True)
-        textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'), pygame.Color('black'))
-        self.surface.blit(textAsk, ((self.surface.get_width()/2)/2, ((self.surface.get_height()/2)/2)+100))
+        textAsk = fontWin.render('Play Again? Press Space', True, pygame.Color('white'))
+        self.surface.blit(textAsk, ((self.surface.get_width()/2)-220, ((self.surface.get_height()/2)/2)+100))
 
         gameOver = False
         pygame.display.flip()
@@ -202,9 +187,6 @@ class Game:
                     print("pressed")
                     newgame = Game(self.surface)
                     newgame.play()
-
-
-
 
 def main():
     pygame.init() # initialize pygame
