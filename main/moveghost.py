@@ -4,29 +4,22 @@ from pathfinding import *
 def moveghost_x(reached, location, graph, ghostcoord):
     if len(reached) > 1:
         if location[reached[1]][0] != ghostcoord:
-            print('location[reached[1]]', location[reached[1]])
             return location[reached[1]][0]
-        # for v in reached:
-        #     print(location[v][0], location[v][1])
-        #     if (ghostcoord != location[v][0]):
-        #         return location[v][0]
-        #     else:
-        #         return 0
-            # if (ghostcoord == location[v][0]) and (ghostcoord != location[v][1]):
-            #     return location[v][1]
 
 def moveghost_y(reached, location, graph, ghostcoord):
     if len(reached) > 1:
         if location[reached[1]][1] != ghostcoord:
             return location[reached[1]][1]
-        #for v in reached:
-            # print(location[v][0], location[v][1])
-            # if (ghostcoord != location[v][1]):
-            #     return location[v][1]
-            # else:
-            #     return 0
-            # if (ghostcoord == location[v][0]) and (ghostcoord != location[v][1]):
-            #     return location[v][1]
+
+def moveghost(reached, location, graph, ghost, player):
+    delx = moveghost_x(reached, location, graph, ghost.rect.x)
+    dely = moveghost_y(reached, location, graph, ghost.rect.y)
+    correctionfactor = 0
+
+    if delx != None:
+        if ghost.rect.x > player.rect.x:
+            player.rect.x = newghost
+
 
 
 

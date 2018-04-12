@@ -2,6 +2,36 @@ from graph import Graph
 
 import pygame
 
+# WORK ON THIS LATER PROBABLY OR COULD INTEGRATE TO GRAPH.PY CLASS THAT ALREADY EXISTS? IDK IF HAVE TIME!
+class Generator:
+
+    def __init__(self, surface, screenwidth, screenheight, walls, wall_list):
+        self.surface = surface
+        self.splitnum = 25
+        self.walls = walls
+        self.wall_list = wall_list
+        self.widthrange = (self.screenwidth - 10) // self.splitnum + 1
+        self.heightrange = (self.screenheight - 10) // self.splitnum + 1
+        self.location = {}
+        self.vertices = []
+
+    def make_vertices(vlist, xrange, yrange):
+        for x in range(1, xrange):
+            for y in range(1, yrange):
+                vlist.append([splitnum*i, splitnum*j])
+
+    def filter_vertices():
+        pass
+        # filter out invalid vertices / wall points
+
+    def make_edges():
+        pass
+        # make graph edges
+
+    def make(): # make/return the graph!
+        pass
+
+
 def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     # GET VERTICES FOR THE ENTIRE SCREEN
     splitnum = 25
@@ -47,7 +77,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
 
 
 
-    # GETTING VALID VERTICES AND FILTERING
+    # GET VALID VERTICES AND FILTER OUT INVALID VERTICES
     validrects = []
     valid = [v for v in vertices if v not in invalid] # filter out invalid vertices
     for v in valid:
@@ -71,6 +101,7 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
     temp2 = []
     edges = []
 
+    # CREATE THE EDGES OF THE GRAPH
     for i in range(len(vertexlist)):
         for j in range(len(vertexlist)):
             if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
@@ -95,28 +126,11 @@ def generate_graph(surface, screenwidth, screenheight, walls, wall_list):
                         hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], (splitnum - 1), 2))
 
 
-    #print(temp)
-    #print('transversed vertices vertically:', len(temp))
-    #print('transversed vertices horizontally:', len(temp2))
-    #print(edges)
-    #print('num of edges:', len(edges))
-
-    '''******************* HERE IS WHERE GRAPH IS MADE *****************************'''
+    # GENERATE/MAKE THE GRAPH
     graph = Graph(validset, edges) # initiate graph with set of vertices!
     v = graph.get_vertices()
     e = graph.get_edges()
-    #print(len(v), len(e)) # this should work O.K.
 
-
-
-    #print('NUM OF VALID VERTS:', len(valid))
-    #print('NUM OF TOTAL VERTS:', len(vertices))
-
-    # for i in range(len(vertdict.keys())):
-    #     if i in invalidverts.keys():
-    #         #print(i, vertdict[i])
-    #         del vertdict[i]
-    # #print(len(vertdict))
 
     return vertdict, rects, validrects, vedges, hedges, graph, location #invalidverts, rects
 
