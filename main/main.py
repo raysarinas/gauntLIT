@@ -21,27 +21,21 @@ class Game:
         self.surface = surface
         self.done = False
         self.cont = True
+
+        # INITIALIZE character sprites
         self.all_sprite_list = pygame.sprite.Group()
         self.block_list = pygame.sprite.Group()
 
-        for i in range(1):
-            self.block = Block(BLACK, 25, 25)
-            self.block.rect.x = 25
-            self.block.rect.y = 25
-            self.block.left_boundary = 10
-            self.block.top_boundary = 10
-            self.block.right_boundary = 550
-            self.block.bottom_boundary = 350
-            self.all_sprite_list.add(self.block)
-            self.block_list.add(self.block)
-
+        self.ghost = Block(BLACK, 25, 25)
+        self.all_sprite_list.add(self.ghost)
+        self.block_list.add(self.ghost)
         self.peach = Peach(590 - 18, 15)
         self.all_sprite_list.add(self.peach)
 
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.valid, self.badrects, self.goodrects, self.vedges, self.hedges, self.graph, self.location = generate_graph(self.surface, SCREEN_WIDTH, SCREEN_HEIGHT, self.walls, self.wall_list)
+        self.graph, self.location = generate_graph(self.surface, self.walls, self.wall_list)
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
         self.playerspeed = 4
@@ -86,25 +80,25 @@ class Game:
             winGame = True
             self.finishScreen(winGame)
 
-        hitGhost1 = pygame.sprite.collide_rect(self.player, self.block)
-        hitGhost2 = pygame.sprite.collide_rect(self.block, self.player)
+        hitGhost1 = pygame.sprite.collide_rect(self.player, self.ghost)
+        hitGhost2 = pygame.sprite.collide_rect(self.ghost, self.player)
 # COLLISION IS TOO CLOSE LIKE
    # STILL PRETTY FAR FROM LUIGI AND STILL A COLLISION IS DETECTED?
    # get the range of coordinates for the player and the ghost, see if any
    # of them intersect and if they do, then that is when hitghost goes to finish screen
 
         playercoords = self.player.rect.x, self.player.rect.y
-        ghostcoords = self.block.rect.x, self.block.rect.y
+        ghostcoords = self.ghost.rect.x, self.ghost.rect.y
         if hitGhost1 or hitGhost2:
             winGame = False
             if (playercoords[0] != ghostcoords[0]):
-                self.block.rect.x += 2
-                self.block.update()
+                self.ghost.rect.x += 2
+                self.ghost.update()
                 self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
                 self.all_sprite_list.draw(self.surface)
             if (playercoords[1] != ghostcoords[1]):
-                self.block.rect.y += 5
-                self.block.update()
+                self.ghost.rect.y += 5
+                self.ghost.update()
                 self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
                 self.all_sprite_list.draw(self.surface)
             self.finishScreen(winGame)
@@ -130,37 +124,28 @@ class Game:
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
             if time_since_path_last_found > self.ghostSpeed: # find coordinates every 2 seconds
-                path = findpath(self.player.rect.x, self.player.rect.y, self.block.rect.x, self.block.rect.y, self.graph, self.location)
+                path = findpath(self.player.rect.x, self.player.rect.y, self.ghost.rect.x, self.ghost.rect.y, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
-            newghostx = moveghost_x(path, self.location, self.graph, self.block.rect.x)
-            newghosty = moveghost_y(path, self.location, self.graph, self.block.rect.y)
-            correction = 0
-            if newghostx != None:
-                if self.block.rect.x > self.player.rect.x:
-                    #print('change ghost x coord to:', newghostx)
-                    self.block.rect.x = newghostx - correction
-                elif self.block.rect.x < self.player.rect.x:
-                    self.block.rect.x = newghostx + correction
-            else:
-                self.block.change_x = 0
-            if newghosty != None:
-                if self.block.rect.y > self.player.rect.y:
-                    self.block.rect.y = newghosty + correction
-                elif self.block.rect.y < self.player.rect.y:
-                    self.block.rect.y = newghosty - correction
-            else:
-                self.block.change_y = 0
-
-            # DRAW VERTICES ON TOP OF EVERYTHING FOR TESTING
-            # for rect in self.badrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('red'), rect)
-            # for rect in self.goodrects:
-            #     pygame.draw.rect(self.surface, pygame.Color('green'), rect)
-            # for rect in self.vedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('orange'), rect)
-            # for rect in self.hedges:
-            #     pygame.draw.rect(self.surface, pygame.Color('purple'), rect)
+            moveghost(path, self.location, self.ghost, self.player)
+            # newghostx = moveghost_x(path, self.location, self.graph, self.ghost.rect.x)
+            # newghosty = moveghost_y(path, self.location, self.graph, self.ghost.rect.y)
+            # correction = 0
+            # if newghostx != None:
+            #     if self.ghost.rect.x > self.player.rect.x:
+            #         #print('change ghost x coord to:', newghostx)
+            #         self.ghost.rect.x = newghostx - correction
+            #     elif self.ghost.rect.x < self.player.rect.x:
+            #         self.ghost.rect.x = newghostx + correction
+            # else:
+            #     self.ghost.change_x = 0
+            # if newghosty != None:
+            #     if self.ghost.rect.y > self.player.rect.y:
+            #         self.ghost.rect.y = newghosty + correction
+            #     elif self.ghost.rect.y < self.player.rect.y:
+            #         self.ghost.rect.y = newghosty - correction
+            # else:
+            #     self.ghost.change_y = 0
 
             pygame.display.flip()
             self.collision()
@@ -249,6 +234,19 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                # if event.type == pygame.KEYDOWN:
+                #     waiting = False
+                #     game = Game(self.surface)
+                #
+                #     if event.key == pygame.K_1:
+                #         game.ghostSpeed = 200
+                #         game.play()
+                #     if event.key == pygame.K_2:
+                #         game.ghostSpeed = 150
+                #         game.play()
+                #     if event.key == pygame.K_3:
+                #         game.ghostSpeed = 50
+                #         game.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     waiting = False
                     game = Game(self.surface)

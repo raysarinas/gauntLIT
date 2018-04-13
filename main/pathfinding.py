@@ -21,9 +21,18 @@ def distance(start, end):
     return man_dist #, playerx
 
 def neighbour_identifier(nbr, location):
+    # COULD IMPROVE THIS BY IMPLEMENTING A BINARY SEARCH THING OR
+    # LIKE DYNAMIC PROGRAMMING MAYBE? IDK MAYBE DIVIDE AND CONQUER
     for v in location:
         if location[v] == nbr:
             return v
+    # low = 0
+    # high = len(location) - 1
+    #
+    # while (low <= high):
+    #     mid = low + (high - low) // 2
+    #
+    #     if (location[mid])
 
 def least_cost_path(graph, start, dest, location):
     reached = {}
@@ -36,7 +45,7 @@ def least_cost_path(graph, start, dest, location):
         if edge[1] not in reached:
             reached[edge[1]] = edge[0]
             for nbr in graph.neighbours(location[edge[1]]):
-                nbrID = neighbour_identifier(nbr, location) # THIS MIGHT BE SLOW
+                nbrID = location.index(nbr) # THIS MIGHT BE SLOW
                 # LIKE FINDING NBR ID IS SLOW PROBABLY A FASTER WAY TO GET IT???
                 events.insert((edge[1], nbrID), time + distance(location[edge[1]], nbr))
 

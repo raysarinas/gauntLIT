@@ -124,12 +124,14 @@ class Block(pygame.sprite.Sprite):
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
         self.image.blit(self.sprite, self.rect)
+        self.rect.x = 25
+        self.rect.y = 25
 
         # Instance variables that control the edges of where we bounce
-        self.left_boundary = 0
-        self.right_boundary = 0
-        self.top_boundary = 0
-        self.bottom_boundary = 0
+        self.left_boundary = 10
+        self.right_boundary = 10
+        self.top_boundary = 550
+        self.bottom_boundary = 350
 
         # Instance variables for our current speed and direction
         self.change_x = 0#random.randint(1, 2)
