@@ -66,17 +66,22 @@ def least_cost_path(graph, start, dest, location):
         edge, time = events.popmin()
         if edge[1] not in reached:
             reached[edge[1]] = edge[0]
+
+            # each vertex in our graph is a tuple, so we use tuples to find neighbours
+            # instead of single values to find the neighbours of a vertex
             for nbr in graph.neighbours(location[edge[1]]):
-                # because each vertex in our graph is a tuple, we use tuples
-                # instead of single values to find the neighbours of a vertex
-                # then find the identifier/key value attached to nbr tuple and
-                # insert into binary heap appropriately
+                # find the identifier/key value attached to nbr tuple
                 nbrID = neighbour_identifier(nbr, location)
+                 # insert to binary heap appropriately
                 events.insert((edge[1], nbrID), time + distance(location[edge[1]], nbr))
 
+
+    # FIND MINIMUM PATH IF POSSIBLE
     if dest not in reached:
         return []
 
+    # start at the dest and continously ind the parent of current vertex
+    # until have reached starting vertex
     current = dest
     path = [current]
 
@@ -84,7 +89,7 @@ def least_cost_path(graph, start, dest, location):
         current = reached[current]
         path.append(current)
 
-    path = path[::-1]
+    path = path[::-1] # reverse the list so starts from the ghost
     return path
 
 def findpath(player, ghost, graph, location):
@@ -102,7 +107,8 @@ def findpath(player, ghost, graph, location):
       the pair (xposition, ypostiion) of coordinates for that vertex on the
       game screen.
 
-    Returns the least cost path?
+    Returns the identifying keys for the player and ghost coordinates from the
+    location dictionary.
     """
 
     playercoords = [player.rect.x, player.rect.y]
@@ -110,11 +116,9 @@ def findpath(player, ghost, graph, location):
 
     startV = None
     endV = None
-
-    # find the nearest vertex to the start and destination/end points
-    # that have been inputted/requested
     minplayer = float('inf')
     minghost = float('inf')
+
     for key, vertex in location.items():
         currentvert = location[key]
         playervertdist = distance(currentvert, playercoords)
@@ -127,5 +131,4 @@ def findpath(player, ghost, graph, location):
             minghost = ghostvertdist
             minghostID = key
 
-    reached = least_cost_path(graph, minghostID, minplayerID, location)
-    return reached
+    return minghostID, minplayerID
