@@ -26,7 +26,7 @@ class Game:
         self.all_sprite_list = pygame.sprite.Group()
         self.block_list = pygame.sprite.Group()
 
-        self.ghost = Block(BLACK, 25, 25)
+        self.ghost = Ghost(BLACK, 25, 25)
         self.all_sprite_list.add(self.ghost)
         self.block_list.add(self.ghost)
         self.peach = Peach(590 - 18, 15)
@@ -42,9 +42,6 @@ class Game:
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player)
         self.ghostSpeed = 200
-        self.ghostSpeed1 = 300
-        self.ghostSpeed2 = 200
-        self.ghostSpeed3 = 150
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -128,26 +125,8 @@ class Game:
                 path = least_cost_path(self.graph, ghostloc, playerloc, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
-            moveghost(path, self.location, self.ghost, self.player)
-            # newghostx = moveghost_x(path, self.location, self.graph, self.ghost.rect.x)
-            # newghosty = moveghost_y(path, self.location, self.graph, self.ghost.rect.y)
-            # correction = 0
-            # if newghostx != None:
-            #     if self.ghost.rect.x > self.player.rect.x:
-            #         #print('change ghost x coord to:', newghostx)
-            #         self.ghost.rect.x = newghostx - correction
-            #     elif self.ghost.rect.x < self.player.rect.x:
-            #         self.ghost.rect.x = newghostx + correction
-            # else:
-            #     self.ghost.change_x = 0
-            # if newghosty != None:
-            #     if self.ghost.rect.y > self.player.rect.y:
-            #         self.ghost.rect.y = newghosty + correction
-            #     elif self.ghost.rect.y < self.player.rect.y:
-            #         self.ghost.rect.y = newghosty - correction
-            # else:
-            #     self.ghost.change_y = 0
-
+            #moveghost(path, self.location, self.ghost, self.player)
+            self.ghost.moveghost(path, self.location, self.player)
             pygame.display.flip()
             self.collision()
 

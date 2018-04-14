@@ -1,8 +1,6 @@
 import pygame
 
-BLUE = (117, 122, 163)
-
-class Wall1(pygame.sprite.Sprite):
+class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
 
     def __init__(self, wallrect):
@@ -10,28 +8,28 @@ class Wall1(pygame.sprite.Sprite):
         # Call the parent's constructor
         super().__init__()
 
-        # Make a wall, of the size specified in the parameters
+        # Make a wall (using wallrect list to get it's size)
         self.sprite = pygame.image.load('images/bricks.png')
         self.width = wallrect[2]
         self.height = wallrect[3]
         self.image = pygame.Surface([self.width, self.height])
 
-        # Make our top-left corner the passed-in location.
+        # top-left corner is where we initiate to draw the wall
         self.rect = self.image.get_rect()
         self.image.blit(self.sprite, self.rect)
-        self.rect.y = wallrect[1]
-        self.rect.x = wallrect[0]
+        self.rect.x, self.rect.y = wallrect[0], wallrect[1]
 
-        # # Make our top-left corner the passed-in location.
-        # self.rect = self.image.get_rect()
-        self.rect.y = wallrect[1]
-        self.rect.x = wallrect[0]
-
-# GENERATE BORDERS MORE EFFICIENTLY:
 def generate_walls(all_sprite_list):
+    """
+    Generates maze wall/border sprites onto the screen by parsing a text file.
+    Returns a 'group' of sprites representing the maze borders/walls, an
+    updated list of all the sprites used in the game, and a list of the walls
+    which each entry representing a rectangle.
+    """
     walls = []
 
     with open('../map.txt', 'r') as filename:
+        # parse wall/border starting coordinates and size and store appropriately.
         for line in filename:
             row = line.strip().split(",")
 
@@ -42,10 +40,13 @@ def generate_walls(all_sprite_list):
             wallrect = [topleftx, toplefty, width, height]
             walls.append(wallrect)
 
+    # make a group of pygame sprites which will be a list of the wall sprites
     wall_list = pygame.sprite.Group()
 
+    # create an instance of a wall and append each wall to both the list of
+    # wall sprites and the entire list of sprites utilized in the game
     for i in range(len(walls)):
-        wall = Wall1(walls[i])
+        wall = Wall(walls[i])
         wall_list.add(wall)
         all_sprite_list.add(wall)
 

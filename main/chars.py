@@ -1,5 +1,6 @@
 import pygame, random
 import pygame.gfxdraw
+from pathfinding import *
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -7,7 +8,7 @@ BLUE = (50, 50, 255)
 
 class Player(pygame.sprite.Sprite):
     """ This class the character Mario that that player controls
-    controls. """
+    controls. Subclass of "Sprite" class in Pygame."""
 
     # Constructor function
     # gets the starting position of mario
@@ -18,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.size = self.sprite.get_rect().size
 
         # Set height, width
-        self.image = pygame.Surface(self.size, pygame.SRCALPHA)#[16, 26])
+        self.image = pygame.Surface(self.size, pygame.SRCALPHA)
 
         # Make our top-left corner of the sprite the passed-in location.
         self.rect = self.image.get_rect()
@@ -74,7 +75,11 @@ class Player(pygame.sprite.Sprite):
 
 
 class Peach(pygame.sprite.Sprite):
-    """ This class represents Princess Peach that must be saved I guess? """
+    """ This class represents Princess Peach that must be saved.
+        Sprite is static and this class just represents the rectangle
+        in which holds the image of Peach.
+        Subclass of "Sprite" class in Pygame.
+    """
 
     # Constructor function
     def __init__(self, x, y):
@@ -82,10 +87,9 @@ class Peach(pygame.sprite.Sprite):
         super().__init__()
 
         # Set height, width
-        self.sprite = pygame.image.load('images/peach2.png')
+        self.sprite = pygame.image.load('images/peach.png')
         self.size = self.sprite.get_rect().size
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
-        #self.image.fill(BLACK)
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
@@ -98,10 +102,10 @@ class Peach(pygame.sprite.Sprite):
 
 
 
-class Block(pygame.sprite.Sprite):
+class Ghost(pygame.sprite.Sprite):
     """
-    This class represents the ball
-    It derives from the "Sprite" class in Pygame
+    This class represents the ghost.
+    Subclass of "Sprite" class in Pygame.
     """
 
     def __init__(self, color, x, y):
@@ -118,8 +122,7 @@ class Block(pygame.sprite.Sprite):
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
         #self.image.fill(color)
 
-        # Fetch the rectangle object that has the dimensions of the image
-        # image.
+        # Fetch the rectangle object that has the dimensions of the image.
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
@@ -133,9 +136,9 @@ class Block(pygame.sprite.Sprite):
         self.top_boundary = 550
         self.bottom_boundary = 350
 
-        # Instance variables for our current speed and direction
-        self.change_x = 0#random.randint(1, 2)
-        self.change_y = 0#random.randint(1, 3)
+        # Instance variables for ghost speed/direction
+        self.change_x = 0
+        self.change_y = 0
 
     def update(self):
         """ Called each frame. """
@@ -147,3 +150,74 @@ class Block(pygame.sprite.Sprite):
 
         if self.rect.bottom - 40 >= self.bottom_boundary or self.rect.top <= self.top_boundary:
             self.change_y *= -1
+
+    def update_x(self, reached, location, ghostcoord):
+        '''
+        Update the x-coordinate/position of the ghost. If length of shortest
+        path to the player isn't empty and the ghost isn't at the vertex closest
+        to the player, then move the ghost to the next vertex part of the shortest
+        path.
+
+        Args:
+        reached: A list containing all the vertices in the 'least cost path'.
+        location: A dictionary containing all the vertices as tuples on the
+        screen with identifiers as keys for the vertices.
+        ghostcoord: Coordinate (tuple) of the current x-coordinate/position of
+        the ghost.
+
+        Returns: Tuple containing the x-coordinate to move ghost to.
+        '''
+        if len(reached) > 1:
+            if location[reached[1]][0] != ghostcoord:
+                return location[reached[1]][0]
+
+    def update_y(self, reached, location, ghostcoord):
+        '''
+        Update the y-coordinate/position of the ghost. If length of shortest
+        path to the player isn't empty and the ghost isn't at the vertex closest
+        to the player, then move the ghost to the next vertex part of the shortest
+        path.
+
+        Args:
+        reached: A list containing all the vertices in the 'least cost path'.
+        location: A dictionary containing all the vertices as tuples on the
+        screen with identifiers as keys for the vertices.
+        ghostcoord: Coordinate (tuple) of the current y-coordinate/position of
+        the ghost.
+
+        Returns: Tuple containing the y-coordinate to move ghost to.
+        '''
+        if len(reached) > 1:
+            if location[reached[1]][1] != ghostcoord:
+                return location[reached[1]][1]
+
+    def moveghost(self, reached, location, player):
+        '''
+        Move the ghost sprite on the screen using a least cost path. Calls functions
+        that will update the (x,y) coordinates/position of the ghost sprite and checks
+        if the path from the ghost to the player is empty or not. If not empty, these
+        functions return the new (x,y) coordinates to move the ghost. This function will
+        then update the ghost position on the screen.
+
+        Args:
+        reached: A list containing all the vertices in the 'least cost path'.
+        location: A dictionary containing all the vertices as tuples on the
+        screen with identifiers as keys for the vertices.
+        ghost: An instance of a ghost sprite object.
+        player: An instance of a player sprite object.
+
+        Returns: None
+        '''
+        delx = self.update_x(reached, location, self.rect.x)
+        dely = self.update_y(reached, location, self.rect.y)
+
+
+        if delx != None:
+            self.rect.x = delx
+        else:
+            self.change_x = 0
+
+        if dely != None:
+            self.rect.y = dely
+        else:
+            self.change_y = 0
