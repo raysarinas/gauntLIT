@@ -81,7 +81,9 @@ class Generator:
         return edges
 
     def make(): # make/return the graph!
-        pass
+        graph = Graph(set(vertexlist), edges) # initiate graph with set of vertices!
+        v = graph.get_vertices()
+        e = graph.get_edges()
 
 
 

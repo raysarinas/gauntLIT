@@ -124,7 +124,7 @@ class Game:
             # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
             path = []
             if time_since_path_last_found > self.ghostSpeed: # find coordinates every 2 seconds
-                path = findpath(self.player.rect.x, self.player.rect.y, self.ghost.rect.x, self.ghost.rect.y, self.graph, self.location)
+                path = findpath(self.player, self.ghost, self.graph, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
             moveghost(path, self.location, self.ghost, self.player)
