@@ -1,93 +1,112 @@
 from graph import Graph
-
 import pygame
 
-# WORK ON THIS LATER PROBABLY OR COULD INTEGRATE TO GRAPH.PY CLASS THAT ALREADY EXISTS? IDK IF HAVE TIME!
-class Generator:
+'''
+HELPER FUNCTIONS TO BUILD GRAPH UTILIZED IN THE GAME FOR GHOST MOVEMENT/A.I. STUFF
+'''
 
-    def __init__(self, surface, walls, wall_list):
-        self.screenwidth = self.surface.get_width()
-        self.screenheight = self.surface.get_height()
-        self.surface = surface
-        self.splitnum = 25
-        self.walls = walls
-        self.wall_list = wall_list
-        self.widthrange = (self.screenwidth - 10) // self.splitnum + 1
-        self.heightrange = (self.screenheight - 10) // self.splitnum + 1
-        self.location = {}
-        self.vertices = []
+def make_vertices(surface, walls): # NEED WALLS AS ARGUMENT
+    '''
+    Construct a list of vertices with appropriate screen/window size.
+    Filter out invalid vertices, i.e. those that are part of/contained within
+    walls/borders on the screen.
+    Efficiency: If H and V are the number of horizontal and vertical vertices,
+      the runtime is O (H * V).
 
-    def make_vertices(vlist, xrange, yrange):
-        '''
-        Construct a list of vertices with appropriate screen/window size.
-        Efficiency: If H and V are the number of horizontal and vertical vertices,
-          the runtime is O (H * V).
+    Args:
+    surface: Pygame surface object
+    walls: A list of wall coordinates and sizes parsed from a textfile.
 
-        Args:
-          vlist: An empty list that will store a returned list of vertices.
-          xrange: The number of vertices that will be generated in the horizontal
-            direction.
-          yrange: The number of vertices that will be generated in the vertical
-            direction.
+    Returns:
+    vertices: A list containing ALL vertices generated from the screen. Contains
+    both valid and invalid vertices; used for completeness and for use in
+    creating a dictionary attached to identifiers.
+    vertexlist: A list containing all the vertices that are valid for both
+    the player and ghost to move around/near/on.
+    '''
 
-        Returns:
-          vlist: A list containing all the vertices attainble with the provided
-            screen width and height.
-        '''
-        for x in range(1, xrange):
-            for y in range(1, yrange):
-                vlist.append([splitnum*i, splitnum*j])
-        return vlist
+    splitnum = 25
+    xrange = (surface.get_width() - 10) // splitnum + 1
+    yrange = (surface.get_height() - 10) // splitnum + 1
 
-    def filter_vertices(vertices, walls):
-        # filter out invalid vertices / wall points
-        topleft = [] # list holding top left coordinates of walls
-        bottomright = [] # list holding bottom right coordinates of walls
-        invalid = [] # list holding invalid vertices
+    vertices = []
+    for x in range(1, xrange):
+        for y in range(1, yrange):
+            vertices.append([splitnum*x, splitnum*y])
 
-        for w in range(len(walls)):
-            startx, starty = walls[w][0], walls[w][1]
-            endx, endy = startx + walls[w][2], starty + walls[w][3]
-            topleft.append([startx, starty])
-            bottomright.append([endx, endy])
+    # filter out invalid vertices / wall points
+    topleft = [] # list holding top left coordinates of walls
+    bottomright = [] # list holding bottom right coordinates of walls
+    invalid = [] # list holding invalid vertices
 
-        for v in vertices:
-            for i in range(len(walls)):
-                if v[0] in range(topleft[i][0], bottomright[i][0]):
-                    if v[1] in range(topleft[i][1], bottomright[i][1]):
-                        invalid.append(v)
+    for w in range(len(walls)):
+        startx, starty = walls[w][0], walls[w][1]
+        endx, endy = startx + walls[w][2], starty + walls[w][3]
+        topleft.append([startx, starty])
+        bottomright.append([endx, endy])
 
-        # filter out invalid vertices and convert each vertex to a tuple so hashable
-        vertexlist = [tuple(v) for v in vertices if v not in invalid]
-        return vertexlist
+    for v in vertices:
+        for i in range(len(walls)):
+            if v[0] in range(topleft[i][0], bottomright[i][0]):
+                if v[1] in range(topleft[i][1], bottomright[i][1]):
+                    invalid.append(v)
 
-    def make_edges(vertexlist):
-        # make graph edges
-        edges = []
-        for i in range(len(vertexlist)):
-            for j in range(len(vertexlist)):
-                if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
-                    if vertexlist[i][1] != vertexlist[j][1]: # vertices in same column
-                        if (vertexlist[i][1] + splitnum == vertexlist[j][1]): # if vertex beside i'th vertex
-                            edges.append((vertexlist[i], vertexlist[j])) # ADD EDGE
-                            edges.append((vertexlist[j], vertexlist[i])) # BOTH WAYS SO UNDIRECTED
+    # filter out invalid vertices and convert each vertex to a tuple so hashable
+    valid = [tuple(v) for v in vertices if v not in invalid]
+    return valid, vertices
 
-                # REPEAT but with horiztonal vertices now i guess
-                if vertexlist[i][1] == vertexlist[j][1]:
-                    if vertexlist[i][0] != vertexlist[j][0]:
-                        if vertexlist[i][0] + splitnum == vertexlist[j][0]:
-                            edges.append((vertexlist[i], vertexlist[j]))
-                            edges.append((vertexlist[j], vertexlist[i]))
-        return edges
+def make_edges(vertexlist):
+    '''
+    Construct a list of edges from based on the vertices valid for the player
+    and ghost to move through/around.
 
-    def make(): # make/return the graph!
-        graph = Graph(set(vertexlist), edges) # initiate graph with set of vertices!
-        v = graph.get_vertices()
-        e = graph.get_edges()
+    Args:
+    vertexlist: A list containing all the vertices that are valid for both
+    the player and ghost to move around/near/on.
+
+    Returns:
+    edges: A list containing all the valid edges based on the vertices taken
+    in as an argument (i.e. vertexlist).
+    '''
+    # make graph edges
+    edges = []
+    splitnum = 25
+    for i in range(len(vertexlist)):
+        for j in range(len(vertexlist)):
+            if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
+                if vertexlist[i][1] != vertexlist[j][1]: # vertices in same column
+                    if (vertexlist[i][1] + splitnum == vertexlist[j][1]): # if vertex beside i'th vertex
+                        edges.append((vertexlist[i], vertexlist[j])) # ADD EDGE
+                        edges.append((vertexlist[j], vertexlist[i])) # BOTH WAYS SO UNDIRECTED
+
+            # REPEAT but with horiztonal vertices
+            if vertexlist[i][1] == vertexlist[j][1]:
+                if vertexlist[i][0] != vertexlist[j][0]:
+                    if vertexlist[i][0] + splitnum == vertexlist[j][0]:
+                        edges.append((vertexlist[i], vertexlist[j]))
+                        edges.append((vertexlist[j], vertexlist[i]))
+    return edges
+
+def get_vertdict(vertexlist):
+    # create a dictionary containing the valid vertices. useful for having identifiers
+    # attached to each vertex so can be used in path finding.
+    location = []
+    for i in range(len(vertexlist)):
+        location[i] = (vertexlist[i][0], vertexlist[i][1])
+    return location
 
 
+def make_graph(surface, walls): # make/return the graph!
 
-def generate_graph(surface, walls, wall_list):
+    validvertices, allvertices = make_vertices(surface, walls)
+    edges = make_edges(validvertices)
+    location = get_vertdict(allvertices)
+    graph = Graph(set(vertices), edges) # initiate graph with set of vertices!
+
+    return graph, location
+
+
+def generate_graph(surface, walls):
     # GET VERTICES FOR THE ENTIRE SCREEN
     screenwidth = surface.get_width()
     screenheight = surface.get_height()
@@ -116,7 +135,6 @@ def generate_graph(surface, walls, wall_list):
         topleft_bounds.append([startx, starty])
         bottomright_bounds.append([xbound, ybound])
 
-    #invalidverts = {}
     invalid = []
 
     for v in vertices:
@@ -131,9 +149,6 @@ def generate_graph(surface, walls, wall_list):
     # filter out invalid vertices and convert to tuple so hashable
     # need to make hashable AFTER filtering out or else cant filter out in first place
 
-    # EDGES AND STUFFFFF
-
-    ''' EDGE TESTING STARTS HERE '''
     #vertexlist = valid
     edges = []
 
@@ -142,25 +157,17 @@ def generate_graph(surface, walls, wall_list):
         for j in range(len(vertexlist)):
             if vertexlist[i][0] == vertexlist[j][0]: # vertices in same row
                 if vertexlist[i][1] != vertexlist[j][1]: # vertices in same column
-                #     # then this is just the vertex itself.
-                #     pass
-                # else: # vertices in same row but not same column. transverse row.
                     if (vertexlist[i][1] + splitnum == vertexlist[j][1]): # if vertex beside i'th vertex
                         # ADD EDGE
                         edges.append((vertexlist[i], vertexlist[j]))
                         edges.append((vertexlist[j], vertexlist[i])) # BOTH WAYS SO UNDIRECTED
-                        #vedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], 2, (splitnum - 1)))
             # REPEAT but with horiztonal vertices now i guess
             if vertexlist[i][1] == vertexlist[j][1]:
                 if vertexlist[i][0] != vertexlist[j][0]:
-                #     pass #temp2.append(vertexlist[i]) # JUST TO CHECK
-                # else:
                     if vertexlist[i][0] + splitnum == vertexlist[j][0]:
                         # ADD EDGE
                         edges.append((vertexlist[i], vertexlist[j]))
                         edges.append((vertexlist[j], vertexlist[i]))
-                        #hedges.append(pygame.Rect(vertexlist[i][0], vertexlist[i][1], (splitnum - 1), 2))
-
 
     # GENERATE/MAKE THE GRAPH
     graph = Graph(set(vertexlist), edges) # initiate graph with set of vertices!

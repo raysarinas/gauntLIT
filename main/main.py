@@ -1,10 +1,9 @@
-import pygame, random
+import pygame, random, sys
 import pygame.gfxdraw
 from walls import *
 from chars import *
 from buildgraph import *
 from pathfinding import *
-from moveghost import *
 
 # Colors
 BLACK = (100, 10, 0)
@@ -35,7 +34,7 @@ class Game:
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.graph, self.location = generate_graph(self.surface, self.walls, self.wall_list)
+        self.graph, self.location = generate_graph(self.surface, self.walls)
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
         self.playerspeed = 4
@@ -79,10 +78,6 @@ class Game:
 
         hitGhost1 = pygame.sprite.collide_rect(self.player, self.ghost)
         hitGhost2 = pygame.sprite.collide_rect(self.ghost, self.player)
-# COLLISION IS TOO CLOSE LIKE
-   # STILL PRETTY FAR FROM LUIGI AND STILL A COLLISION IS DETECTED?
-   # get the range of coordinates for the player and the ghost, see if any
-   # of them intersect and if they do, then that is when hitghost goes to finish screen
 
         playercoords = self.player.rect.x, self.player.rect.y
         ghostcoords = self.ghost.rect.x, self.ghost.rect.y
@@ -214,19 +209,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                # if event.type == pygame.KEYDOWN:
-                #     waiting = False
-                #     game = Game(self.surface)
-                #
-                #     if event.key == pygame.K_1:
-                #         game.ghostSpeed = 200
-                #         game.play()
-                #     if event.key == pygame.K_2:
-                #         game.ghostSpeed = 150
-                #         game.play()
-                #     if event.key == pygame.K_3:
-                #         game.ghostSpeed = 50
-                #         game.play()
+
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     waiting = False
                     game = Game(self.surface)
