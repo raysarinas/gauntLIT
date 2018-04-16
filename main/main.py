@@ -32,7 +32,6 @@ class Game:
         self.all_sprite_list.add(self.peach)
 
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
-        #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
         self.graph, self.location = make_graph(self.surface, self.walls)
 
@@ -72,7 +71,6 @@ class Game:
         # player collision with peach
         hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
         if hitPeach:
-            #self.done
             winGame = True
             self.finishScreen(winGame)
 

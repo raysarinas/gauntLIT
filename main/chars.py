@@ -72,8 +72,6 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.rect.top = block.rect.bottom
 
-
-
 class Peach(pygame.sprite.Sprite):
     """ This class represents Princess Peach that must be saved.
         Sprite is static and this class just represents the rectangle
@@ -97,10 +95,6 @@ class Peach(pygame.sprite.Sprite):
         self.rect.y = y
         self.rect.x = x
 
-    def update(self):
-        pass
-
-
 
 class Ghost(pygame.sprite.Sprite):
     """
@@ -120,7 +114,6 @@ class Ghost(pygame.sprite.Sprite):
         self.sprite = pygame.image.load('images/boo.gif')
         self.size = self.sprite.get_rect().size
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
-        #self.image.fill(color)
 
         # Fetch the rectangle object that has the dimensions of the image.
         # Update the position of this object by setting the values
@@ -210,7 +203,6 @@ class Ghost(pygame.sprite.Sprite):
         '''
         delx = self.update_x(reached, location, self.rect.x)
         dely = self.update_y(reached, location, self.rect.y)
-
 
         if delx != None:
             self.rect.x = delx
