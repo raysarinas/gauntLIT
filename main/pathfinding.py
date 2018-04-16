@@ -67,7 +67,6 @@ def least_cost_path(graph, start, dest, location):
                  # insert to binary heap appropriately
                 events.insert((edge[1], nbrID), time + distance(location[edge[1]], nbr))
 
-
     # FIND MINIMUM PATH IF POSSIBLE
     if dest not in reached:
         return []
@@ -103,14 +102,20 @@ def findpath(player, ghost, graph, location):
     location dictionary.
     """
 
+    # this function was modified from the "process_input" function from assignment 1 part 1.
+    # set the coordinates of the player and the ghost
     playercoords = [player.rect.x, player.rect.y]
     ghostcoords = [ghost.rect.x, ghost.rect.y]
 
+
+    # initialize minimum start/end and start/end vertex values
     startV = None
     endV = None
     minplayer = float('inf')
     minghost = float('inf')
 
+
+    # find the nearest vertex to the start and destination/end points
     for key, vertex in location.items():
         currentvert = location[key]
         playervertdist = distance(currentvert, playercoords)

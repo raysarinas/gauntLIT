@@ -124,6 +124,8 @@ class Game:
             self.collision()
 
     def finishScreen(self, winGame):
+
+        # finish screen for when the player reaches Peach
         if winGame:
             self.surface.fill(BLK)
             self.surface.blit(pygame.image.load('images/sunset.png'), self.surface.get_rect())
@@ -141,6 +143,8 @@ class Game:
             self.surface.blit(textAsk, textAsk_rect)
 
         else:
+
+        # finish screen for when the player is caught by the ghost and its game over
             self.surface.fill(BLK)
             losepic = pygame.image.load('images/gameover.png')
             picrect = losepic.get_rect()
@@ -160,24 +164,27 @@ class Game:
         pygame.display.flip()
         waiting = True
         while waiting:
-            #print('collided')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                # if the player wants to play again then they should press the space bar
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     waiting = False
                     newgame = Game(self.surface)
                     newgame.startScreen()
 
     def startScreen(self):
+        # set the background image of the start screen
         self.surface.blit(pygame.image.load('images/house.png'), self.surface.get_rect())
 
+        # display title
         fontwelcome = pygame.font.SysFont(None, 35, True)
         textwelcome = fontwelcome.render("HAUNTED BUNGALOW RESCUE", True, pygame.Color('white'))
         text_rect = textwelcome.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100))
         self.surface.blit(textwelcome, text_rect)
 
+        # display prompt for the user to set a difficulty
         fontstart = pygame.font.SysFont(None, 30, True)
         textstart = fontstart.render('Press 1, 2, or 3 to Select a Difficulty', True, pygame.Color('white'))
         start_rect = textstart.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70))
@@ -200,26 +207,35 @@ class Game:
 
         pygame.display.flip()
 
+
         waiting = True
         while waiting:
 
+            # handle events that the user did
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
+                # if the user presses 1 on the keyboard then they selected the easy mode
+                # sets the ghostSpeed as slow
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     waiting = False
                     game = Game(self.surface)
                     game.ghostSpeed = 200
                     game.play()
 
+                # if the user presses 2 on the keyboard then they selected the easy mode
+                # sets the ghostSpeed as Medium
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     waiting = False
                     game = Game(self.surface)
                     game.ghostSpeed = 150
                     game.play()
 
+
+                # if the user presses 3 on the keyboard then they selected the easy mode
+                # sets the ghostSpeed as fast
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
                     waiting = False
                     game = Game(self.surface)

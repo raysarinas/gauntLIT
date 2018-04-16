@@ -138,9 +138,12 @@ class Ghost(pygame.sprite.Sprite):
         self.rect.x += self.change_x
         self.rect.y += self.change_y
 
+        # make sure the player does not hit the right or left boundaries
         if self.rect.right >= self.right_boundary + 40 or self.rect.left <= self.left_boundary:
             self.change_x *= -1
 
+
+        # make sure the player does not hit the top or bottom boundaries
         if self.rect.bottom - 40 >= self.bottom_boundary or self.rect.top <= self.top_boundary:
             self.change_y *= -1
 
