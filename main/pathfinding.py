@@ -19,30 +19,11 @@ def neighbour_identifier(nbr, location):
     Takes in a neighbour of a vertex and dictionary of vertices and
     searchs for the key value attached to that neighbour and returns it.
 
-    MORE EFFICIENT WAY OF DOING THIS IS BINARY SEARCH OR TOP-DOWN
-    DYNAMIC PROGRAMMING
+    MORE EFFICIENT WAY OF DOING THIS IS BINARY SEARCH
     """
     for v in location:
         if location[v] == nbr:
             return v
-
-    # low = 0
-    # high = len(location) - 1
-    # mid = high - low // 2
-    #
-    # while low <= high:
-    #     mid = high - low // 2
-    #     if location[mid][0] == nbr[0]:
-    #         if location[mid][1] == nbr[1]:
-    #             return mid
-    #         elif location[mid][1] < nbr[1]:
-    #             pass
-    #         elif location[mid][1] > nbr[1]:
-    #             pass
-    #     elif location[mid][0] < nbr[0]:
-    #         low = mid + 1
-    #     elif location[mid][0] > nbr[1]:
-    #         high = mid - 1
 
 def least_cost_path(graph, start, dest, location):
     """

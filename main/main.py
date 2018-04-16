@@ -34,7 +34,7 @@ class Game:
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
         #print(self.walls)
         # FOR TESTING VERTICES AND GRAPH STUFF
-        self.graph, self.location = generate_graph(self.surface, self.walls)
+        self.graph, self.location = make_graph(self.surface, self.walls)
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
         self.playerspeed = 4
