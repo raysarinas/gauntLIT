@@ -42,6 +42,13 @@ class Game:
         self.ghostSpeed = 200 # default ghost speed
 
     def handle_event(self):
+        '''
+        To handle events where the player has pressed a specific key on their keyboard
+        LEFT ARROW - MOVE PLAYER LEFT
+        RIGHT ARROW - MOVE PLAYER RIGHT
+        UP ARROW - MOVE PLAYER UP
+        DOWN ARROW - MOVE PLAYER DOWN
+        '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.done = True
@@ -67,6 +74,13 @@ class Game:
 
     # DETECT COLLISION
     def collision(self):
+        '''
+        Detects collision of the player sprite with Peach or the ghost
+        If the player has collided with the ghost then we go to the game over Screen
+        If the player has collided/ reached Peach then we go to the win Screen
+        A correction was added so that when the sprites collided it looked cleaner
+        '''
+
         winGame = False
         # player collision with peach
         hitPeach = pygame.sprite.collide_rect(self.player, self.peach)
@@ -128,6 +142,12 @@ class Game:
             self.collision() # check for collision(s) between player and ghost or player and peach
 
     def finishScreen(self, winGame):
+        '''
+        Finish screen that displays whether the player has lost or
+        won the game.
+        A prompt also is displayed to prompt the user that if they
+        want to play again then they should press the space bar.
+        '''
 
         # finish screen for when the player reaches Peach
         if winGame:
@@ -178,6 +198,12 @@ class Game:
                     newgame.startScreen()
 
     def startScreen(self):
+        '''
+        Start Screen that displays the levels of difficulty to
+        the player - Easy, Medium, Hard.
+        It prompts the user to press the number on the keyboard coressponding
+         to the level they want to play.
+        '''
         # set the background image of the start screen
         self.surface.blit(pygame.image.load('images/house.png'), self.surface.get_rect())
 
@@ -246,6 +272,9 @@ class Game:
                     game.play()
 
 def main():
+    '''
+    Initializes the game and allows the game to run
+    '''
     pygame.init() # initialize pygame
     pygame.font.init() # for drawing words
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen

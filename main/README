@@ -9,6 +9,11 @@ To play the game the user must first select there difficulty that they would lik
 and hard. The aim of the game is to get Luigi to Peach without being caught by the ghost which is following the player throughout the
 game.
 
+LEFT ARROW - MOVE PLAYER LEFT
+RIGHT ARROW - MOVE PLAYER RIGHT
+UP ARROW - MOVE PLAYER UP
+DOWN ARROW - MOVE PLAYER DOWN
+
 INSTRUCTIONS TO SET UP THE GAME:
 This game runs on Pygame so that program must be downloaded for the game to function. To run the game, be in the directory of the our assignment and type into the terminal "python3 main.py".
 
