@@ -19,7 +19,8 @@ def neighbour_identifier(nbr, location):
     Takes in a neighbour of a vertex and dictionary of vertices and
     searchs for the key value attached to that neighbour and returns it.
 
-    MORE EFFICIENT WAY OF DOING THIS IS BINARY SEARCH
+    MORE EFFICIENT WAY OF FINDING THE KEY VALUE ATTACHED TO A NBR
+    WOULD BE TO USE BINARY SEARCH!
     """
     for v in location:
         if location[v] == nbr:

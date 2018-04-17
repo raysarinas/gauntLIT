@@ -112,7 +112,6 @@ def make_graph(surface, walls): # make/return the graph!
 
     validvertices, location = make_vertices(surface, walls)
     edges = make_edges(validvertices)
-    #location = get_vertdict(allvertices)
     graph = Graph(set(validvertices), edges) # initiate graph with set of vertices!
 
     return graph, location

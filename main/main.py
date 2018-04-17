@@ -25,21 +25,21 @@ class Game:
         self.all_sprite_list = pygame.sprite.Group()
         self.block_list = pygame.sprite.Group()
 
-        self.ghost = Ghost(BLACK, 25, 25)
+        self.ghost = Ghost(25, 25)
         self.all_sprite_list.add(self.ghost)
         self.block_list.add(self.ghost)
         self.peach = Peach(590 - 18, 15)
         self.all_sprite_list.add(self.peach)
 
         self.wall_list, self.all_sprite_list, self.walls = generate_walls(self.all_sprite_list)
-        # FOR TESTING VERTICES AND GRAPH STUFF
+        # initiate graph and get the location dictionary containing vertices
         self.graph, self.location = make_graph(self.surface, self.walls)
 
         self.player = Player(10, SCREEN_HEIGHT - 34)
-        self.playerspeed = 4
+        self.playerspeed = 4 # how fast the player will move.
         self.player.walls = self.wall_list
         self.all_sprite_list.add(self.player)
-        self.ghostSpeed = 200
+        self.ghostSpeed = 200 # default ghost speed
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -79,15 +79,18 @@ class Game:
 
         playercoords = self.player.rect.x, self.player.rect.y
         ghostcoords = self.ghost.rect.x, self.ghost.rect.y
+
         if hitGhost1 or hitGhost2:
             winGame = False
+
             if (playercoords[0] != ghostcoords[0]):
-                self.ghost.rect.x += 2
+                self.ghost.rect.x += 2 # correction factor so that ghost properly draws beside player during collision
                 self.ghost.update()
                 self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
                 self.all_sprite_list.draw(self.surface)
+
             if (playercoords[1] != ghostcoords[1]):
-                self.ghost.rect.y += 5
+                self.ghost.rect.y += 5 # correction factor so that ghost properly draws beside player during collision
                 self.ghost.update()
                 self.surface.blit(pygame.image.load('images/moon.png'), self.surface.get_rect())
                 self.all_sprite_list.draw(self.surface)
@@ -110,18 +113,19 @@ class Game:
             blocks_hit_list = pygame.sprite.spritecollide(self.player, self.block_list, True)
             self.all_sprite_list.draw(self.surface)
 
-            time_since_path_last_found += dt
-            # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
-            path = []
-            if time_since_path_last_found > self.ghostSpeed: # find coordinates every 2 seconds
+            # initiate a counter for recalculating the least cost path of the ghost to the player
+            time_since_path_last_found += dt # dt is measured in milliseconds, therefore 1000 ms = 1 seconds
+            path = [] # reset path to have nothing at this instant
+            if time_since_path_last_found > self.ghostSpeed: # find coordinates of the player every 'ghostSpeed'
+            # amount of seconds, depending on level of difficulty
+                # find the path from the ghost to the player. compute using least cost path/Dijkstra's algorithm
                 ghostloc, playerloc = findpath(self.player, self.ghost, self.graph, self.location)
                 path = least_cost_path(self.graph, ghostloc, playerloc, self.location)
                 time_since_path_last_found = 0 # reset it to 0 so you can count again
 
-            #moveghost(path, self.location, self.ghost, self.player)
-            self.ghost.moveghost(path, self.location, self.player)
+            self.ghost.moveghost(path, self.location, self.player) # move the ghost accordingly
             pygame.display.flip()
-            self.collision()
+            self.collision() # check for collision(s) between player and ghost or player and peach
 
     def finishScreen(self, winGame):
 
@@ -143,7 +147,6 @@ class Game:
             self.surface.blit(textAsk, textAsk_rect)
 
         else:
-
         # finish screen for when the player is caught by the ghost and its game over
             self.surface.fill(BLK)
             losepic = pygame.image.load('images/gameover.png')
@@ -248,8 +251,8 @@ def main():
     surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT]) # make screen
     pygame.display.set_caption("Green Mario's Haunted Bungalow Rescue")
 
-    game = Game(surface)
-    game.startScreen()
+    game = Game(surface) # create an instance of the game class
+    game.startScreen() # start the game with a start screen!
 
 main()
 pygame.quit()

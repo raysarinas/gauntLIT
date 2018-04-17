@@ -102,7 +102,7 @@ class Ghost(pygame.sprite.Sprite):
     Subclass of "Sprite" class in Pygame.
     """
 
-    def __init__(self, color, x, y):
+    def __init__(self, x, y):
         """ Constructor. Pass in the color of the block,
         and its x and y position. """
         # Call the parent class (Sprite) constructor
