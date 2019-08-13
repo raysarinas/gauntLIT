@@ -1,8 +1,4 @@
 Green Mario's Haunted Bungalow Rescue
-CMPUT 275 FINAL PROJECT
-
-Melisse Doroteo - 1499913
-Raymond Sarinas - 1476504
 
 INSTRUCTIONS/DESCRIPTION FOR THE GAME:
 To play the game the user must first select there difficulty that they would like to play. There are options such as easy, medium,
